@@ -1,0 +1,6 @@
+# ignoring the following files
+*.root
+*.o
+*~
+*.*cc.o
+*.pdf

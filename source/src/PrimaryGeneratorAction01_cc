@@ -1,0 +1,131 @@
+/// \file PrimaryGeneratorAction.cc
+/// \brief Implementation of the PrimaryGeneratorAction class
+#include <fstream>
+#include <iostream>
+#include <string>
+
+#include "DetectorConstruction.hh"
+#include "PrimaryGeneratorAction.hh"
+
+#include "G4RunManager.hh"
+#include "G4LogicalVolumeStore.hh"
+#include "G4LogicalVolume.hh"
+#include "G4Box.hh"
+#include "G4Event.hh"
+#include "G4ParticleGun.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PrimaryVertex.hh"
+#include "G4PrimaryParticle.hh"
+#include "Randomize.hh"
+
+
+PrimaryGeneratorAction::PrimaryGeneratorAction()
+ : G4VUserPrimaryGeneratorAction(),
+   fParticleGun(nullptr)
+{
+  G4int nofParticles = 1;
+  fParticleGun = new G4ParticleGun(nofParticles);
+  
+  // default particle kinematic
+  //
+  auto particleDefinition = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
+  fParticleGun->SetParticleDefinition(particleDefinition);
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
+  fParticleGun->SetParticleEnergy(50.*MeV);
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+PrimaryGeneratorAction::~PrimaryGeneratorAction()
+{
+  delete fParticleGun;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+{
+// This function is called at the begining of event
+
+// Particle table
+//  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+#if 0
+//Let GUI to determine 
+  fParticleGun->GeneratePrimaryVertex(anEvent);
+  return;
+#endif
+#if 0
+  // In order to avoid dependence of PrimaryGeneratorAction
+  // on DetectorConstruction class we get world volume 
+  // from G4LogicalVolumeStore
+  //
+  G4double worldZHalfLength = 0.;
+  auto worldLV = G4LogicalVolumeStore::GetInstance()->GetVolume("LogVol_World");
+
+  // Check that the world volume has box shape
+  G4Box* worldBox = nullptr;
+  if (  worldLV ) {
+    worldBox = dynamic_cast<G4Box*>(worldLV->GetSolid());
+  }
+
+  if ( worldBox ) {
+    worldZHalfLength = worldBox->GetZHalfLength();  
+  }  else  {
+    G4ExceptionDescription msg;
+    msg << "World volume of box shape not found." << G4endl;
+    msg << "Perhaps you have changed geometry." << G4endl;
+    msg << "The gun will be place in the center.";
+    G4Exception("PrimaryGeneratorAction::GeneratePrimaries()",
+		"MyCode0002", JustWarning, msg);
+  } 
+#endif  
+  // Set gun position
+  if(0) {
+    fParticleGun -> SetParticlePosition(G4ThreeVector(0.5*mm, 0.5*mm, -3*mm));
+    fParticleGun -> GeneratePrimaryVertex(anEvent);
+  }
+
+  std::string fname="./beam.info";
+  static std::string Pname="mu-";
+  static G4double pEnergy = - 2 * MeV; 
+  if(pEnergy < 0) {
+    pEnergy = 2 * MeV; 
+    std::ifstream ifs(fname);
+    if(ifs.fail()) {
+      G4cout << " File not found: " << fname << G4endl;
+    } else {
+      G4cout << " File opened: " << fname << G4endl;
+      std::string line;
+      //    G4int pos;
+      while(getline(ifs,line)) {
+	//                    012345678
+	if(line.substr(0,9)=="Particle ") {Pname=line.substr(9);}
+	if(line.substr(0,9)=="Energy   ")   {pEnergy=stod(line.substr(9))*MeV  ; }
+      }
+      ifs.close();
+    }
+    G4cout << "Particle       " << Pname << G4endl;
+    G4cout << "Energy (MeV):  " << pEnergy / MeV <<G4endl;
+  }
+ 
+  auto particle = G4ParticleTable::GetParticleTable()->FindParticle(Pname);
+  G4double pMass = particle->GetPDGMass();
+
+  G4double pMomentum=sqrt( pEnergy*(2*pMass+pEnergy));
+  G4ThreeVector momVect=G4ThreeVector(0.0,0.0,1.0)*pMomentum;
+  auto primaryParticle=new G4PrimaryParticle(particle, momVect.x(), momVect.y(), momVect.z() ); 
+  
+  G4double pos_X = 1.1*NPixX*SPixX*( G4UniformRand()-0.5 );
+  G4double pos_Y = 1.1*NPixY*SPixY*( G4UniformRand()-0.5 );
+  G4double pos_Z = -5*mm;
+  auto vertex = G4ThreeVector( pos_X, pos_Y, pos_Z );
+  G4double time_Zero = 0.0*ns;
+  auto primaryVertex = new G4PrimaryVertex( vertex, time_Zero );
+ 
+// Add the primary particles to the primary vertex
+  primaryVertex->SetPrimary( primaryParticle );
+  anEvent->AddPrimaryVertex( primaryVertex );
+
+}

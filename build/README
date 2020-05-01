@@ -1,0 +1,29 @@
+You can compile the programs in this directory
+    $ cd build
+    $ rm -r C*
+    $ cmake ../
+    $ make
+
+Then the executable ./exampleB4a   is created.
+You can execute the program by
+
+    $ ./exampleB4a
+
+in the GUI mode. You can enter commands to the GUI.   The simplest one is 
+
+     /run/beamOn 100
+
+You can also run the program in batch mode.
+
+  $ ./exampleB4a -m runrun.mac
+
+The output root file is "B4_2MeV.root"  (I am sorry for the strange name).
+The output file can be read by p3.C as follows:
+
+  $ root -l
+  root [0] .x p3.C
+
+Then you can see the simple histogram and the Hit map.
+At present all the root macros "*.C" work somehow.
+
+
