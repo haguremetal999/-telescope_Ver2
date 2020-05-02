@@ -68,10 +68,10 @@ RM = /usr/local/Cellar/cmake/3.17.2/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/tsuboy/work/geant/pixel2/source
+CMAKE_SOURCE_DIR = /Users/tsuboy/work/geant/telescope/source
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/tsuboy/work/geant/pixel2/build
+CMAKE_BINARY_DIR = /Users/tsuboy/work/geant/telescope/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -146,9 +146,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tsuboy/work/geant/pixel2/build/CMakeFiles /Users/tsuboy/work/geant/pixel2/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tsuboy/work/geant/telescope/build/CMakeFiles /Users/tsuboy/work/geant/telescope/build/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tsuboy/work/geant/pixel2/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/tsuboy/work/geant/telescope/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -405,6 +405,33 @@ src/SteppingAction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s
 .PHONY : src/SteppingAction.cc.s
 
+src/apixel.o: src/apixel.cc.o
+
+.PHONY : src/apixel.o
+
+# target to build an object file
+src/apixel.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.o
+.PHONY : src/apixel.cc.o
+
+src/apixel.i: src/apixel.cc.i
+
+.PHONY : src/apixel.i
+
+# target to preprocess a source file
+src/apixel.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.i
+.PHONY : src/apixel.cc.i
+
+src/apixel.s: src/apixel.cc.s
+
+.PHONY : src/apixel.s
+
+# target to generate assembly for a file
+src/apixel.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.s
+.PHONY : src/apixel.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -442,6 +469,9 @@ help:
 	@echo "... src/SteppingAction.o"
 	@echo "... src/SteppingAction.i"
 	@echo "... src/SteppingAction.s"
+	@echo "... src/apixel.o"
+	@echo "... src/apixel.i"
+	@echo "... src/apixel.s"
 .PHONY : help
 
 

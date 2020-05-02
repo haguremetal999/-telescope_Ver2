@@ -4,8 +4,6 @@
 // root[0] .x plotNtuple.C
 
 {
-  cout << "The program is no more correct" << endl;
-if(0) {
   gROOT->Reset();
   gROOT->SetStyle("Plain");
   
@@ -41,5 +39,4 @@ if(0) {
   c1->cd(4);
   gPad->SetLogy(1);
   ntuple->Draw("Egap");
-  }
 }  

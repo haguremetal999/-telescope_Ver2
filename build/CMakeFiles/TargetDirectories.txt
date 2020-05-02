@@ -1,7 +1,7 @@
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/install/local.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/install/strip.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/install.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/list_install_components.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/rebuild_cache.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/edit_cache.dir
-/Users/tsuboy/work/geant/pixel2/build/CMakeFiles/exampleB4a.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/install/local.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/install/strip.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/install.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/list_install_components.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/rebuild_cache.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/edit_cache.dir
+/Users/tsuboy/work/geant/telescope/build/CMakeFiles/exampleB4a.dir

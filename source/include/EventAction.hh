@@ -37,7 +37,8 @@ class EventAction : public G4UserEventAction
     G4double  fTrackLDepl;
     G4double  fTrackLWafer;
     G4int col_dum;
-    G4double  pixelData[NPixY][NPixX];
+  //    G4double  pixelData[NPixY][NPixX];
+    G4double  pixelData[100][100];
 };
 
 
@@ -50,8 +51,11 @@ inline void EventAction::AddCmos(G4double de, G4double dl, G4int iy, G4int ix) {
 }
 
 inline void EventAction::AddDepl(G4double de, G4double dl, G4int iy, G4int ix ) {
-  if (iy>NPixY) G4cout << "Index error iy " << iy << " > " << NPixY << G4endl;
-  if (ix>NPixX) G4cout << "Index error ix " << ix << " > " << NPixX << G4endl;
+#define NY 50
+#define NX 30
+   
+  if (iy>NY) G4cout << "Index error iy " << iy << " > " << NY << G4endl;
+  if (ix>NX) G4cout << "Index error ix " << ix << " > " << NX << G4endl;
   fEnergyDepl += de; 
   fTrackLDepl += dl;
   pixelData[iy][ix] +=de;

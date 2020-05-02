@@ -22,6 +22,7 @@
 
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
+#include "apixel.hh"
 // For the sensitive volume
 //#include "G4SDManager.hh"
 //#include "SensitiveVolume.hh"
@@ -34,11 +35,11 @@ G4GlobalMagFieldMessenger* DetectorConstruction::fMagFieldMessenger = nullptr;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
- : G4VUserDetectorConstruction(),
-   fCmosPV(nullptr),
-   fDeplPV(nullptr),
-   fWaferPV(nullptr),
-   fCheckOverlaps(true)
+ : G4VUserDetectorConstruction()
+   //,   fCmosPV(nullptr),
+   //fDeplPV(nullptr),
+   //fWaferPV(nullptr)
+   // ,fCheckOverlaps(true)
 {
 }
 
@@ -109,178 +110,40 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
      new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
                        false, copyNum_World);
 
-// Define 'Pixel Detector' - Global Envelop
+   // Prepare pixel sensors
+   pixel0= new apixel(100);
+   G4LogicalVolume *lV_Pixel0= pixel0 ->Getlogvol();
 
-   G4int  nDiv_X=NPixX, nDiv_Y=NPixY;
-   G4double leng_X_PixEnvG = NPixX*SPixX;     // X-full-length of pixel: global envelop
-   G4double leng_Y_PixEnvG = NPixY*SPixY;     // Y-full-length of pixel: global envelop
-   G4double leng_Z_PixEnvG = TPixCmos+TPixDepl+TPixWafer;     // Z-full-length of pixel: global envelop
-   G4Box* solid_PixEnvG =
-     new G4Box("Solid_PixEnvG", leng_X_PixEnvG/2.0, leng_Y_PixEnvG/2.0, leng_Z_PixEnvG/2.0);
-
-   // Define logical volume of the global envelop
-   G4Material* materi_PixEnvG = materi_Man->FindOrBuildMaterial("G4_AIR");
-   G4LogicalVolume* logVol_PixEnvG =
-     new G4LogicalVolume(solid_PixEnvG, materi_PixEnvG, "LogVol_PixEnvG");
-   logVol_PixEnvG->SetVisAttributes (G4VisAttributes::Invisible);
-
-// Define 'Pixel Detector' - Local Envelop (divided the global envelop in Y-direction)
-   // Define the shape of the local envelop
-   G4double leng_X_PixEnvL = NPixX*SPixX;             // X-full-length of pixel: local envelop
-   G4double leng_Y_PixEnvL = SPixY;                   // Y-full-length of pixel: local envelop
-   G4double leng_Z_PixEnvL = TPixCmos+TPixDepl+TPixWafer;      // Z-full-length of pixel: local envelop
-
-   G4Box* solid_PixEnvL =
-     new G4Box("Solid_PixEnvL", leng_X_PixEnvL/2.0, leng_Y_PixEnvL/2.0, leng_Z_PixEnvL/2.0);
+   pixel1= new apixel(110);
+   G4LogicalVolume *lV_Pixel1= pixel1 ->Getlogvol();
+ 
 
 
-   // Define logical volume of the local envelop
-   G4Material* materi_PixEnvL = materi_Man->FindOrBuildMaterial("G4_AIR");
-   G4LogicalVolume* logVol_PixEnvL =
-     new G4LogicalVolume(solid_PixEnvL, materi_PixEnvL, "LogVol_PixEnvL");
-   //logVol_PixEnvL->SetVisAttributes (G4VisAttributes::Invisible);
-
-   // Placement of the local envelop to the global envelop using Replica
-   new G4PVReplica("PhysVol_PixEnvL", logVol_PixEnvL, logVol_PixEnvG, kYAxis,
-                   nDiv_Y , leng_Y_PixEnvL);
-
-// Define 'Pixel Detector' - Pixel Element (divided the local envelop in X-direction)
-   // Define the shape of the pixel element
-   G4double leng_X_PixElmt = SPixX;                    // X-full-length of pixel: pixel element
-   G4double leng_Y_PixElmt = SPixY;                    // Y-full-length of pixel: pixel element
-   G4double leng_Z_PixElmt = TPixCmos+TPixDepl+TPixWafer;       // Z-full-length of pixel: pixel element
-   G4Box* solid_PixElmt =
-     new G4Box("Solid_PixElmt", leng_X_PixElmt/2.0, leng_Y_PixElmt/2.0, leng_Z_PixElmt/2.0);
-
-   // Define logical volume of the pixel element
-//   G4Material* materi_PixElmt = materi_Man->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
-   G4Material* materi_PixElmt = materi_Man->FindOrBuildMaterial("G4_AIR");
-   G4LogicalVolume* logVol_PixElmt =
-     new G4LogicalVolume(solid_PixElmt, materi_PixElmt, "LogVol_PixElmt");
-   //     logVol_PixElmt->SetVisAttributes (G4VisAttributes::Invisible);
-
-   // Placement of pixel elements to the local envelop using Replica
-   G4PVReplica* physVol_PixElmt=
-   new G4PVReplica("PhysVol_PixElmt", logVol_PixElmt, logVol_PixEnvL, kXAxis,
-                   nDiv_X, leng_X_PixElmt);
-   //
-// Pixel element = Cmos+Depl+Wafer   Define 'Pixel Detector' - Pixel Element (divided the local envelop in X-direction)
-
-// Cmos circuit made of SiO2 
-
-   // Define the shape of the pixel element
-   G4double leng_X_PixCmos = SPixX;                    // X-full-length of pixel: pixel element
-   G4double leng_Y_PixCmos = SPixY;                    // Y-full-length of pixel: pixel element
-   G4double leng_Z_PixCmos = TPixCmos;                 // Z-full-length of pixel: pixel element
-   G4Box* solid_PixCmos =
-     new G4Box("Solid_PixCmos", leng_X_PixCmos/2.0, leng_Y_PixCmos/2.0, leng_Z_PixCmos/2.0);
-
-   G4Material* materi_PixCmos = materi_Man->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
-   G4LogicalVolume* logVol_PixCmos =
-     new G4LogicalVolume(solid_PixCmos, materi_PixCmos, "LogVol_PixCmos");
-   //  logVol_PixCmos->SetVisAttributes (G4VisAttributes::Invisible);
-   #if 0
-   const G4VPhysicalVolume* GetCmosPV() const;
-   const G4VPhysicalVolume* GetDeplPV() const;
-   const G4VPhysicalVolume* GetWaferPV() const;
-   #endif
-
-
-// Depleted zone (signal generation)
-
-   G4double leng_X_PixDepl = SPixX;                    // X-full-length of pixel: pixel element
-   G4double leng_Y_PixDepl = SPixY;                    // Y-full-length of pixel: pixel element
-   G4double leng_Z_PixDepl = TPixDepl;                 // Z-full-length of pixel: pixel element
-   G4Box* solid_PixDepl =
-     new G4Box("Solid_PixDepl", leng_X_PixDepl/2.0, leng_Y_PixDepl/2.0, leng_Z_PixDepl/2.0);
-
-   G4Material* materi_PixDepl = materi_Man->FindOrBuildMaterial("G4_Si");
-   G4LogicalVolume* logVol_PixDepl =
-     new G4LogicalVolume(solid_PixDepl, materi_PixDepl, "LogVol_PixDepl");
-   //  logVol_PixDepl->SetVisAttributes (G4VisAttributes::Invisible);
-
-   // Placement of pixel elements to the local envelop using Replica
-   //   new G4PVReplica("PhysVol_PixDepl", logVol_PixDepl, logVol_PixElmt, kXAxis,nDiv_X, leng_X_PixDepl);
-
-
-// Si wafer
-
-   // Define the shape of the pixel element
-   G4double leng_X_PixWafer = SPixX;                    // X-full-length of pixel: pixel element
-   G4double leng_Y_PixWafer = SPixY;                    // Y-full-length of pixel: pixel element
-   G4double leng_Z_PixWafer = TPixWafer;                 // Z-full-length of pixel: pixel element
-   G4Box* solid_PixWafer =
-     new G4Box("Solid_PixWafer", leng_X_PixWafer/2.0, leng_Y_PixWafer/2.0, leng_Z_PixWafer/2.0);
-
-   G4Material* materi_PixWafer = materi_Man->FindOrBuildMaterial("G4_Si");
-   G4LogicalVolume* logVol_PixWafer =
-     new G4LogicalVolume(solid_PixWafer, materi_PixWafer, "LogVol_PixWafer");
-   //  logVol_PixWafer->SetVisAttributes (G4VisAttributes::Invisible);
-
-
-
-   //Placement of Cmos/Depl/Wafer
-   //Cmos
-   G4double pos_X_LogV=0.0*um;
-   G4double pos_Y_LogV=0.0*um;
-   G4double pos_Z_LogV=-(TPixDepl+TPixWafer)/2;
-   G4ThreeVector threeVect_LogV = G4ThreeVector(pos_X_LogV, pos_Y_LogV, pos_Z_LogV);
-   G4RotationMatrix rotMtrx_LogV = G4RotationMatrix();
-   G4Transform3D trans3D_LogV = G4Transform3D(rotMtrx_LogV, threeVect_LogV);
-   
-   G4int copyNum_LogV = 1000;                // Set ID number of LogV
-   fCmosPV= new G4PVPlacement(trans3D_LogV, "PhysVol_PixCmos", logVol_PixCmos, physVol_PixElmt,
-		     false, copyNum_LogV);
-   
-   //Depleted region
-   pos_X_LogV=0.0*um;
-   pos_Y_LogV=0.0*um;
-   pos_Z_LogV=-(-TPixCmos+TPixWafer)/2;
-   threeVect_LogV = G4ThreeVector(pos_X_LogV, pos_Y_LogV, pos_Z_LogV);
-   rotMtrx_LogV = G4RotationMatrix();
-   trans3D_LogV = G4Transform3D(rotMtrx_LogV, threeVect_LogV);
-   
-   copyNum_LogV = 2000;                // Set ID number of LogV
-   fDeplPV= new G4PVPlacement(trans3D_LogV, "PhysVol_PixDepl", logVol_PixDepl, physVol_PixElmt,
-		     false, copyNum_LogV);
-   
-   //Wafer
-   pos_X_LogV=0.0*um;
-   pos_Y_LogV=0.0*um;
-   pos_Z_LogV=(TPixCmos+TPixDepl)/2;
-   threeVect_LogV = G4ThreeVector(pos_X_LogV, pos_Y_LogV, pos_Z_LogV);
-   rotMtrx_LogV = G4RotationMatrix();
-   trans3D_LogV = G4Transform3D(rotMtrx_LogV, threeVect_LogV);
-   
-   copyNum_LogV = 3000;                // Set ID number of LogV
-   fWaferPV= new G4PVPlacement(trans3D_LogV, "PhysVol_PixWafer", logVol_PixWafer, physVol_PixElmt,
-      		     false, copyNum_LogV);
-   
-   /*
-Calcuation of Z position
-    |  t1  | t2  |        t3        | 
- zmin  z1    z2           Z3       zmax
-
-zmin=-(t1+t2+t3)/2  ;   zmax=+(t1+t2+t3)/2  
-z1=zmin+t1/2= -(t2+t3)
-z2=zmin+t1+t2/2=(t1-t3)/2
-z3=zmax-t3/2=(t1+t2)/2
-
-
-    */
 
 // Placement of the 'Pixel Detector' to the world: Put the 'global envelop'
-   G4double pos_X_LogV_PixEnvG = 0.0*cm;       // X-location LogV_PixEnvG
-   G4double pos_Y_LogV_PixEnvG = 0.0*cm;       // Y-location LogV_PixEnvG
-   G4double pos_Z_LogV_PixEnvG = 0.0*cm;       // Z-location LogV_PixEnvG
-   G4ThreeVector threeVect_LogV_PixEnvG =
-     G4ThreeVector(pos_X_LogV_PixEnvG, pos_Y_LogV_PixEnvG, pos_Z_LogV_PixEnvG);
-   G4RotationMatrix rotMtrx_LogV_PixEnvG = G4RotationMatrix();
-   G4Transform3D trans3D_LogV_PixEnvG = G4Transform3D(rotMtrx_LogV_PixEnvG, threeVect_LogV_PixEnvG);
+   G4double pos_X0 = 0.0*cm;
+   G4double pos_Y0 = 0.0*cm;
+   G4double pos_Z0 = 0.0*cm;
+   G4ThreeVector vec0 = G4ThreeVector(pos_X0, pos_Y0, pos_Z0);
+   G4RotationMatrix rot0 = G4RotationMatrix();
+   G4Transform3D trans0 = G4Transform3D(rot0, vec0);
+   G4int cN0 = 1000;    
+   new G4PVPlacement(trans0, "PV_Pixel0", lV_Pixel0, physVol_World,false, cN0);
 
-   G4int copyNum_LogV_PixEnvG = 4000;                // Set ID number of LogV_PixEnvG
-   new G4PVPlacement(trans3D_LogV_PixEnvG, "PhysVol_PixEnvG", logVol_PixEnvG, physVol_World,
-                     false, copyNum_LogV_PixEnvG);
+
+
+
+// Placement of the 'Pixel Detector' to the world: Put the 'global envelop'
+   G4double pos_X1 = 0.0*cm;
+   G4double pos_Y1 = 0.0*cm;
+   G4double pos_Z1 = 1.0*cm;
+   G4ThreeVector vec1 = G4ThreeVector(pos_X1, pos_Y1, pos_Z1);
+   G4RotationMatrix rot1 = G4RotationMatrix();
+   G4Transform3D trans1 = G4Transform3D(rot1, vec1);
+   G4int cN1 = 1001;    
+   new G4PVPlacement(trans1, "PV_Pixel1", lV_Pixel1, physVol_World,false, cN1);
+
+
 
 #if 0
 // Sensitive Volume

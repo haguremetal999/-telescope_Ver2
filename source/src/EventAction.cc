@@ -46,7 +46,7 @@ void EventAction::BeginOfEventAction(const G4Event* /*event*/)
   fTrackLCmos = 0.;
   fTrackLDepl = 0.;
   fTrackLWafer = 0.;
-  for(G4int ix=0;ix<NPixX;ix++) for(G4int iy=0;iy<NPixY;iy++) pixelData[iy][ix]=0;
+  for(G4int ix=0;ix<NX;ix++) for(G4int iy=0;iy<NY;iy++) pixelData[iy][ix]=0;
 
 }
 
@@ -69,7 +69,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
   
   //  std::vector<G4double> pd(NPixX*NPixY);  
   // fill ntuple
-  analysisManager->FillNtupleIColumn(0, NPixY*1000+NPixX);
+  analysisManager->FillNtupleIColumn(0, NY*1000+NX);
   analysisManager->FillNtupleIColumn(1, Nbuff);
   analysisManager->FillNtupleDColumn(2, fEnergyCmos/keV);
   analysisManager->FillNtupleDColumn(3, fEnergyDepl/keV);
@@ -79,8 +79,10 @@ void EventAction::EndOfEventAction(const G4Event* event)
   analysisManager->FillNtupleDColumn(7, fTrackLWafer/um);
   G4int ptr=9;
   G4int nhits=0;
-  for (G4int iy=0; iy<NPixY; iy++) {
-    for (G4int ix=0; ix<NPixX; ix++) {
+  //  G4int NY=50;
+  //  G4int NX=30;
+  for (G4int iy=0; iy<NY; iy++) {
+    for (G4int ix=0; ix<NX; ix++) {
       if(pixelData[iy][ix]>0) {
 	if(nhits<Nbuff) {
 	  nhits++;

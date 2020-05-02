@@ -25,49 +25,34 @@ SteppingAction::SteppingAction(
 SteppingAction::~SteppingAction()
 {}
 
-#if 0
-static G4double PPP=-1.0;
-#endif
 
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
   auto chg= step->GetTrack()->GetDefinition()->GetPDGCharge() ;
   if(chg!=0) {
 // get volume of the current step
-    auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
-// energy deposit
-    auto edep = step->GetTotalEnergyDeposit();
-    auto thetime = step->GetPreStepPoint()->GetGlobalTime();
-//  auto thetime1= step->GetPreStepPoint()->GetProperTime();
-//  auto thetime2 = step->GetPreStepPoint()->GetLocalTime();
-  
-    auto stepLength = step->GetStepLength();
+     auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
+// energy deposit and time
+     auto edep    = step->GetTotalEnergyDeposit();
+     auto thetime = step->GetPreStepPoint()->GetGlobalTime();
+     auto stepLength = step->GetStepLength();
 
-#if 0    
-  auto mass=step->GetPreStepPoint()->GetMass();
-  if(mass != PPP) {
-    auto ee=step -> GetPreStepPoint()->GetKineticEnergy();
-    G4cout << " Mass=" << mass/MeV  << " MeV. E=" << ee << " MeV T="  << thetime/ns << " nsec " << G4endl;
-    PPP=mass;
+     auto analysisManager = G4AnalysisManager::Instance();
+     if ( volume == fDetConstruction->Getapixel0()->GetCmosPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       fEventAction->AddCmos(edep,stepLength,iy,ix);
+       analysisManager->FillH1(6, thetime/ns, edep/keV);
+     } else if ( volume == fDetConstruction->Getapixel0()->GetDeplPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       fEventAction->AddDepl(edep,stepLength,iy,ix);
+       analysisManager->FillH1(7, thetime/ns, edep/keV);
+     } else if ( volume == fDetConstruction->Getapixel0()->GetWaferPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       fEventAction->AddWafer(edep,stepLength,iy,ix);
+       analysisManager->FillH1(8, thetime/ns, edep/keV);
+     }
   }
-#endif
-
-  auto analysisManager = G4AnalysisManager::Instance();
-  if ( volume == fDetConstruction->GetCmosPV() ) {
-     G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-     G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-     fEventAction->AddCmos(edep,stepLength,iy,ix);
-     analysisManager->FillH1(6, thetime/ns, edep/keV);
-  } else if ( volume == fDetConstruction->GetDeplPV() ) {
-     G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-     G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-     fEventAction->AddDepl(edep,stepLength,iy,ix);
-     analysisManager->FillH1(7, thetime/ns, edep/keV);
-  } else if ( volume == fDetConstruction->GetWaferPV() ) {
-     G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-     G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-     fEventAction->AddWafer(edep,stepLength,iy,ix);
-     analysisManager->FillH1(8, thetime/ns, edep/keV);
-  }
-}
 }

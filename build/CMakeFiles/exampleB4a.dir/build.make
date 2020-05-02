@@ -63,10 +63,10 @@ RM = /usr/local/Cellar/cmake/3.17.2/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/tsuboy/work/geant/pixel2/source
+CMAKE_SOURCE_DIR = /Users/tsuboy/work/geant/telescope/source
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/tsuboy/work/geant/pixel2/build
+CMAKE_BINARY_DIR = /Users/tsuboy/work/geant/telescope/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/exampleB4a.dir/depend.make
@@ -78,108 +78,121 @@ include CMakeFiles/exampleB4a.dir/progress.make
 include CMakeFiles/exampleB4a.dir/flags.make
 
 CMakeFiles/exampleB4a.dir/exampleB4a.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/exampleB4a.cc.o: /Users/tsuboy/work/geant/pixel2/source/exampleB4a.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/exampleB4a.dir/exampleB4a.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/exampleB4a.cc.o -c /Users/tsuboy/work/geant/pixel2/source/exampleB4a.cc
+CMakeFiles/exampleB4a.dir/exampleB4a.cc.o: /Users/tsuboy/work/geant/telescope/source/exampleB4a.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/exampleB4a.dir/exampleB4a.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/exampleB4a.cc.o -c /Users/tsuboy/work/geant/telescope/source/exampleB4a.cc
 
 CMakeFiles/exampleB4a.dir/exampleB4a.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/exampleB4a.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/exampleB4a.cc > CMakeFiles/exampleB4a.dir/exampleB4a.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/exampleB4a.cc > CMakeFiles/exampleB4a.dir/exampleB4a.cc.i
 
 CMakeFiles/exampleB4a.dir/exampleB4a.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/exampleB4a.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/exampleB4a.cc -o CMakeFiles/exampleB4a.dir/exampleB4a.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/exampleB4a.cc -o CMakeFiles/exampleB4a.dir/exampleB4a.cc.s
 
 CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/ActionInitialization.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/ActionInitialization.cc
+CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o: /Users/tsuboy/work/geant/telescope/source/src/ActionInitialization.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/ActionInitialization.cc
 
 CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/ActionInitialization.cc > CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/ActionInitialization.cc > CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.i
 
 CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/ActionInitialization.cc -o CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/ActionInitialization.cc -o CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.s
 
 CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/DetectorConstruction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/DetectorConstruction.cc
+CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o: /Users/tsuboy/work/geant/telescope/source/src/DetectorConstruction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/DetectorConstruction.cc
 
 CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/DetectorConstruction.cc > CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/DetectorConstruction.cc > CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.i
 
 CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/DetectorConstruction.cc -o CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/DetectorConstruction.cc -o CMakeFiles/exampleB4a.dir/src/DetectorConstruction.cc.s
 
 CMakeFiles/exampleB4a.dir/src/EventAction.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/EventAction.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/EventAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/exampleB4a.dir/src/EventAction.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/EventAction.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/EventAction.cc
+CMakeFiles/exampleB4a.dir/src/EventAction.cc.o: /Users/tsuboy/work/geant/telescope/source/src/EventAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/exampleB4a.dir/src/EventAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/EventAction.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/EventAction.cc
 
 CMakeFiles/exampleB4a.dir/src/EventAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/EventAction.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/EventAction.cc > CMakeFiles/exampleB4a.dir/src/EventAction.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/EventAction.cc > CMakeFiles/exampleB4a.dir/src/EventAction.cc.i
 
 CMakeFiles/exampleB4a.dir/src/EventAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/EventAction.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/EventAction.cc -o CMakeFiles/exampleB4a.dir/src/EventAction.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/EventAction.cc -o CMakeFiles/exampleB4a.dir/src/EventAction.cc.s
 
 CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/PhysicsList.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/PhysicsList.cc
+CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o: /Users/tsuboy/work/geant/telescope/source/src/PhysicsList.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/PhysicsList.cc
 
 CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/PhysicsList.cc > CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/PhysicsList.cc > CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.i
 
 CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/PhysicsList.cc -o CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/PhysicsList.cc -o CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.s
 
 CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/PrimaryGeneratorAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/PrimaryGeneratorAction.cc
+CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o: /Users/tsuboy/work/geant/telescope/source/src/PrimaryGeneratorAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/PrimaryGeneratorAction.cc
 
 CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/PrimaryGeneratorAction.cc > CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/PrimaryGeneratorAction.cc > CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.i
 
 CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/PrimaryGeneratorAction.cc -o CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/PrimaryGeneratorAction.cc -o CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.s
 
 CMakeFiles/exampleB4a.dir/src/RunAction.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/RunAction.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/RunAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/exampleB4a.dir/src/RunAction.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/RunAction.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/RunAction.cc
+CMakeFiles/exampleB4a.dir/src/RunAction.cc.o: /Users/tsuboy/work/geant/telescope/source/src/RunAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/exampleB4a.dir/src/RunAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/RunAction.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/RunAction.cc
 
 CMakeFiles/exampleB4a.dir/src/RunAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/RunAction.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/RunAction.cc > CMakeFiles/exampleB4a.dir/src/RunAction.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/RunAction.cc > CMakeFiles/exampleB4a.dir/src/RunAction.cc.i
 
 CMakeFiles/exampleB4a.dir/src/RunAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/RunAction.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/RunAction.cc -o CMakeFiles/exampleB4a.dir/src/RunAction.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/RunAction.cc -o CMakeFiles/exampleB4a.dir/src/RunAction.cc.s
 
 CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o: CMakeFiles/exampleB4a.dir/flags.make
-CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o: /Users/tsuboy/work/geant/pixel2/source/src/SteppingAction.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o -c /Users/tsuboy/work/geant/pixel2/source/src/SteppingAction.cc
+CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o: /Users/tsuboy/work/geant/telescope/source/src/SteppingAction.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/SteppingAction.cc
 
 CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/pixel2/source/src/SteppingAction.cc > CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/SteppingAction.cc > CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.i
 
 CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/pixel2/source/src/SteppingAction.cc -o CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/SteppingAction.cc -o CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s
+
+CMakeFiles/exampleB4a.dir/src/apixel.cc.o: CMakeFiles/exampleB4a.dir/flags.make
+CMakeFiles/exampleB4a.dir/src/apixel.cc.o: /Users/tsuboy/work/geant/telescope/source/src/apixel.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/exampleB4a.dir/src/apixel.cc.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/exampleB4a.dir/src/apixel.cc.o -c /Users/tsuboy/work/geant/telescope/source/src/apixel.cc
+
+CMakeFiles/exampleB4a.dir/src/apixel.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/exampleB4a.dir/src/apixel.cc.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/tsuboy/work/geant/telescope/source/src/apixel.cc > CMakeFiles/exampleB4a.dir/src/apixel.cc.i
+
+CMakeFiles/exampleB4a.dir/src/apixel.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/exampleB4a.dir/src/apixel.cc.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/tsuboy/work/geant/telescope/source/src/apixel.cc -o CMakeFiles/exampleB4a.dir/src/apixel.cc.s
 
 # Object files for target exampleB4a
 exampleB4a_OBJECTS = \
@@ -190,7 +203,8 @@ exampleB4a_OBJECTS = \
 "CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o" \
 "CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o" \
 "CMakeFiles/exampleB4a.dir/src/RunAction.cc.o" \
-"CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o"
+"CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o" \
+"CMakeFiles/exampleB4a.dir/src/apixel.cc.o"
 
 # External object files for target exampleB4a
 exampleB4a_EXTERNAL_OBJECTS =
@@ -203,6 +217,7 @@ exampleB4a: CMakeFiles/exampleB4a.dir/src/PhysicsList.cc.o
 exampleB4a: CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o
 exampleB4a: CMakeFiles/exampleB4a.dir/src/RunAction.cc.o
 exampleB4a: CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o
+exampleB4a: CMakeFiles/exampleB4a.dir/src/apixel.cc.o
 exampleB4a: CMakeFiles/exampleB4a.dir/build.make
 exampleB4a: /Users/tsuboy/work/geant/geant4.10.06.p01-install/lib/libG4Tree.dylib
 exampleB4a: /Users/tsuboy/work/geant/geant4.10.06.p01-install/lib/libG4GMocren.dylib
@@ -244,7 +259,7 @@ exampleB4a: /Users/tsuboy/work/geant/geant4.10.06.p01-install/lib/libG4intercoms
 exampleB4a: /Users/tsuboy/work/geant/geant4.10.06.p01-install/lib/libG4global.dylib
 exampleB4a: /Users/tsuboy/work/geant/geant4.10.06.p01-install/lib/libG4clhep.dylib
 exampleB4a: CMakeFiles/exampleB4a.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/tsuboy/work/geant/pixel2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable exampleB4a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/tsuboy/work/geant/telescope/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable exampleB4a"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/exampleB4a.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -257,6 +272,6 @@ CMakeFiles/exampleB4a.dir/clean:
 .PHONY : CMakeFiles/exampleB4a.dir/clean
 
 CMakeFiles/exampleB4a.dir/depend:
-	cd /Users/tsuboy/work/geant/pixel2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/tsuboy/work/geant/pixel2/source /Users/tsuboy/work/geant/pixel2/source /Users/tsuboy/work/geant/pixel2/build /Users/tsuboy/work/geant/pixel2/build /Users/tsuboy/work/geant/pixel2/build/CMakeFiles/exampleB4a.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/tsuboy/work/geant/telescope/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/tsuboy/work/geant/telescope/source /Users/tsuboy/work/geant/telescope/source /Users/tsuboy/work/geant/telescope/build /Users/tsuboy/work/geant/telescope/build /Users/tsuboy/work/geant/telescope/build/CMakeFiles/exampleB4a.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/exampleB4a.dir/depend
 

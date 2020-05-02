@@ -7,6 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/exampleB4a.dir/src/PrimaryGeneratorAction.cc.o"
   "CMakeFiles/exampleB4a.dir/src/RunAction.cc.o"
   "CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.o"
+  "CMakeFiles/exampleB4a.dir/src/apixel.cc.o"
   "exampleB4a"
   "exampleB4a.pdb"
 )

@@ -8,16 +8,13 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
-
+#include "apixel.hh"
 // I am ashamed I can not forward information from Geometry to other functions
 
-#define  NPixX (90)
-#define  NPixY (90)
-#define  SPixX (18*um)
-#define  SPixY (18*um)
-
-
-
+#define  aNPixX (90)
+#define  aNPixY (90)
+#define  aSPixX (18*um)
+#define  aSPixY (18*um)
 
 class G4VPhysicalVolume;
 class G4GlobalMagFieldMessenger;
@@ -48,9 +45,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
     // get methods
     //
-    const G4VPhysicalVolume* GetCmosPV() const;
-    const G4VPhysicalVolume* GetDeplPV() const;
-    const G4VPhysicalVolume* GetWaferPV() const;
+  const apixel*               Getapixel0() const;
+  const apixel*               Getapixel1() const;
+  //  const G4VPhysicalVolume* GetWaferPV() const;
      
   private:
     // methods
@@ -63,22 +60,19 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger; 
                                       // magnetic field messenger
      
-    G4VPhysicalVolume* fCmosPV; // the Cmos physical volume
-    G4VPhysicalVolume* fDeplPV;      // the Depletion physical volume
-    G4VPhysicalVolume* fWaferPV;      // the wafer physical volume
-    
-    G4bool  fCheckOverlaps; // option to activate checking of volumes overlaps
-
-   // Define the shape of the global envelop
-   const G4double TPixCmos=10*um, TPixDepl=50*um, TPixWafer=440*um;   // pixel thickness
+  apixel *pixel0;
+  apixel *pixel1;
+  //    G4VPhysicalVolume* fWaferPV;      // the wafer physical volume
+  //    G4bool  fCheckOverlaps; // option to activate checking of volumes overlaps
 
 };
 
 // inline functions
+inline const apixel* DetectorConstruction::Getapixel0() const { return pixel0;  }
+inline const apixel* DetectorConstruction::Getapixel1() const { return pixel1;  }
 
-inline const G4VPhysicalVolume* DetectorConstruction::GetCmosPV() const {   return fCmosPV;  }
-inline const G4VPhysicalVolume* DetectorConstruction::GetDeplPV() const  {  return fDeplPV; }
-inline const G4VPhysicalVolume* DetectorConstruction::GetWaferPV() const  {  return fWaferPV; }
+//inline const G4VPhysicalVolume* DetectorConstruction::GetDeplPV() const  {  return fDeplPV; }
+//inline const G4VPhysicalVolume* DetectorConstruction::GetWaferPV() const  {  return fWaferPV; }
      
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
