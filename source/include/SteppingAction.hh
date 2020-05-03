@@ -31,6 +31,7 @@ private:
   EventAction*  fEventAction;  
   apixel* pixel0;
   apixel* pixel1;
+  apixel* pixel2;
 };
 
 #endif

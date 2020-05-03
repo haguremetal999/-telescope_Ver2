@@ -35,6 +35,7 @@ void EventAction::BeginOfEventAction(const G4Event* /*event*/)
 {  
   fDetConstruction -> Getapixel0() -> ClearApixel();
   fDetConstruction -> Getapixel1() -> ClearApixel();
+  fDetConstruction -> Getapixel2() -> ClearApixel();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -47,6 +48,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
 
   apixel* pixel0= fDetConstruction -> Getapixel0();
   apixel* pixel1= fDetConstruction -> Getapixel1();
+  apixel* pixel2= fDetConstruction -> Getapixel2();
 // fill histograms
   G4double fEnergyCmos =  pixel0 ->  GetECmos();
   G4double fEnergyDepl =  pixel0 ->  GetEDepl();
@@ -94,8 +96,8 @@ void EventAction::EndOfEventAction(const G4Event* event)
   
 
   //Pixel1
-  NPixY= pixel0 -> GetNPixY();
-  NPixX= pixel0 -> GetNPixX();
+  NPixY= pixel1 -> GetNPixY();
+  NPixX= pixel1 -> GetNPixX();
   ofs=1000000;
   for (G4int iy=0; iy<NPixY; iy++) {
     for (G4int ix=0; ix<NPixX; ix++) {
@@ -109,6 +111,24 @@ void EventAction::EndOfEventAction(const G4Event* event)
       }
     }
   }
+
+  //Pixel2
+  NPixY= pixel2 -> GetNPixY();
+  NPixX= pixel2 -> GetNPixX();
+  ofs=2000000;
+  for (G4int iy=0; iy<NPixY; iy++) {
+    for (G4int ix=0; ix<NPixX; ix++) {
+      Eyx= pixel2->GetPixYX(iy, ix);
+      if(Eyx>0) {
+	if(nhits<Nbuff) {
+	  nhits++;
+	  analysisManager->FillNtupleIColumn(ptr++, ofs+iy*1000+ix);  // 9,11,13,15...
+	  analysisManager->FillNtupleDColumn(ptr++, Eyx/keV);  //10,12,14...
+	}
+      }
+    }
+  }
+
 
 
   if(nhits>Maxhits) {G4cout <<  "Ntuple: " << nhits << "hits are stored" <<G4endl;  Maxhits=nhits;}

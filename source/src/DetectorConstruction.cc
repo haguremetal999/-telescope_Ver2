@@ -40,6 +40,7 @@ DetectorConstruction::DetectorConstruction()
   G4cout <<   "DetectorConstruction CONSTRUCTOR is called" << G4endl;
    Pixel0= new apixel(100);
    Pixel1= new apixel(110);
+   Pixel2= new apixel(120);
 
 }
 
@@ -62,6 +63,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 apixel* DetectorConstruction::Getapixel0() { return Pixel0;  }
 apixel* DetectorConstruction::Getapixel1() { return Pixel1;  }
+apixel* DetectorConstruction::Getapixel2() { return Pixel2;  }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -119,9 +121,10 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
    // Prepare pixel sensors
    G4LogicalVolume *lV_Pixel0= Pixel0 ->Getlogvol();
    G4LogicalVolume *lV_Pixel1= Pixel1 ->Getlogvol();
+   G4LogicalVolume *lV_Pixel2= Pixel2 ->Getlogvol();
    G4cout << "DETCON lv0/lv1=" << lV_Pixel0 << "/" <<lV_Pixel1 << G4endl;
  
-// Placement of the 'Pixel Detector' to the world: Put the 'global envelop'
+// Placement of the 'Pixel0' to the world: Put the 'global envelop'
    G4double pos_X0 = 0.0*cm;
    G4double pos_Y0 = 0.0*cm;
    G4double pos_Z0 = 0.0*cm;
@@ -134,15 +137,27 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 
 
 
-// Placement of the 'Pixel Detector' to the world: Put the 'global envelop'
+// Placement of the 'Pixel1' to the world: Put the 'global envelop'
    G4double pos_X1 = 0.0*cm;
    G4double pos_Y1 = 0.0*cm;
-   G4double pos_Z1 = 1.0*cm;
+   G4double pos_Z1 = 3.0*cm;
    G4ThreeVector vec1 = G4ThreeVector(pos_X1, pos_Y1, pos_Z1);
    G4RotationMatrix rot1 = G4RotationMatrix();
    G4Transform3D trans1 = G4Transform3D(rot1, vec1);
    G4int cN1 = 1001;    
    new G4PVPlacement(trans1, "PV_Pixel1", lV_Pixel1, physVol_World,false, cN1);
+
+// Placement of the 'Pixel2' to the world: Put the 'global envelop'
+   G4double pos_X2 = 0.0*cm;
+   G4double pos_Y2 = 0.0*cm;
+   G4double pos_Z2 = 6.0*cm;
+   G4ThreeVector vec2 = G4ThreeVector(pos_X2, pos_Y2, pos_Z2);
+   G4RotationMatrix rot2 = G4RotationMatrix();
+   G4Transform3D trans2 = G4Transform3D(rot2, vec2);
+   G4int cN2 = 1002;    
+   new G4PVPlacement(trans2, "PV_Pixel2", lV_Pixel2, physVol_World,false, cN2);
+
+
 
 
 

@@ -23,7 +23,8 @@ SteppingAction::SteppingAction(
   fDetConstruction=det;
   pixel0= det->Getapixel0();
   pixel1= det->Getapixel1();
-  //  G4cout << "SSSSSS   Stepping action constructor is called pixel0/pixel1 " << pixel0 << "/" << pixel1 << G4endl;
+  pixel2= det->Getapixel2();
+  //  G4cout << "SSSSSS    pixel0/pixel1/pixel2 " << pixel0 << "/" << pixel1 << "/" << pixel2 << G4endl;
 }
 
 
@@ -71,6 +72,21 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        pixel1->AddWafer(edep,stepLength,iy,ix);
+       analysisManager->FillH1(8, thetime/ns, edep/keV);
+     } else if ( volume == pixel2->GetCmosPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       pixel2->AddCmos(edep,stepLength,iy,ix);
+       analysisManager->FillH1(6, thetime/ns, edep/keV);
+     } else if ( volume == pixel2->GetDeplPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       pixel2->AddDepl(edep,stepLength,iy,ix);
+       analysisManager->FillH1(7, thetime/ns, edep/keV);
+     } else if ( volume == pixel2->GetWaferPV() ) {
+       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
+       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
+       pixel2->AddWafer(edep,stepLength,iy,ix);
        analysisManager->FillH1(8, thetime/ns, edep/keV);
      }
   }

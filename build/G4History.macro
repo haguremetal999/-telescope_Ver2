@@ -17,8 +17,7 @@
 /vis/verbose 0
 /tracking/verbose 0
 /run/beamOn 0
-/vis/scene/notifyHandlers scene-0
 /gun/particle proton
 /gun/energy 120 GeV
 /run/printProgress 100
-/run/beamOn 1000
+/run/beamOn 5000

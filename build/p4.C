@@ -57,6 +57,7 @@
   cout << "Nevents=" << Nev << " NPixY/NPixX=" << NPixY << "  "<< NPixX <<endl;
   TH2F *pixel0 = new TH2F("pixel0","pixel0",NPixX,0.0,NPixX,NPixY,0.0,NPixY);
   TH2F *pixel1 = new TH2F("pixel1","pixel1",NPixX,0.0,NPixX,NPixY,0.0,NPixY);
+  TH2F *pixel2 = new TH2F("pixel2","pixel1",NPixX,0.0,NPixX,NPixY,0.0,NPixY);
 
   for(int i=0;i<Nbuff;i++) {
     ss.str(""); ss<< "IADR" << i;
@@ -74,6 +75,7 @@
       if(Nhits>nhitmax) cout << "MM Il "<<il <<" Iy " << iy << " Ix " << ix << " E " << Epix[i] << endl;
       if(il==0) pixel0->Fill(ix,iy,Epix[i]);
       if(il==1) pixel1->Fill(ix,iy,Epix[i]);
+      if(il==2) pixel2->Fill(ix,iy,Epix[i]);
     }
 
     if (Nhits >nhitmax) {
@@ -87,9 +89,14 @@
   pixel0->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
 
-  c1 -> cd(4);
+  c1 -> cd(3);
   pixel1->Draw("colz");
   pixel1->SetTitle(0);         //Erase title
+  gStyle->SetStatX(0.9);  //put aside
+
+  c1 -> cd(4);
+  pixel2->Draw("colz");
+  pixel2->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
 
 
