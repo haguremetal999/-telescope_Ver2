@@ -22,7 +22,6 @@ class EventAction : public G4UserEventAction
     
   private:
   DetectorConstruction* fDetConstruction;
-
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -51,11 +51,9 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //Use the default gun setting except the particle position
   //  auto primaryParticle=new G4PrimaryParticle(particle, momVect.x(), momVect.y(), momVect.z() ); 
   
-  G4int NX=50,NY=30;
-  G4double SX=20*um,SY=20*um;
-  G4double pos_X = 0.9*NX*SX*( G4UniformRand()-0.5 );
-  G4double pos_Y = 0.9*NY*SY*( G4UniformRand()-0.5 );
-  G4double pos_Z = -5*mm;
+  G4double pos_X = 0.1*mm*( G4UniformRand()-0.5 );
+  G4double pos_Y = 0.1*mm*( G4UniformRand()-0.5 );
+  G4double pos_Z = -10*mm;
 
   fParticleGun->SetParticlePosition(G4ThreeVector( pos_X, pos_Y, pos_Z ));
 
