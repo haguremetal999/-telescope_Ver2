@@ -4,7 +4,7 @@ You can compile the programs in this directory
 
     $ cd build
     $ rm -r C*
-    $ cmake ../
+    $ cmake ../source
     $ make
 
 Then the executable ./exampleB4a   is created.

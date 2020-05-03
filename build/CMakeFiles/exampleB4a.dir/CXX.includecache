@@ -1087,6 +1087,8 @@ G4GlobalMagFieldMessenger.hh
 /Users/tsuboy/work/geant/telescope/source/src/G4GlobalMagFieldMessenger.hh
 G4AutoDelete.hh
 /Users/tsuboy/work/geant/telescope/source/src/G4AutoDelete.hh
+G4RotationMatrix.hh
+/Users/tsuboy/work/geant/telescope/source/src/G4RotationMatrix.hh
 G4GeometryManager.hh
 /Users/tsuboy/work/geant/telescope/source/src/G4GeometryManager.hh
 G4PhysicalVolumeStore.hh

@@ -11,6 +11,7 @@
 #include "G4PVReplica.hh"
 #include "G4GlobalMagFieldMessenger.hh"
 #include "G4AutoDelete.hh"
+#include "G4RotationMatrix.hh"
 
 #include "G4GeometryManager.hh"
 #include "G4PhysicalVolumeStore.hh"
@@ -142,7 +143,9 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
    G4double pos_Y1 = 0.0*cm;
    G4double pos_Z1 = 3.0*cm;
    G4ThreeVector vec1 = G4ThreeVector(pos_X1, pos_Y1, pos_Z1);
-   G4RotationMatrix rot1 = G4RotationMatrix();
+   G4RotationMatrix rot1 =  G4RotationMatrix();
+   rot1.rotateX(30.*deg);
+
    G4Transform3D trans1 = G4Transform3D(rot1, vec1);
    G4int cN1 = 1001;    
    new G4PVPlacement(trans1, "PV_Pixel1", lV_Pixel1, physVol_World,false, cN1);
