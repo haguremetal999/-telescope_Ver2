@@ -17,7 +17,7 @@
 /vis/verbose 0
 /tracking/verbose 0
 /run/beamOn 0
-/gun/particle mu-
-/gun/energy 2 MeV
+/gun/particle proton
+/gun/energy 120 GeV
 /run/printProgress 100
-/run/beamOn 10
+/run/beamOn 1000

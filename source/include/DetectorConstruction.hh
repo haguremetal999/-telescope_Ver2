@@ -34,16 +34,11 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction();
     virtual ~DetectorConstruction();
 
-  //  public:
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
-    // get methods
-    //
-  //  const apixel*               Getapixel0() const;
-  apixel*               Getapixel0() ;
-  apixel*               Getapixel1() ;
-  //  const G4VPhysicalVolume* GetWaferPV() const;
+    apixel*               Getapixel0() ;
+    apixel*               Getapixel1() ;
      
   private:
     // methods
@@ -56,8 +51,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger; 
                                       // magnetic field messenger
      
-  apixel *pixel0;
-  apixel *pixel1;
+  apixel *Pixel0;
+  apixel *Pixel1;
   //    G4VPhysicalVolume* fWaferPV;      // the wafer physical volume
   //    G4bool  fCheckOverlaps; // option to activate checking of volumes overlaps
 

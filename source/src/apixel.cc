@@ -21,8 +21,46 @@
 
 #include "apixel.hh"
 
+ G4VPhysicalVolume* apixel::GetCmosPV()  {   return fCmosPV;  }
+ G4VPhysicalVolume* apixel::GetDeplPV()  {  return fDeplPV; }
+ G4VPhysicalVolume* apixel::GetWaferPV() {  return fWaferPV; }
+ G4int apixel::GetNPixY()  {  return NPixY; }
+ G4int apixel::GetNPixX()  {  return NPixX; }
+ G4double  apixel::GetECmos()  { return  fEnergyCmos; }
+ G4double  apixel::GetEDepl()  { return  fEnergyDepl; }
+ G4double  apixel::GetEWafer() { return  fEnergyWafer; }
+ G4double  apixel::GetLCmos()  { return  fTrackLCmos; }
+ G4double  apixel::GetLDepl()  { return  fTrackLDepl; }
+ G4double  apixel::GetLWafer() { return  fTrackLWafer; }
+ G4double  apixel::GetPixYX(G4int iy, G4int ix) { return pixelData[iy][ix];}
+
+
+
+
+// inline functions
+
+ void apixel::AddCmos(G4double de, G4double dl, G4int iy, G4int ix) {
+  fEnergyCmos += de;
+  fTrackLCmos += dl;
+  col_dum=iy+ix;
+}
+
+ void apixel::AddDepl(G4double de, G4double dl, G4int iy, G4int ix ) {
+  if (iy>NPixY) G4cout << "Index error iy " << iy << " > " << NPixY << G4endl;
+  if (ix>NPixX) G4cout << "Index error ix " << ix << " > " << NPixX << G4endl;
+  fEnergyDepl += de;
+  fTrackLDepl += dl;
+  pixelData[iy][ix] +=de;
+}
+
+ void apixel::AddWafer(G4double de, G4double dl, G4int iy, G4int ix ) {
+  fEnergyWafer += de;
+  fTrackLWafer += dl;
+  col_dum=iy+ix;
+}
+
 G4LogicalVolume* apixel::Getlogvol(){
-  G4cout << "AAAPIX Getlogvol" << logVol_PixEnvG << G4endl;
+  //  G4cout << "AAAPIX Getlogvol" << logVol_PixEnvG << G4endl;
   return logVol_PixEnvG;
 }
 
@@ -55,11 +93,11 @@ apixel::apixel(
       pixelData[i] = new double[NPixX];
     }
 
-    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
+    //    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
     for (int iy = 0; iy < NPixY; iy++) for (int ix = 0; ix < NPixX; ix++) {
 	pixelData[iy][ix]=ix+iy;
     }
-    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
+    //    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
    
 
    G4NistManager* materi_Man = G4NistManager::Instance();
@@ -176,12 +214,12 @@ z3=zmax-t3/2=(t1+t2)/2
 
 
     */
-    G4cout << "AAAPIX Finish " << G4endl;
+    G4cout << "AAAPIX constructor Finish " << G4endl;
 
   }
 
 void apixel::ClearApixel() {
-  G4cout << "AAAPIX clear pixel data " << G4endl;
+  //  G4cout << "AAAPIX clear pixel data " << G4endl;
   for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;
   fEnergyCmos=0.0;
   fEnergyDepl=0.0;
