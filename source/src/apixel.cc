@@ -20,7 +20,11 @@
 #include "G4SystemOfUnits.hh"
 
 #include "apixel.hh"
-G4LogicalVolume* apixel::Getlogvol(){return logVol_PixEnvG;}
+
+G4LogicalVolume* apixel::Getlogvol(){
+  G4cout << "AAAPIX Getlogvol" << logVol_PixEnvG << G4endl;
+  return logVol_PixEnvG;
+}
 
 apixel::apixel(
          G4int    CN,
@@ -44,6 +48,19 @@ apixel::apixel(
     TPixWafer=TW;
 
 // Define 'Pixel Detector' - Global Envelop
+
+//   http://blog.northcol.org/2012/01/14/mdarray/
+    pixelData = new double*[NPixY];
+    for (int i = 0; i < NPixY; i++) {
+      pixelData[i] = new double[NPixX];
+    }
+
+    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
+    for (int iy = 0; iy < NPixY; iy++) for (int ix = 0; ix < NPixX; ix++) {
+	pixelData[iy][ix]=ix+iy;
+    }
+    G4cout << "AAAPIX Pixel Data is initialized to " << NPixY << "/" << NPixX << G4endl;
+   
 
    G4NistManager* materi_Man = G4NistManager::Instance();
    G4Box* solid_PixEnvG =
@@ -159,7 +176,18 @@ z3=zmax-t3/2=(t1+t2)/2
 
 
     */
+    G4cout << "AAAPIX Finish " << G4endl;
+
   }
 
-
-
+void apixel::ClearApixel() {
+  G4cout << "AAAPIX clear pixel data " << G4endl;
+  for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;
+  fEnergyCmos=0.0;
+  fEnergyDepl=0.0;
+  fEnergyWafer=0.0;
+  fTrackLCmos=0.0;
+  fTrackLDepl=0.0;
+  fTrackLWafer=0.0;
+  col_dum=0;
+}

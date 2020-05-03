@@ -68,19 +68,27 @@ int main(int argc,char** argv)
 
   // Set mandatory initialization classes
   //
+  G4cout <<  "EXA Detector construction " << G4endl;
   auto detConstruction = new DetectorConstruction();
+
+  
+  G4cout <<  "EXA Run manager " << G4endl;
   runManager->SetUserInitialization(detConstruction);
 
+  G4cout <<  "EXA Physics list " << G4endl;
   auto physicsList = new FTFP_BERT;
   runManager->SetUserInitialization(physicsList);
  
   runManager->SetUserInitialization(new PhysicsList);
 
+  G4cout <<  "EXA action initialization " << G4endl;
   auto actionInitialization = new ActionInitialization(detConstruction);
   runManager->SetUserInitialization(actionInitialization);
   
   // Initialize visualization
   //
+  G4cout <<  "EXA Vis Manager " << G4endl;
+
   auto visManager = new G4VisExecutive;
   // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
   // G4VisManager* visManager = new G4VisExecutive("Quiet");
@@ -93,6 +101,7 @@ int main(int argc,char** argv)
   //
   if ( macro.size() ) {
     // batch mode
+  G4cout <<  "EXA BATCH command" << G4endl;
     G4String command = "/control/execute ";
     UImanager->ApplyCommand(command+macro);
   }

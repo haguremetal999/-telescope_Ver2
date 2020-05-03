@@ -1,20 +1,15 @@
 /// \file DetectorConstruction.hh
 /// \brief Definition of the DetectorConstruction class
-#include "G4PhysicalConstants.hh"
-#include "G4SystemOfUnits.hh"
-
 #ifndef DetectorConstruction_h
 #define DetectorConstruction_h 1
 
+#include "G4PhysicalConstants.hh"
+#include "G4SystemOfUnits.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
 #include "apixel.hh"
 // I am ashamed I can not forward information from Geometry to other functions
 
-#define  aNPixX (90)
-#define  aNPixY (90)
-#define  aSPixX (18*um)
-#define  aSPixY (18*um)
 
 class G4VPhysicalVolume;
 class G4GlobalMagFieldMessenger;
@@ -39,14 +34,15 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction();
     virtual ~DetectorConstruction();
 
-  public:
+  //  public:
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
     // get methods
     //
-  const apixel*               Getapixel0() const;
-  const apixel*               Getapixel1() const;
+  //  const apixel*               Getapixel0() const;
+  apixel*               Getapixel0() ;
+  apixel*               Getapixel1() ;
   //  const G4VPhysicalVolume* GetWaferPV() const;
      
   private:
@@ -67,13 +63,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
 };
 
-// inline functions
-inline const apixel* DetectorConstruction::Getapixel0() const { return pixel0;  }
-inline const apixel* DetectorConstruction::Getapixel1() const { return pixel1;  }
-
-//inline const G4VPhysicalVolume* DetectorConstruction::GetDeplPV() const  {  return fDeplPV; }
-//inline const G4VPhysicalVolume* DetectorConstruction::GetWaferPV() const  {  return fWaferPV; }
-     
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif

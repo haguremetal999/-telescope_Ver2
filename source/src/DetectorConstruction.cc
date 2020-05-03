@@ -36,10 +36,6 @@ G4GlobalMagFieldMessenger* DetectorConstruction::fMagFieldMessenger = nullptr;
 
 DetectorConstruction::DetectorConstruction()
  : G4VUserDetectorConstruction()
-   //,   fCmosPV(nullptr),
-   //fDeplPV(nullptr),
-   //fWaferPV(nullptr)
-   // ,fCheckOverlaps(true)
 {
 }
 
@@ -59,6 +55,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Define volumes
   return DefineVolumes();
 }
+
+apixel* DetectorConstruction::Getapixel0() { return pixel0;  }
+apixel* DetectorConstruction::Getapixel1() { return pixel1;  }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -87,6 +86,8 @@ void DetectorConstruction::DefineMaterials()
 
 G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 {
+   G4cout << "DETCON start" << G4endl;
+
 // Get pointer to 'Material Manager'
    G4NistManager* materi_Man = G4NistManager::Instance();
 
@@ -110,6 +111,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
      new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
                        false, copyNum_World);
 
+   G4cout << "DETCON pixels are generated" << G4endl;
    // Prepare pixel sensors
    pixel0= new apixel(100);
    G4LogicalVolume *lV_Pixel0= pixel0 ->Getlogvol();
@@ -117,9 +119,6 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
    pixel1= new apixel(110);
    G4LogicalVolume *lV_Pixel1= pixel1 ->Getlogvol();
  
-
-
-
 // Placement of the 'Pixel Detector' to the world: Put the 'global envelop'
    G4double pos_X0 = 0.0*cm;
    G4double pos_Y0 = 0.0*cm;
@@ -176,21 +175,6 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
    
    
 // Return the physical world
-  //
-  // print parameters
-  //
-  G4cout
-    << G4endl 
-    << "------------------------------------------------------------" << G4endl
-    << "---> The calorimeter is " << "nofLayers" << " layers of: [ "
-    << "absoThickness/mm" << "mm of " << "absorberMaterial->GetName()" 
-    << " + "
-    << "gapThickness/mm" << "mm of " << "gapMaterial->GetName()" << " ] " << G4endl
-    << "------------------------------------------------------------" << G4endl;
-  
-  //                                        
-  // Visualization attributes
-  //
 //   logVol_World->SetVisAttributes (G4VisAttributes::GetInvisible());
 
 //  auto simpleBoxVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
@@ -200,6 +184,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   //
   // Always return the physical World
   //
+   G4cout << "DETCON Geometry is done" << G4endl;
    return physVol_World;
 //  return worldPV;
 }

@@ -18,15 +18,19 @@ class EventAction;
 class SteppingAction : public G4UserSteppingAction
 {
 public:
-  SteppingAction(const DetectorConstruction* detectorConstruction,
-                    EventAction* eventAction);
+  //  SteppingAction(const DetectorConstruction* , EventAction* );
+  SteppingAction( DetectorConstruction* , EventAction* );
   virtual ~SteppingAction();
 
-  virtual void UserSteppingAction(const G4Step* step);
+  //  virtual void UserSteppingAction(const G4Step* , const DetectorConstruction* );
+  virtual void UserSteppingAction(const G4Step* );
     
 private:
-  const DetectorConstruction* fDetConstruction;
+  //  const DetectorConstruction* fDetConstruction;
+  DetectorConstruction* fDetConstruction;
   EventAction*  fEventAction;  
+  apixel* pixel0;
+  apixel* pixel1;
 };
 
 #endif

@@ -6,7 +6,7 @@
 #include "EventAction.hh"
 #include "RunAction.hh"
 #include "Analysis.hh"
-
+#include "apixel.hh"
 
 #include "G4RunManager.hh"
 #include "G4Event.hh"
@@ -18,15 +18,13 @@
 #include <vector>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//EventAction::EventAction(DetectorConstruction* det)
+//  :G4UserEventAction(),fDetector(det)
+//{ }
+EventAction::EventAction(DetectorConstruction* detectorConstruction)
+  : G4UserEventAction()
+  ,   fDetConstruction(detectorConstruction)
 
-EventAction::EventAction()
- : G4UserEventAction(),
-   fEnergyCmos(0.),
-   fEnergyDepl(0.),
-   fEnergyWafer(0.),
-   fTrackLCmos(0.),
-   fTrackLDepl(0.),
-   fTrackLWafer(0.)
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -37,28 +35,32 @@ EventAction::~EventAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void EventAction::BeginOfEventAction(const G4Event* /*event*/)
-//  :    fDetConstruction(detectorConstruction)
 {  
-  // initialisation per event
-  fEnergyCmos = 0.;
-  fEnergyDepl = 0.;
-  fEnergyWafer = 0.;
-  fTrackLCmos = 0.;
-  fTrackLDepl = 0.;
-  fTrackLWafer = 0.;
-  for(G4int ix=0;ix<NX;ix++) for(G4int iy=0;iy<NY;iy++) pixelData[iy][ix]=0;
-
+  fDetConstruction -> Getapixel0() -> ClearApixel();
+  fDetConstruction -> Getapixel1() -> ClearApixel();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 int Maxhits=0;
 void EventAction::EndOfEventAction(const G4Event* event)
+
 {  // Accumulate statistics
 
   // get analysis manager
   auto analysisManager = G4AnalysisManager::Instance();
 
+ apixel* pixel0= fDetConstruction -> Getapixel0();
+  //  apixel pixel1=detectorConcstruction -> Getapixel0();
 // fill histograms
+ G4double fEnergyCmos = pixel0 ->  GetECmos();
+ G4double fEnergyDepl = pixel0 ->  GetEDepl();
+ G4double fEnergyWafer = pixel0 ->  GetEWafer();
+ G4double fTrackLCmos =  pixel0 ->  GetLCmos();
+ G4double fTrackLDepl =  pixel0 ->  GetLDepl();
+ G4double fTrackLWafer =  pixel0 ->  GetLWafer();
+ G4int NPixY= pixel0 -> GetNPixY();
+ G4int NPixX= pixel0 -> GetNPixX();
+
   if (fEnergyCmos>0)  analysisManager->FillH1(0, fEnergyCmos/keV);
   if (fEnergyDepl>0)  analysisManager->FillH1(1, fEnergyDepl/um);
   if (fEnergyWafer>0) analysisManager->FillH1(2, fEnergyWafer/keV);
@@ -67,9 +69,8 @@ void EventAction::EndOfEventAction(const G4Event* event)
   if (fTrackLWafer>0) analysisManager->FillH1(5, fTrackLWafer/um);
   //  Histograms 6-8 are filled in the Stepping action.
   
-  //  std::vector<G4double> pd(NPixX*NPixY);  
   // fill ntuple
-  analysisManager->FillNtupleIColumn(0, NY*1000+NX);
+  analysisManager->FillNtupleIColumn(0, NPixY*1000+NPixX);
   analysisManager->FillNtupleIColumn(1, Nbuff);
   analysisManager->FillNtupleDColumn(2, fEnergyCmos/keV);
   analysisManager->FillNtupleDColumn(3, fEnergyDepl/keV);
@@ -79,16 +80,16 @@ void EventAction::EndOfEventAction(const G4Event* event)
   analysisManager->FillNtupleDColumn(7, fTrackLWafer/um);
   G4int ptr=9;
   G4int nhits=0;
-  //  G4int NY=50;
-  //  G4int NX=30;
-  for (G4int iy=0; iy<NY; iy++) {
-    for (G4int ix=0; ix<NX; ix++) {
-      if(pixelData[iy][ix]>0) {
+
+  for (G4int iy=0; iy<NPixY; iy++) {
+    for (G4int ix=0; ix<NPixX; ix++) {
+      G4double Eyx= pixel0->GetPixYX(iy, ix);
+      if(Eyx>0) {
 	if(nhits<Nbuff) {
 	  nhits++;
 	  analysisManager->FillNtupleIColumn(ptr++, iy*1000+ix);  // 9,11,13,15...
-	  analysisManager->FillNtupleDColumn(ptr++, pixelData[iy][ix]/keV);  //10,12,14...
-	  if(0)  G4cout << iy*1000+ix << " " << pixelData[iy][ix]/keV << G4endl;
+	  analysisManager->FillNtupleDColumn(ptr++, Eyx/keV);  //10,12,14...
+	  if(0)  G4cout << iy*1000+ix << " " << Eyx/keV << G4endl;
 	}
       }
     }
