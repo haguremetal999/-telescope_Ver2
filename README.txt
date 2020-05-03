@@ -1,4 +1,7 @@
+3 May 2020 T.Tsuboyama (KEK)
+
 You can compile the programs in this directory
+
     $ cd build
     $ rm -r C*
     $ cmake ../
@@ -50,4 +53,5 @@ What is not implemented
    The spread of charge around the hit pixel is not done.  For high energy particles.
    only one or two hits are recorded in each sensor and track.
    At predent the deposite energy iself is stored to the output file.
+   You should modify either SteppingAction and/or EndOfEventAction.
 
