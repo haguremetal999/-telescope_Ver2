@@ -37,10 +37,10 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
-    apixel*               Getapixel0() ;
-    apixel*               Getapixel1() ;
-    apixel*               Getapixel2() ;
-     
+   apixel* Getapixel0() const { return Pixel0;}
+   apixel* Getapixel1() const { return Pixel1;}
+   apixel* Getapixel2() const { return Pixel2;}
+
   private:
     // methods
     //
@@ -55,8 +55,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
   apixel *Pixel0;
   apixel *Pixel1;
   apixel *Pixel2;
-  //    G4VPhysicalVolume* fWaferPV;      // the wafer physical volume
-  //    G4bool  fCheckOverlaps; // option to activate checking of volumes overlaps
 
 };
 

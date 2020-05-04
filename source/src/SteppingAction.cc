@@ -24,7 +24,6 @@ SteppingAction::SteppingAction(
   pixel0= det->Getapixel0();
   pixel1= det->Getapixel1();
   pixel2= det->Getapixel2();
-  //  G4cout << "SSSSSS    pixel0/pixel1/pixel2 " << pixel0 << "/" << pixel1 << "/" << pixel2 << G4endl;
 }
 
 
@@ -42,7 +41,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
      auto thetime    = step->GetPreStepPoint()->GetGlobalTime();
      auto stepLength = step->GetStepLength();
      auto analysisManager = G4AnalysisManager::Instance();
- 
      if ( volume == pixel0->GetCmosPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);

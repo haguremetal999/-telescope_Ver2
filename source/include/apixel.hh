@@ -1,5 +1,5 @@
-#ifndef _APIXELHH 
-#define _APIXELHH
+#ifndef APIXELHH_HH 
+#define APIXELHH_HH
 #include "G4Material.hh"
 #include "G4NistManager.hh"
 
@@ -26,20 +26,20 @@ class apixel
  {
 private:
    //Pixel properties
-  G4int  NPixY;
-  G4int  NPixX;
-  G4double  SPixY;
-  G4double  SPixX;
-  G4double TPixCmos;
-  G4double TPixDepl;
-  G4double TPixWafer;
-  G4VPhysicalVolume* fCmosPV;
-  G4VPhysicalVolume* fDeplPV;
-  G4VPhysicalVolume* fWaferPV;
-  G4LogicalVolume* logVol_PixEnvG;
-  G4int CopyNumBase;
+   G4int  NPixY;
+   G4int  NPixX;
+   G4double  SPixY;
+   G4double  SPixX;
+   G4double TPixCmos;
+   G4double TPixDepl;
+   G4double TPixWafer;
+   G4VPhysicalVolume* fCmosPV;
+   G4VPhysicalVolume* fDeplPV;
+   G4VPhysicalVolume* fWaferPV;
+   G4LogicalVolume* logVol_PixEnvG;
+   G4int CopyNumBase;
    // Event data
-  G4double **pixelData; 
+   G4double **pixelData; 
    G4double  fEnergyCmos;
    G4double  fEnergyDepl;
    G4double  fEnergyWafer;
@@ -60,24 +60,40 @@ public:
     G4double TW=440.0*um
 	  );
    ~apixel();
-   G4LogicalVolume* Getlogvol();
-   //inline get method
-   G4int GetNPixY() ;
-   G4int GetNPixX() ;
-   G4VPhysicalVolume* GetCmosPV();
-   G4VPhysicalVolume* GetDeplPV();
-   G4VPhysicalVolume* GetWaferPV();
-   void AddCmos(G4double de, G4double dl, G4int col, G4int row );
-   void AddDepl(G4double de, G4double dl, G4int col, G4int row );
-   void AddWafer(G4double de, G4double dl, G4int col, G4int row );
-   void ClearApixel() ;
-   G4double  GetECmos()  ;
-   G4double  GetEDepl()  ;
-   G4double  GetEWafer() ;
-   G4double  GetLCmos()  ;
-   G4double  GetLDepl()  ;
-   G4double  GetLWafer() ;
-   G4double  GetPixYX(G4int iy, G4int ix) ;
+   G4LogicalVolume* Getlogvol() const {  return logVol_PixEnvG;};
+   G4int GetNPixY() const {return NPixY;};
+   G4int GetNPixX() const {return NPixX;};
+   G4VPhysicalVolume* GetCmosPV()   const {return fCmosPV;};
+   G4VPhysicalVolume* GetDeplPV()   const {return fDeplPV;};
+   G4VPhysicalVolume* GetWaferPV()  const {return fWaferPV;};
+   void AddCmos (G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  col_dum=iy+ix;};
+   void AddWafer(G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; col_dum=iy+ix;};
+   void AddDepl(G4double de, G4double dl, G4int iy, G4int ix ) {
+     if (iy>NPixY) G4cout << "Index error iy " << iy << " > " << NPixY << G4endl;
+     if (ix>NPixX) G4cout << "Index error ix " << ix << " > " << NPixX << G4endl;
+     fEnergyDepl += de;
+     fTrackLDepl += dl;
+     pixelData[iy][ix] +=de;
+   }
+
+   void ClearApixel()  {
+     for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;
+     fEnergyCmos=0.0;
+     fEnergyDepl=0.0;
+     fEnergyWafer=0.0;
+     fTrackLCmos=0.0;
+     fTrackLDepl=0.0;
+     fTrackLWafer=0.0;
+     col_dum=0;
+   };
+
+   G4double  GetECmos() const  { return  fEnergyCmos; } ;
+   G4double  GetEDepl() const  { return  fEnergyDepl; };
+   G4double  GetEWafer() const  { return  fEnergyWafer; };
+   G4double  GetLCmos() const  { return  fTrackLCmos; };
+   G4double  GetLDepl() const  { return  fTrackLDepl; };
+   G4double  GetLWafer()  const { return  fTrackLWafer; };
+   G4double  GetPixYX(G4int iy, G4int ix) const { return pixelData[iy][ix];};
 };
 
 #endif

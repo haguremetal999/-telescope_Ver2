@@ -38,7 +38,6 @@ G4GlobalMagFieldMessenger* DetectorConstruction::fMagFieldMessenger = nullptr;
 DetectorConstruction::DetectorConstruction()
  : G4VUserDetectorConstruction()
 {
-  G4cout <<   "DetectorConstruction CONSTRUCTOR is called" << G4endl;
    Pixel0= new apixel(100);
    Pixel1= new apixel(110);
    Pixel2= new apixel(120);
@@ -62,9 +61,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   return DefineVolumes();
 }
 
-apixel* DetectorConstruction::Getapixel0() { return Pixel0;  }
-apixel* DetectorConstruction::Getapixel1() { return Pixel1;  }
-apixel* DetectorConstruction::Getapixel2() { return Pixel2;  }
+//apixel* DetectorConstruction::Getapixel0() { return Pixel0;  }
+//apixel* DetectorConstruction::Getapixel1() { return Pixel1;  }
+//apixel* DetectorConstruction::Getapixel2() { return Pixel2;  }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -118,12 +117,11 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
      new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
                        false, copyNum_World);
 
-   G4cout << "DETCON pixels are generated" << G4endl;
    // Prepare pixel sensors
    G4LogicalVolume *lV_Pixel0= Pixel0 ->Getlogvol();
    G4LogicalVolume *lV_Pixel1= Pixel1 ->Getlogvol();
    G4LogicalVolume *lV_Pixel2= Pixel2 ->Getlogvol();
-   G4cout << "DETCON lv0/lv1=" << lV_Pixel0 << "/" <<lV_Pixel1 << G4endl;
+   //   G4cout << "DETCON lv0/lv1=" << lV_Pixel0 << "/" <<lV_Pixel1 << G4endl;
  
 // Placement of the 'Pixel0' to the world: Put the 'global envelop'
    G4double pos_X0 = 0.0*cm;
@@ -204,9 +202,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   //
   // Always return the physical World
   //
-   G4cout << "DETCON Geometry is done" << G4endl;
    return physVol_World;
-//  return worldPV;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
