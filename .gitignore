@@ -1,5 +1,8 @@
 # ignoring the following files
+build/CMakeFiles
 *.root
+*.log
+a.out
 *.o
 *~
 *.*cc.o

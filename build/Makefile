@@ -243,6 +243,33 @@ src/ActionInitialization.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.s
 .PHONY : src/ActionInitialization.cc.s
 
+src/ChargeShare.o: src/ChargeShare.cc.o
+
+.PHONY : src/ChargeShare.o
+
+# target to build an object file
+src/ChargeShare.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/ChargeShare.cc.o
+.PHONY : src/ChargeShare.cc.o
+
+src/ChargeShare.i: src/ChargeShare.cc.i
+
+.PHONY : src/ChargeShare.i
+
+# target to preprocess a source file
+src/ChargeShare.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/ChargeShare.cc.i
+.PHONY : src/ChargeShare.cc.i
+
+src/ChargeShare.s: src/ChargeShare.cc.s
+
+.PHONY : src/ChargeShare.s
+
+# target to generate assembly for a file
+src/ChargeShare.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/ChargeShare.cc.s
+.PHONY : src/ChargeShare.cc.s
+
 src/DetectorConstruction.o: src/DetectorConstruction.cc.o
 
 .PHONY : src/DetectorConstruction.o
@@ -451,6 +478,9 @@ help:
 	@echo "... src/ActionInitialization.o"
 	@echo "... src/ActionInitialization.i"
 	@echo "... src/ActionInitialization.s"
+	@echo "... src/ChargeShare.o"
+	@echo "... src/ChargeShare.i"
+	@echo "... src/ChargeShare.s"
 	@echo "... src/DetectorConstruction.o"
 	@echo "... src/DetectorConstruction.i"
 	@echo "... src/DetectorConstruction.s"
