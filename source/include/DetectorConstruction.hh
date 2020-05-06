@@ -7,7 +7,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
-#include "apixel.hh"
+#include "aPixel.hh"
 // I am ashamed I can not forward information from Geometry to other functions
 
 
@@ -37,9 +37,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
-   apixel* Getapixel0() const { return Pixel0;}
-   apixel* Getapixel1() const { return Pixel1;}
-   apixel* Getapixel2() const { return Pixel2;}
+   aPixel* GetaPixel0() const { return Pixel0;}
+   aPixel* GetaPixel1() const { return Pixel1;}
+   aPixel* GetaPixel2() const { return Pixel2;}
 
   private:
     // methods
@@ -52,9 +52,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger; 
                                       // magnetic field messenger
      
-  apixel *Pixel0;
-  apixel *Pixel1;
-  apixel *Pixel2;
+  aPixel *Pixel0;
+  aPixel *Pixel1;
+  aPixel *Pixel2;
 
 };
 

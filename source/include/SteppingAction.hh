@@ -29,9 +29,9 @@ private:
   //  const DetectorConstruction* fDetConstruction;
   DetectorConstruction* fDetConstruction;
   EventAction*  fEventAction;  
-  apixel* pixel0;
-  apixel* pixel1;
-  apixel* pixel2;
+  aPixel* pixel0;
+  aPixel* pixel1;
+  aPixel* pixel2;
 };
 
 #endif

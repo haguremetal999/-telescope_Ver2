@@ -1,32 +1,34 @@
-//#include "G4NistManager.hh"
+#ifndef TSUBODEBUG
+#include "G4NistManager.hh"
+#endif
 #include "ChargeShare.hh"
 #include <iostream>
 #include <cmath>
-using namespace std;
+//using namespace std;
 
-void ChargeShare::printShareYx(double y, double x) {
+void ChargeShare::printShareYx(G4double y, G4double x) {
   setPositionYx(y,x);
-  cout << "ysize " << wy << " xsize " << wx << " sigma " << sig << "  leak " << leak << "  NdivY " << NY << "  NdivX " << NX <<endl;
-  cout << "Input Y/X=" << y << "/" << x <<endl;
-  cout << getChargeShareYx(-1,-1) << " " << getChargeShareYx(-1,0) << " " << getChargeShareYx(-1,1) << " " <<endl
-       << getChargeShareYx( 0,-1) << " " << getChargeShareYx( 0,0) << " " << getChargeShareYx( 0,1) << " " <<endl
-       << getChargeShareYx( 1,-1) << " " << getChargeShareYx( 1,0) << " " << getChargeShareYx( 1,1) << " " <<endl;
+  G4cout << "ysize " << wy << " xsize " << wx << " sigma " << sig << "  leak " << leak << "  NdivY " << NY << "  NdivX " << NX <<G4endl;
+  G4cout << "Input Y/X=" << y << "/" << x <<G4endl;
+  G4cout << getChargeShareYx( 1,-1) << " " << getChargeShareYx( 1,0) << " " << getChargeShareYx( 1,1) << " " <<G4endl
+       << getChargeShareYx( 0,-1) << " " << getChargeShareYx( 0,0) << " " << getChargeShareYx( 0,1) << " " <<G4endl
+       << getChargeShareYx(-1,-1) << " " << getChargeShareYx(-1,0) << " " << getChargeShareYx(-1,1) << " " <<G4endl;
 }
 
-
-void ChargeShare::setPositionYx(double ypos, double xpos){
-  int  iy=round(ypos/wy*NY);
-  int  ix=round(xpos/wx*NX);
+void ChargeShare::setPositionYx(G4double ypos, G4double xpos){
+  G4int  iy=round(ypos/wy*NY);
+  G4int  ix=round(xpos/wx*NX);
   if(ix<-NX || ix>NX || iy<-NY || iy>NY) {
-    cout << "ChargeShare: position error X/Y" << xpos << " " << ypos << endl;
-    for(int ipy=0;ipy<3;ipy++) for(int ipx=0;ipx<3;ipx++)  w[ipy][ipx]=0.0;
+    G4cout << "ChargeShare: position error X/Y" << xpos << " " << ypos << G4endl;
+    for(G4int ipy=0;ipy<3;ipy++) for(G4int ipx=0;ipx<3;ipx++)  w[ipy][ipx]=0.0;
     w[1][1]=1.0;
     wsum=1.0;
   } else {
     wsum=0;
-    for(int ipy=-1;ipy<=1;ipy++) {
-      for(int ipx=-1;ipx<=1;ipx++){
-	w[ipy+1][ipx+1]=syx[iy+(ipy*2+3)*NY][ix+(ipx*2+3)*NX];
+    for(G4int ipy=-1;ipy<=1;ipy++) {
+      for(G4int ipx=-1;ipx<=1;ipx++){
+	//Data access --> considering the 4-fold symmetry
+	w[ipy+1][ipx+1]=syx[abs(iy-ipy*2*NY)][abs(ix-ipx*2*NX)];
 	wsum+=w[ipy+1][ipx+1];
       }
     }
@@ -34,44 +36,46 @@ void ChargeShare::setPositionYx(double ypos, double xpos){
 }
 
 //Constructor
-ChargeShare::ChargeShare (double width_y, double width_x, double sigma, double ll, int NdivY=20, int NdivX=20) {
-  //   http://blog.northcol.org/2012/01/14/mdarray/
+ChargeShare::ChargeShare (G4double width_y, G4double width_x, G4double sigma, G4double ll, G4int NdivY=20, G4int NdivX=20) {
+
   NY=NdivY;
   NX=NdivX;
   wx=width_x;
   wy=width_y;
   sig=sigma;
   leak=ll;
+  G4cout << "ChargeShare y/x size="<<wy<<", "<<wx<< " Mesh="<<NY<<" , "<<NX<<" Leak factor "<<leak<<G4endl; 
 
-  double *ey=new double[NdivY*8+1];
-  double *ex=new double[NdivX*8+1];
-  double wx2=wx*wx/sig/sig/NX/NX;
-  double wy2=wy*wy/sig/sig/NY/NY;
+  G4double *ey=new G4double[NdivY*8+1];
+  G4double *ex=new G4double[NdivX*8+1];
+  G4double wx2=(wx/sig/NX)*(wx/sig/NX)/2;
+  G4double wy2=(wy/sig/NY)*(wy/sig/NY)/2;
 
-  syx = new double*[NY*6+1];
-  for (int i = 0; i < NY*6+1; i++) {
-    syx[i] = new double[NX*6+1];
+  //   http://blog.northcol.org/2012/01/14/mdarray/
+  syx = new G4double*[NY*3+1];
+  for (G4int i = 0; i < NY*3+1; i++) {
+    syx[i] = new double[NX*3+1];
   }
 
-  for( int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
-  for( int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
+  for( G4int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
+  for( G4int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
     
-  double sum;
-  for(int iy= -NY*3;iy<= NY*3;iy++) {
-    for(int ix= -NX*3;ix<= NX*3;ix++) { 
+  G4double sum;
+  for(G4int iy= 0;iy<= NY*3;iy++) {
+    for(G4int ix= 0;ix<= NX*3;ix++) { 
       sum=0.0;
-      for(int jy= -NY;jy<= NY;jy++) {
-	for(int jx= -NX;jx<= NX;jx++) {
+      for(G4int jy= -NY;jy<= NY;jy++) {
+	for(G4int jx= -NX;jx<= NX;jx++) {
 	  sum=sum+ey[jy+iy+NY*4]*ex[jx+ix+NX*4];
 	}
       }
-      syx[iy+NY*3][ix+NX*3]=sum;
+      syx[iy][ix]=sum;
     }
   }
-}
-
-
+};
   
+
+
 /*
    Charge share. Assumption: the charge in silicon "somehow" spread with gaussian with sigma "sig".
    The gaussian function is integrated in the pixel. center and +/- 1 neighbors. 

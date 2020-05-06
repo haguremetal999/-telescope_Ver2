@@ -15,9 +15,10 @@ private:
 public:
   ChargeShare(double , double , double, double, int, int);
   ~ChargeShare(){;};
-  void setPositionYx(double y, double x);
-  double getChargeShareYx(int iy, int ix){  return w[iy+1][ix+1]/wsum; };
-  void  printShareYx(double y, double x);
+  void setPositionYx(double , double );
+  void setShareParam(double Cs) {sig=Cs; };
+  double getChargeShareYx(int iy, int ix) const {  return w[iy+1][ix+1]/wsum; };
+  void  printShareYx(double , double ) ;
 };
 
 #endif

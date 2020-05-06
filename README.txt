@@ -1,5 +1,12 @@
-3 May 2020 T.Tsuboyama (KEK)
+7 May 2020 T.Tsuboyama (KEK)
+1) The charge in one pixel is spread to neighbor pixels. The amount of spread is
+calculated ChargeShare.cc.
+2) A buf is found. In very rare case, the program stops in the event generation.
+   The error happens even the Stepping function is skipped. It does not happen
+   if the beam start position is moved by 0.1um. --> I gave up the debugging.
 
+
+-----------------------
 You can compile the programs in this directory
 
     $ cd build
@@ -29,7 +36,7 @@ The output file can be read by p3.C as follows:
 Then you can see the simple histogram and the Hit map.
 At present all the root macros "*.C" work somehow.
 
-
+--------------------------------------------
 If you need to add pixel sensors, you should 
 $ grep el2  source/src/*cc
 $ grep el2  source/include/*cc
@@ -47,11 +54,10 @@ Sy/Sx pixel size.  tc/td/tw thickness of CMOScircuit/Depletionlayer/wafer
 
 In the DetectorConstruction, you can specify the location and orientation of the sensors.
 So you can add mis alighment artificially. (Source code is obvious.)
-
-
-What is not implemented
-   The spread of charge around the hit pixel is not done.  For high energy particles.
-   only one or two hits are recorded in each sensor and track.
-   At predent the deposite energy iself is stored to the output file.
-   You should modify either SteppingAction and/or EndOfEventAction.
-
+------------- Running parmeters
+Sensor position and orientation        DetectorConstruction.cc
+Sensor properties (thickness, pixel size, pixel array, charge spread...) 
+       Default parameters:   apixel.hh   
+       Individual parameters:  DetectorConstruction.cc 
+Beam type energy position direction
+       PrimaryGenerator.cc

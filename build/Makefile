@@ -432,32 +432,32 @@ src/SteppingAction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/SteppingAction.cc.s
 .PHONY : src/SteppingAction.cc.s
 
-src/apixel.o: src/apixel.cc.o
+src/aPixel.o: src/aPixel.cc.o
 
-.PHONY : src/apixel.o
+.PHONY : src/aPixel.o
 
 # target to build an object file
-src/apixel.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.o
-.PHONY : src/apixel.cc.o
+src/aPixel.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/aPixel.cc.o
+.PHONY : src/aPixel.cc.o
 
-src/apixel.i: src/apixel.cc.i
+src/aPixel.i: src/aPixel.cc.i
 
-.PHONY : src/apixel.i
+.PHONY : src/aPixel.i
 
 # target to preprocess a source file
-src/apixel.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.i
-.PHONY : src/apixel.cc.i
+src/aPixel.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/aPixel.cc.i
+.PHONY : src/aPixel.cc.i
 
-src/apixel.s: src/apixel.cc.s
+src/aPixel.s: src/aPixel.cc.s
 
-.PHONY : src/apixel.s
+.PHONY : src/aPixel.s
 
 # target to generate assembly for a file
-src/apixel.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/apixel.cc.s
-.PHONY : src/apixel.cc.s
+src/aPixel.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/exampleB4a.dir/build.make CMakeFiles/exampleB4a.dir/src/aPixel.cc.s
+.PHONY : src/aPixel.cc.s
 
 # Help Target
 help:
@@ -499,9 +499,9 @@ help:
 	@echo "... src/SteppingAction.o"
 	@echo "... src/SteppingAction.i"
 	@echo "... src/SteppingAction.s"
-	@echo "... src/apixel.o"
-	@echo "... src/apixel.i"
-	@echo "... src/apixel.s"
+	@echo "... src/aPixel.o"
+	@echo "... src/aPixel.i"
+	@echo "... src/aPixel.s"
 .PHONY : help
 
 

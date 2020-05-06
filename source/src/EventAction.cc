@@ -6,7 +6,7 @@
 #include "EventAction.hh"
 #include "RunAction.hh"
 #include "Analysis.hh"
-#include "apixel.hh"
+#include "aPixel.hh"
 
 #include "G4RunManager.hh"
 #include "G4Event.hh"
@@ -33,9 +33,9 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event* /*event*/)
 {  
-  fDetConstruction -> Getapixel0() -> ClearApixel();
-  fDetConstruction -> Getapixel1() -> ClearApixel();
-  fDetConstruction -> Getapixel2() -> ClearApixel();
+  fDetConstruction -> GetaPixel0() -> ClearaPixel();
+  fDetConstruction -> GetaPixel1() -> ClearaPixel();
+  fDetConstruction -> GetaPixel2() -> ClearaPixel();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -46,9 +46,9 @@ void EventAction::EndOfEventAction(const G4Event* event)
   // get analysis manager
   auto analysisManager = G4AnalysisManager::Instance();
 
-  apixel* pixel0= fDetConstruction -> Getapixel0();
-  apixel* pixel1= fDetConstruction -> Getapixel1();
-  apixel* pixel2= fDetConstruction -> Getapixel2();
+  aPixel* pixel0= fDetConstruction -> GetaPixel0();
+  aPixel* pixel1= fDetConstruction -> GetaPixel1();
+  aPixel* pixel2= fDetConstruction -> GetaPixel2();
 // fill histograms
   G4double fEnergyCmos =  pixel0 ->  GetECmos();
   G4double fEnergyDepl =  pixel0 ->  GetEDepl();
@@ -85,6 +85,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     for (G4int ix=0; ix<NPixX; ix++) {
       Eyx= pixel0->GetPixYX(iy, ix);
       if(Eyx>0) {
+	//	G4cout << "Pixel0 iy " << iy << " ix " << ix << " E  " << Eyx/keV << G4endl;
 	if(nhits<Nbuff) {
 	  nhits++;
 	  analysisManager->FillNtupleIColumn(ptr++, ofs+iy*1000+ix);  // 9,11,13,15...
@@ -103,6 +104,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     for (G4int ix=0; ix<NPixX; ix++) {
       Eyx= pixel1->GetPixYX(iy, ix);
       if(Eyx>0) {
+	//	G4cout << "Pixel1 iy " << iy << " ix " << ix << " E  " << Eyx/keV << G4endl;
 	if(nhits<Nbuff) {
 	  nhits++;
 	  analysisManager->FillNtupleIColumn(ptr++, ofs+iy*1000+ix);  // 9,11,13,15...
@@ -120,6 +122,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     for (G4int ix=0; ix<NPixX; ix++) {
       Eyx= pixel2->GetPixYX(iy, ix);
       if(Eyx>0) {
+	//	G4cout << "Pixel2 iy " << iy << " ix " << ix << " E  " << Eyx/keV << G4endl;
 	if(nhits<Nbuff) {
 	  nhits++;
 	  analysisManager->FillNtupleIColumn(ptr++, ofs+iy*1000+ix);  // 9,11,13,15...
@@ -129,7 +132,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     }
   }
 
-
+  //  G4cin >> NPixY; 
 
   if(nhits>Maxhits) {G4cout <<  "Ntuple: " << nhits << "hits are stored" <<G4endl;  Maxhits=nhits;}
   analysisManager->FillNtupleIColumn(8,nhits);

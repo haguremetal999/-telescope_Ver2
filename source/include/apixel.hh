@@ -1,28 +1,9 @@
 #ifndef APIXELHH_HH 
 #define APIXELHH_HH
-#include "G4Material.hh"
-#include "G4NistManager.hh"
+#include "ChargeShare.hh"
+#include "G4ThreeVector.hh"
 
-#include "G4Box.hh"
-#include "G4LogicalVolume.hh"
-#include "G4PVPlacement.hh"
-#include "G4PVReplica.hh"
-#include "G4GlobalMagFieldMessenger.hh"
-#include "G4AutoDelete.hh"
-
-#include "G4GeometryManager.hh"
-#include "G4PhysicalVolumeStore.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4SolidStore.hh"
-
-#include "G4VisAttributes.hh"
-#include "G4Colour.hh"
-
-#include "G4PhysicalConstants.hh"
-#include "G4SystemOfUnits.hh"
-
-class apixel
-//class apixel:   public G4VuserLogicalVolume
+class aPixel
  {
 private:
    //Pixel properties
@@ -38,6 +19,7 @@ private:
    G4VPhysicalVolume* fWaferPV;
    G4LogicalVolume* logVol_PixEnvG;
    G4int CopyNumBase;
+   ChargeShare* chgShare;
    // Event data
    G4double **pixelData; 
    G4double  fEnergyCmos;
@@ -49,17 +31,18 @@ private:
    G4int col_dum;
 
 public:
-   apixel(
-    G4int  CN,
-    G4int  NY=50,
-    G4int  NX=30,
-    G4double SY=20.0*um,
-    G4double SX=20.0*um,
-    G4double TC=10.0*um,
-    G4double TD=50.0*um,
-    G4double TW=440.0*um
+   aPixel(
+    G4int  CN,        // pixel ID number 
+    G4int  NY=50,     // Number of pixels in Y
+    G4int  NX=50,     // Number of pixels in X
+    G4double SY=40.0*um,  //Pixel size in Y
+    G4double SX=40.0*um,  //Pixel size in X
+    G4double CS=10.0*um,  //Charge share parameter
+    G4double TC=10.0*um,  //Thickness of circuit
+    G4double TD=50.0*um,  //Thickness of the depleted zone
+    G4double TW=440.0*um  //Thickness of the supporting wafer
 	  );
-   ~apixel();
+   ~aPixel();
    G4LogicalVolume* Getlogvol() const {  return logVol_PixEnvG;};
    G4int GetNPixY() const {return NPixY;};
    G4int GetNPixX() const {return NPixX;};
@@ -67,16 +50,10 @@ public:
    G4VPhysicalVolume* GetDeplPV()   const {return fDeplPV;};
    G4VPhysicalVolume* GetWaferPV()  const {return fWaferPV;};
    void AddCmos (G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  col_dum=iy+ix;};
+   void AddDepl(G4double de, G4double dl, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1);
    void AddWafer(G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; col_dum=iy+ix;};
-   void AddDepl(G4double de, G4double dl, G4int iy, G4int ix ) {
-     if (iy>NPixY) G4cout << "Index error iy " << iy << " > " << NPixY << G4endl;
-     if (ix>NPixX) G4cout << "Index error ix " << ix << " > " << NPixX << G4endl;
-     fEnergyDepl += de;
-     fTrackLDepl += dl;
-     pixelData[iy][ix] +=de;
-   }
-
-   void ClearApixel()  {
+   ChargeShare* getChargeShare() const {return chgShare;}; 
+   void ClearaPixel()  {
      for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;
      fEnergyCmos=0.0;
      fEnergyDepl=0.0;

@@ -29,8 +29,8 @@
 /run/beamOn 0        # arg = 0; Only invokes initialization - no event generation
                      # arg > 0; Specified number of events will be executed
 ## GlobalSetup.mac (END)
-/gun/particle proton 
-/gun/energy  100 GeV
+/gun/particle proton
+/gun/energy 120 GeV
 /run/printProgress 100
-/run/beamOn 1500
+/run/beamOn 10
 

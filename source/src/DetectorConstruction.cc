@@ -1,6 +1,5 @@
 /// \file DetectorConstruction.cc
 /// \brief Implementation of the DetectorConstruction class
-#include "DetectorConstruction.hh"
 
 #include "G4Material.hh"
 #include "G4NistManager.hh"
@@ -23,10 +22,11 @@
 
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
-#include "apixel.hh"
+//#include "aPixel.hh"
 // For the sensitive volume
 //#include "G4SDManager.hh"
 //#include "SensitiveVolume.hh"
+#include "DetectorConstruction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -36,12 +36,13 @@ G4GlobalMagFieldMessenger* DetectorConstruction::fMagFieldMessenger = nullptr;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
- : G4VUserDetectorConstruction()
+: G4VUserDetectorConstruction()
 {
-   Pixel0= new apixel(100);
-   Pixel1= new apixel(110);
-   Pixel2= new apixel(120);
+Pixel0= new aPixel(100);
+Pixel1= new aPixel(110);
+Pixel2= new aPixel(120);
 
+// Pixel0 -> getChargeShare() -> setShareParam(20*um);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -54,109 +55,105 @@ DetectorConstruction::~DetectorConstruction()
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {
-  // Define materials 
-  DefineMaterials();
-  
-  // Define volumes
-  return DefineVolumes();
-}
+// Define materials 
+DefineMaterials();
 
-//apixel* DetectorConstruction::Getapixel0() { return Pixel0;  }
-//apixel* DetectorConstruction::Getapixel1() { return Pixel1;  }
-//apixel* DetectorConstruction::Getapixel2() { return Pixel2;  }
+// Define volumes
+return DefineVolumes();
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorConstruction::DefineMaterials()
 { 
-  // Lead material defined using NIST Manager
-  auto nistManager = G4NistManager::Instance();
-  nistManager->FindOrBuildMaterial("G4_Pb");
-  
-  // Liquid argon material
-  G4double a;  // mass of a mole;
-  G4double z;  // z=mean number of protons;  
-  G4double density; 
-  new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
-         // The argon by NIST Manager is a gas with a different density
+// Lead material defined using NIST Manager
+auto nistManager = G4NistManager::Instance();
+nistManager->FindOrBuildMaterial("G4_Pb");
 
-  // Vacuum
-  new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
-                  kStateGas, 2.73*kelvin, 3.e-18*pascal);
+// Liquid argon material
+G4double a;  // mass of a mole;
+G4double z;  // z=mean number of protons;  
+G4double density; 
+new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
+     // The argon by NIST Manager is a gas with a different density
 
-  // Print materials
-  G4cout << *(G4Material::GetMaterialTable()) << G4endl;
+// Vacuum
+new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
+	      kStateGas, 2.73*kelvin, 3.e-18*pascal);
+
+// Print materials
+G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 {
-   G4cout << "DETCON start" << G4endl;
+G4cout << "DETCON start" << G4endl;
 
 // Get pointer to 'Material Manager'
-   G4NistManager* materi_Man = G4NistManager::Instance();
+G4NistManager* materi_Man = G4NistManager::Instance();
 
 // Define 'World Volume'
-   // Define the shape of solid
-   G4double leng_X_World = 0.2*m;         // X-full-length of world
-   G4double leng_Y_World = 0.2*m;         // Y-full-length of world
-   G4double leng_Z_World = 0.2*m;         // Z-full-length of world
-   G4Box* solid_World =
-     new G4Box("Solid_World", leng_X_World/2.0, leng_Y_World/2.0, leng_Z_World/2.0);
+// Define the shape of solid
+G4double leng_X_World = 0.2*m;         // X-full-length of world
+G4double leng_Y_World = 0.2*m;         // Y-full-length of world
+G4double leng_Z_World = 0.2*m;         // Z-full-length of world
+G4Box* solid_World =
+ new G4Box("Solid_World", leng_X_World/2.0, leng_Y_World/2.0, leng_Z_World/2.0);
 
-   // Define logical volume
-   G4Material* materi_World = materi_Man->FindOrBuildMaterial("G4_AIR");
-   G4LogicalVolume* logVol_World =
-     new G4LogicalVolume(solid_World, materi_World, "LogVol_World");
-   logVol_World->SetVisAttributes (G4VisAttributes::Invisible);
+// Define logical volume
+G4Material* materi_World = materi_Man->FindOrBuildMaterial("G4_AIR");
+G4LogicalVolume* logVol_World =
+ new G4LogicalVolume(solid_World, materi_World, "LogVol_World");
+logVol_World->SetVisAttributes (G4VisAttributes::Invisible);
 
-   // Placement of logical volume
-   G4int copyNum_World = 0;               // Set ID number of world
-   G4PVPlacement* physVol_World  =
-     new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
-                       false, copyNum_World);
+// Placement of logical volume
+G4int copyNum_World = 0;               // Set ID number of world
+G4PVPlacement* physVol_World  =
+ new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
+		   false, copyNum_World);
 
-   // Prepare pixel sensors
-   G4LogicalVolume *lV_Pixel0= Pixel0 ->Getlogvol();
-   G4LogicalVolume *lV_Pixel1= Pixel1 ->Getlogvol();
-   G4LogicalVolume *lV_Pixel2= Pixel2 ->Getlogvol();
-   //   G4cout << "DETCON lv0/lv1=" << lV_Pixel0 << "/" <<lV_Pixel1 << G4endl;
- 
+// Prepare pixel sensors
+G4LogicalVolume *lV_Pixel0= Pixel0 ->Getlogvol();
+G4LogicalVolume *lV_Pixel1= Pixel1 ->Getlogvol();
+G4LogicalVolume *lV_Pixel2= Pixel2 ->Getlogvol();
+//   G4cout << "DETCON lv0/lv1=" << lV_Pixel0 << "/" <<lV_Pixel1 << G4endl;
+
 // Placement of the 'Pixel0' to the world: Put the 'global envelop'
-   G4double pos_X0 = 0.0*cm;
-   G4double pos_Y0 = 0.0*cm;
-   G4double pos_Z0 = 0.0*cm;
-   G4ThreeVector vec0 = G4ThreeVector(pos_X0, pos_Y0, pos_Z0);
-   G4RotationMatrix rot0 = G4RotationMatrix();
-   G4Transform3D trans0 = G4Transform3D(rot0, vec0);
-   G4int cN0 = 1000;    
-   new G4PVPlacement(trans0, "PV_Pixel0", lV_Pixel0, physVol_World,false, cN0);
+G4double pos_X0 = 0.0*cm;
+G4double pos_Y0 = 0.0*cm;
+G4double pos_Z0 = 0.0*cm;
+G4ThreeVector vec0 = G4ThreeVector(pos_X0, pos_Y0, pos_Z0);
+G4RotationMatrix rot0 = G4RotationMatrix();
+G4Transform3D trans0 = G4Transform3D(rot0, vec0);
+G4int cN0 = 1000;    
+new G4PVPlacement(trans0, "PV_Pixel0", lV_Pixel0, physVol_World,false, cN0);
 
 
 
 
 // Placement of the 'Pixel1' to the world: Put the 'global envelop'
-   G4double pos_X1 = 0.0*cm;
-   G4double pos_Y1 = 0.0*cm;
-   G4double pos_Z1 = 3.0*cm;
-   G4ThreeVector vec1 = G4ThreeVector(pos_X1, pos_Y1, pos_Z1);
-   G4RotationMatrix rot1 =  G4RotationMatrix();
-   rot1.rotateX(30.*deg);
+G4double pos_X1 = 0.0*cm;
+G4double pos_Y1 = 0.0*cm;
+G4double pos_Z1 = 3.0*cm;
+G4ThreeVector vec1 = G4ThreeVector(pos_X1, pos_Y1, pos_Z1);
+G4RotationMatrix rot1 =  G4RotationMatrix();
+rot1.rotateX(45.*deg);
 
-   G4Transform3D trans1 = G4Transform3D(rot1, vec1);
-   G4int cN1 = 1001;    
-   new G4PVPlacement(trans1, "PV_Pixel1", lV_Pixel1, physVol_World,false, cN1);
+G4Transform3D trans1 = G4Transform3D(rot1, vec1);
+G4int cN1 = 1001;    
+new G4PVPlacement(trans1, "PV_Pixel1", lV_Pixel1, physVol_World,false, cN1);
 
 // Placement of the 'Pixel2' to the world: Put the 'global envelop'
-   G4double pos_X2 = 0.0*cm;
-   G4double pos_Y2 = 0.0*cm;
-   G4double pos_Z2 = 6.0*cm;
-   G4ThreeVector vec2 = G4ThreeVector(pos_X2, pos_Y2, pos_Z2);
-   G4RotationMatrix rot2 = G4RotationMatrix();
-   G4Transform3D trans2 = G4Transform3D(rot2, vec2);
-   G4int cN2 = 1002;    
-   new G4PVPlacement(trans2, "PV_Pixel2", lV_Pixel2, physVol_World,false, cN2);
+G4double pos_X2 = 0.0*cm;
+G4double pos_Y2 = 0.0*cm;
+G4double pos_Z2 = 6.0*cm;
+G4ThreeVector vec2 = G4ThreeVector(pos_X2, pos_Y2, pos_Z2);
+G4RotationMatrix rot2 = G4RotationMatrix();
+G4Transform3D trans2 = G4Transform3D(rot2, vec2);
+G4int cN2 = 1002;    
+new G4PVPlacement(trans2, "PV_Pixel2", lV_Pixel2, physVol_World,false, cN2);
 
 
 
@@ -166,9 +163,9 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 // Sensitive Volume
 
 // The name is arbitrary
-   auto aCmos= new SensitiveVolume("Cmos_SV");
+auto aCmos= new SensitiveVolume("Cmos_SV");
 // Add sensitivity to the logical volume
-   logVol_PixCmos -> SetSensitiveDetector(aCmos);
+logVol_PixCmos -> SetSensitiveDetector(aCmos);
 //register to the SensitiveDetectorManager
    auto SDman= G4SDManager::GetSDMpointer();
    SDman->AddNewDetector(aCmos);  
