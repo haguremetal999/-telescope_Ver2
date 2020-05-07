@@ -54,13 +54,7 @@ aPixel::aPixel(
     }
 
     //Charge sharing handler
-
     chgShare = new ChargeShare(SPixY,SPixX,Csh,0.0,20,20);
-
-    for (int iy = 0; iy < NPixY; iy++) for (int ix = 0; ix < NPixX; ix++) {
-	pixelData[iy][ix]=ix+iy;
-    }
-   
 
    G4NistManager* materi_Man = G4NistManager::Instance();
    G4Box* solid_PixEnvG = new G4Box("Solid_PixEnvG", (NPixX*SPixX)/2.0, (NPixY*SPixY)/2.0, (TPixCmos+TPixDepl+TPixWafer)/2.0);
@@ -68,7 +62,7 @@ aPixel::aPixel(
    G4Material* materi_PixEnvG = materi_Man->FindOrBuildMaterial("G4_AIR");
 
    logVol_PixEnvG =  new G4LogicalVolume(solid_PixEnvG, materi_PixEnvG, "LogVol_PixEnvG");
-   logVol_PixEnvG->SetVisAttributes (G4VisAttributes::Invisible);
+   //   logVol_PixEnvG->SetVisAttributes (G4VisAttributes::Invisible);    The outer envelope is visible
 
 // Define 'Pixel Detector' - Local Envelop (divided the global envelop in Y-direction)
    // Define the shape of the local envelop
@@ -77,11 +71,10 @@ aPixel::aPixel(
    // Define logical volume of the local envelop
    G4Material* materi_PixEnvL = materi_Man->FindOrBuildMaterial("G4_AIR");
    G4LogicalVolume* logVol_PixEnvL = new G4LogicalVolume(solid_PixEnvL, materi_PixEnvL, "LogVol_PixEnvL");
-   //logVol_PixEnvL->SetVisAttributes (G4VisAttributes::Invisible);
+   logVol_PixEnvL->SetVisAttributes (G4VisAttributes::Invisible);
 
    // Placement of the local envelop to the global envelop using Replica
-   new G4PVReplica("PhysVol_PixEnvL", logVol_PixEnvL, logVol_PixEnvG, kYAxis,
-                   NPixY , SPixY);
+   new G4PVReplica("PhysVol_PixEnvL", logVol_PixEnvL, logVol_PixEnvG, kYAxis,      NPixY , SPixY);
 
 // Define 'Pixel Detector' - Pixel Element (divided the local envelop in X-direction)
    // Define the shape of the pixel element
@@ -91,7 +84,7 @@ aPixel::aPixel(
 //   G4Material* materi_PixElmt = materi_Man->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
    G4Material* materi_PixElmt = materi_Man->FindOrBuildMaterial("G4_AIR");
    G4LogicalVolume* logVol_PixElmt = new G4LogicalVolume(solid_PixElmt, materi_PixElmt, "LogVol_PixElmt");
-   //     logVol_PixElmt->SetVisAttributes (G4VisAttributes::Invisible);
+   logVol_PixElmt->SetVisAttributes (G4VisAttributes::Invisible);
 
    // Placement of pixel elements to the local envelop using Replica
    G4PVReplica* physVol_PixElmt= new G4PVReplica("PhysVol_PixElmt", logVol_PixElmt, logVol_PixEnvL, kXAxis, NPixX, SPixX);
@@ -103,6 +96,7 @@ aPixel::aPixel(
 
    G4Material* materi_PixCmos = materi_Man->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
    G4LogicalVolume* logVol_PixCmos = new G4LogicalVolume(solid_PixCmos, materi_PixCmos, "LogVol_PixCmos");
+   logVol_PixCmos->SetVisAttributes (G4VisAttributes::Invisible);
 
 // Depleted zone (signal generation)
    G4Box* solid_PixDepl = new G4Box("Solid_PixDepl", SPixX/2.0, SPixY/2.0, TPixDepl/2.0);
@@ -117,7 +111,7 @@ aPixel::aPixel(
 
    G4Material* materi_PixWafer = materi_Man->FindOrBuildMaterial("G4_Si");
    G4LogicalVolume* logVol_PixWafer = new G4LogicalVolume(solid_PixWafer, materi_PixWafer, "LogVol_PixWafer");
-   //  logVol_PixWafer->SetVisAttributes (G4VisAttributes::Invisible);
+   logVol_PixWafer->SetVisAttributes (G4VisAttributes::Invisible);
 
    //Placement of Cmos/Depl/Wafer
 

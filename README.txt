@@ -1,9 +1,10 @@
 7 May 2020 T.Tsuboyama (KEK)
 1) The charge in one pixel is spread to neighbor pixels. The amount of spread is
 calculated ChargeShare.cc.
-2) A buf is found. In very rare case, the program stops in the event generation.
-   The error happens even the Stepping function is skipped. It does not happen
-   if the beam start position is moved by 0.1um. --> I gave up the debugging.
+2) BUG report: In very rare case, the program stops in the particle tracing..
+   The error happens even the Stepping function (user digitization) is skipped. 
+   In this case, the problem does not happen if the beam start position is moved 
+   by 0.1 um. --> I gave up the debugging.
 
 
 -----------------------
