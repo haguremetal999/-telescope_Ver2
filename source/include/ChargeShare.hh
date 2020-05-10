@@ -19,9 +19,9 @@ public:
   ~ChargeShare(){;};
   void setPositionYx(double , double );
   void setShareParam(double Cs) {sig=Cs; };
-  double getChargeShareYx(int iy, int ix) const {  return w[iy+NN][ix+NN]/wsum; };
   void  printShareYx(double , double ) ;
   int GetNeighbors() const {return NN;};   // Number of neighbors (calculated in the program)
+  double getChargeShareYx(int iy, int ix) const {  return w[iy+NN][ix+NN]/wsum; };
 };
 
 #endif

@@ -19,7 +19,7 @@ void ChargeShare::printShareYx(G4double y, G4double x) {
        sx +=share*ix*wx; 
        sy +=share*iy*wy;
        ss +=share;
-       G4cout << s << "  ";
+       G4cout << share << "  ";
      }
      G4cout << G4endl;
    }
@@ -68,19 +68,15 @@ ChargeShare::ChargeShare (
   sig=sigma;
   leak=ll;
   if(NdivY==0) 
-    NY=(wy/sig)*4+1;
+    NY=std::max(10,(int)((wy/sig)*4+1));
     else
     NY=NdivY;
   if(NdivX==0) 
-    NX=(wx/sig)*4+1;
+    NX=std::max(10,(int)((wx/sig)*4+1));
   else
     NX=NdivX;
   G4cout << "ChargeShare y/x size="<<wy/um <<", "<<wx/um<< " Sig=" << sig/um << " Neighbors=" << NN << "  Mesh="<<NY<<" , "<<NX<<" Leak factor "<<leak<<G4endl; 
 
-  G4double *ey=new G4double[NY*NI*2+1];
-  G4double *ex=new G4double[NX*NI*2+1];
-  G4double wx2=(wx/sig/NX)*(wx/sig/NX)/2;
-  G4double wy2=(wy/sig/NY)*(wy/sig/NY)/2;
 
   //   http://blog.northcol.org/2012/01/14/mdarray/
   w= new double*[NT];
@@ -91,15 +87,12 @@ ChargeShare::ChargeShare (
   
   //  for( G4int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
   //  for( G4int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
-  ey[0]=exp(-(NY*NI)*(NY*NI)*wy2)+leak;
-  ex[0]=exp(-(NX*NI)*(NX*NI)*wx2)+leak;
-  for( G4int iy= -NY*NI+1;iy<= NY*NI;iy++) {ey[iy+NY*NI]=ey[iy-1+NY*NI]+exp(-iy*iy*wy2)+leak; };
-  for( G4int ix= -NX*NI+1;ix<= NX*NI;ix++) {ex[ix+NX*NI]=ex[ix-1+NX*NI]+exp(-ix*ix*wx2)+leak; };
 
+  G4double fy2=wy/sig/NY/sqrt(2);
+  G4double fx2=wx/sig/NX/sqrt(2);
   for(G4int iy= 0;iy<= NY*NT;iy++) {
     for(G4int ix= 0;ix<= NX*NT;ix++) { 
-      //      syx[iy][ix]=(ey[iy+NY*(NI+1)]-ey[iy+NY*(NI-1)])*(ex[ix+NX*(NI+1)]-ex[ix+NX*(NI-1)]);
-      syx[iy][ix]=(ey[iy+NY*(NI+1)]-ey[iy+NY*(NI-1)])*(ex[ix+NX*(NI+1)]-ex[ix+NX*(NI-1)]);
+      syx[iy][ix]=(erf((iy+NY)*fy2)-erf((iy-NY)*fy2))*(erf((ix+NX)*fx2)-erf((ix-NX)*fx2));
     }
   }
 };
