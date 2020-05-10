@@ -150,9 +150,9 @@ z3=zmax-t3/2=(t1+t2)/2
     */
 }
 
-void aPixel::AddDepl(G4double de, G4double dl, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1)
+void aPixel::AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1)
  {
-   if(0) return;
+   if(0) fTrackLDepl=tt;
    fTrackLDepl += dl;
    G4double x0=lp0.getX();
    G4double y0=lp0.getY();

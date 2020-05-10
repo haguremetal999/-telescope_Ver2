@@ -35,9 +35,9 @@ public:
     G4int  CN,        // pixel ID number 
     G4int  NY=50,     // Number of pixels in Y
     G4int  NX=50,     // Number of pixels in X
-    G4double SY=40.0*um,  //Pixel size in Y
-    G4double SX=40.0*um,  //Pixel size in X
-    G4double CS=10.0*um,  //Charge share parameter
+    G4double SY=20.0*um,  //Pixel size in Y
+    G4double SX=20.0*um,  //Pixel size in X
+    G4double CS=30.0*um,  //Charge share parameter
     G4double TC=10.0*um,  //Thickness of circuit
     G4double TD=50.0*um,  //Thickness of the depleted zone
     G4double TW=440.0*um  //Thickness of the supporting wafer
@@ -49,9 +49,9 @@ public:
    G4VPhysicalVolume* GetCmosPV()   const {return fCmosPV;};
    G4VPhysicalVolume* GetDeplPV()   const {return fDeplPV;};
    G4VPhysicalVolume* GetWaferPV()  const {return fWaferPV;};
-   void AddCmos (G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  col_dum=iy+ix;};
-   void AddDepl(G4double de, G4double dl, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1);
-   void AddWafer(G4double de, G4double dl, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; col_dum=iy+ix;};
+   void AddCmos (G4double de, G4double dl, G4double tt, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  col_dum=iy+ix+tt;};
+   void AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1);
+   void AddWafer(G4double de, G4double dl, G4double tt, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; col_dum=iy+ix+tt;};
    ChargeShare* getChargeShare() const {return chgShare;}; 
    void ClearaPixel()  {
      for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;

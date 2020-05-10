@@ -17,8 +17,8 @@ SteppingAction::SteppingAction(
                       DetectorConstruction* det,
 		      //                      const DetectorConstruction* det,
                       EventAction* event)
-  : G4UserSteppingAction(),
-    fEventAction(event)
+  : G4UserSteppingAction()
+   ,    fEventAction(event)
 {
   fDetConstruction=det;
   pixel0= det->GetaPixel0();
@@ -40,7 +40,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
      auto edep       = step->GetTotalEnergyDeposit();
      auto thetime    = step->GetPreStepPoint()->GetGlobalTime();
      auto stepLength = step->GetStepLength();
-     auto analysisManager = G4AnalysisManager::Instance();
+     //     auto analysisManager = G4AnalysisManager::Instance();
      // Test of local coordinate
      //From   BookForAppliDev.pdf   Page 283.
      //G4StepPoint* preStepPoint = step->GetPreStepPoint();
@@ -58,53 +58,29 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
             << " p1(X Y Z)mm " << lp1.getX()/mm << " / "<< lp1.getY()/mm << " / "<< lp1.getZ()/mm  <<G4endl;
 
      if ( volume == pixel0->GetCmosPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel0->AddCmos(edep,stepLength,iy,ix);
-       analysisManager->FillH1(6, thetime/ns, edep/keV);
+       pixel0->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == pixel0->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       //       G4cout << "-------- Pixel0 ---- iy ix " << iy << "  " << ix << " E " << edep/keV << G4endl;  
-       pixel0->AddDepl(edep,stepLength,iy,ix,lp0,lp1);
-       analysisManager->FillH1(7, thetime/ns, edep/keV);
+       pixel0->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == pixel0->GetWaferPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel0->AddWafer(edep,stepLength,iy,ix);
-       analysisManager->FillH1(8, thetime/ns, edep/keV);
+       pixel0->AddWafer(edep,stepLength,thetime,0,0);
      } else if ( volume == pixel1->GetCmosPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel1->AddCmos(edep,stepLength,iy,ix);
-       analysisManager->FillH1(6, thetime/ns, edep/keV);
+       pixel1->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == pixel1->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       //       G4cout << "-------- Pixel1 ---- iy ix " << iy << "  " << ix << " E " << edep/keV << G4endl;  
-       pixel1->AddDepl(edep,stepLength,iy,ix,lp0,lp1);
-       analysisManager->FillH1(7, thetime/ns, edep/keV);
+       pixel1->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == pixel1->GetWaferPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel1->AddWafer(edep,stepLength,iy,ix);
-       analysisManager->FillH1(8, thetime/ns, edep/keV);
+       pixel1->AddWafer(edep,stepLength,thetime,0,0);
      } else if ( volume == pixel2->GetCmosPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel2->AddCmos(edep,stepLength,iy,ix);
-       analysisManager->FillH1(6, thetime/ns, edep/keV);
+       pixel2->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == pixel2->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       //       G4cout << "-------- Pixel2 ---- iy ix " << iy << "  " << ix << " E " << edep/keV << G4endl;  
-       pixel2->AddDepl(edep,stepLength,iy,ix,lp0,lp1);
-       analysisManager->FillH1(7, thetime/ns, edep/keV);
+       pixel2->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == pixel2->GetWaferPV() ) {
-       G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
-       G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
-       pixel2->AddWafer(edep,stepLength,iy,ix);
-       analysisManager->FillH1(8, thetime/ns, edep/keV);
+       pixel2->AddWafer(edep,stepLength,thetime,0,0);
      }
   }
 }

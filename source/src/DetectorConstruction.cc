@@ -111,8 +111,7 @@ logVol_World->SetVisAttributes (G4VisAttributes::Invisible);
 // Placement of logical volume
 G4int copyNum_World = 0;               // Set ID number of world
 G4PVPlacement* physVol_World  =
- new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0,
-		   false, copyNum_World);
+ new G4PVPlacement(G4Transform3D(), "PhysVol_World", logVol_World, 0, false, copyNum_World);
 
 // Prepare pixel sensors
 G4LogicalVolume *lV_Pixel0= Pixel0 ->Getlogvol();
@@ -123,7 +122,7 @@ G4LogicalVolume *lV_Pixel2= Pixel2 ->Getlogvol();
 // Placement of the 'Pixel0' to the world: Put the 'global envelop'
 G4double pos_X0 = 0.0*cm;
 G4double pos_Y0 = 0.0*cm;
-G4double pos_Z0 = 0.0*cm;
+G4double pos_Z0 = 2.0*mm;
 G4ThreeVector vec0 = G4ThreeVector(pos_X0, pos_Y0, pos_Z0);
 G4RotationMatrix rot0 = G4RotationMatrix();
 G4Transform3D trans0 = G4Transform3D(rot0, vec0);

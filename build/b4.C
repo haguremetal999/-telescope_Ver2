@@ -59,9 +59,10 @@
   TH2F *pixel1 = new TH2F("pixel1","pixel1",NPixX,0.0,NPixX,NPixY,0.0,NPixY);
   TH2F *pixel2 = new TH2F("pixel2","pixel1",NPixX,0.0,NPixX,NPixY,0.0,NPixY);
 
-  TH2F *pixel5 = new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,80.0);
-  TH2F *pixel6 = new TH2F("pixel6","pixel6",1500,0.0,1500,400,0.0,80.0);
-
+  Pixelsize=40;
+  TH2F *pixel5 = new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,Pixelsize*80.0);
+  TH2F *pixel6 = new TH2F("pixel6","pixel6",1500,0.0,1500,400,0.0,Pixelsize*80.0);
+  TH2F *nhits5= new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,20);
 
   for(int i=0;i<Nbuff;i++) {
     ss.str(""); ss<< "IADR" << i;
@@ -75,6 +76,7 @@
     double esum0=0,xsum0=0,ysum0=0;
     double esum1=0,xsum1=0,ysum1=0;
     double esum2=0,xsum2=0,ysum2=0;
+    int phits=0;
     for(int i=0;i<Nhits;i++){
       int il= Apix[i]/1000000;
       int iy= (Apix[i]-il*1000000)/1000;
@@ -103,15 +105,16 @@
         esum2 += Epix[i];
 	xsum2 += ix*Epix[i];
 	ysum2 += iy*Epix[i];
+	if (Epix[i]>1.00) phits++;
       }
 
     }
     if(esum2>5.0) {
-      printf(" PP %5d, %10.3f, %10.3f, %10.3f\n",ievent,xsum2/esum2, ysum2/esum2, esum2); 
-      pixel5 -> Fill (ievent, xsum2/esum2, esum2);
-      pixel6 -> Fill (ievent, ysum2/esum2, esum2);
-    };
-    //    getchar();
+   //   printf(" PP %5d, %10.3f, %10.3f, %10.3f\n",ievent,xsum2/esum2, ysum2/esum2, esum2); 
+      pixel5 -> Fill (ievent, Pixelsize*xsum2/esum2, esum2);
+      pixel6 -> Fill (ievent, Pixelsize*ysum2/esum2, esum2);
+      nhits5 -> Fill (ievent, phits);
+    }
 
     if (Nhits >nhitmax) {
       nhitmax=Nhits; 
@@ -120,8 +123,8 @@
   }
   //  int ch;
   c1 -> cd(1);
-  pixel5->Draw("colz");
-  pixel5->SetTitle(0);         //Erase title
+  nhits5->Draw("colz");
+  nhits5->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
   c1 -> cd(2);
   pixel6->Draw("colz");

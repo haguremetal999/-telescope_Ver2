@@ -57,19 +57,25 @@ ChargeShare::ChargeShare (G4double width_y, G4double width_x, G4double sigma, G4
     syx[i] = new double[NX*3+1];
   }
 
-  for( G4int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
-  for( G4int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
+  //  for( G4int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
+  //  for( G4int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
+  ey[0]=exp(-NY*NY*16*wy2)+leak;
+  ex[0]=exp(-NX*NX*16*wx2)+leak;
+  for( G4int iy= -NY*4+1;iy<= NY*4;iy++) {ey[iy+NY*4]=ey[iy-1+NY*4]+exp(-iy*iy*wy2)+leak; };
+  for( G4int ix= -NX*4+1;ix<= NX*4;ix++) {ex[ix+NX*4]=ey[ix-1+NY*4]+exp(-ix*ix*wx2)+leak; };
+
     
-  G4double sum;
+
   for(G4int iy= 0;iy<= NY*3;iy++) {
     for(G4int ix= 0;ix<= NX*3;ix++) { 
-      sum=0.0;
-      for(G4int jy= -NY;jy<= NY;jy++) {
-	for(G4int jx= -NX;jx<= NX;jx++) {
-	  sum=sum+ey[jy+iy+NY*4]*ex[jx+ix+NX*4];
-	}
-      }
-      syx[iy][ix]=sum;
+      //  G4double sum;
+      //      for(G4int jy= -NY;jy<= NY;jy++) {
+      //	for(G4int jx= -NX;jx<= NX;jx++) {
+      //	  sum=sum+ey[jy+iy+NY*4]*ex[jx+ix+NX*4];
+      //	}
+      //      }
+      //      syx[iy][ix]=sum;
+      syx[iy][ix]=(ey[iy+NY*5]-ey[iy+NY*3])*(ex[ix+NX*5]-ex[ix+NX*3]);
     }
   }
 };
