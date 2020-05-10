@@ -1,4 +1,10 @@
-7 May 2020 T.Tsuboyama (KEK)
+10 May 2020
+In the previous version, the "charge share region" was 3x3. 
+In this version it can be set NxN. 
+The creation of the look up table gets faster by changing from "Adding gaussian functions" 
+to "subtraction of the integration of the gaussian function".
+
+7 May 2020
 1) The charge in one pixel is spread to neighbor pixels. The amount of spread is
 calculated ChargeShare.cc.
 2) BUG report: In very rare case, the program stops in the particle tracing..

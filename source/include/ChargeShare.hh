@@ -2,23 +2,26 @@
 #define CHARGESHAREHH
 
 class ChargeShare {
-private: 
-  int NY;
+ private: 
+  int NN; // Number of neighbors;
+  int NY;  
   int NX;
-  double wy;
+  double wy; 
   double wx;
   double wsum;
   double **syx;
-  double w[3][3];
+  double **w;
+  //  double w[Neighbors*2+1][Neighbors*2+1];
   double sig;
   double leak;
 public:
-  ChargeShare(double , double , double, double, int, int);
+  ChargeShare(double , double , double, double, int , int, int);
   ~ChargeShare(){;};
   void setPositionYx(double , double );
   void setShareParam(double Cs) {sig=Cs; };
-  double getChargeShareYx(int iy, int ix) const {  return w[iy+1][ix+1]/wsum; };
+  double getChargeShareYx(int iy, int ix) const {  return w[iy+NN][ix+NN]/wsum; };
   void  printShareYx(double , double ) ;
+  int GetNeighbors() const {return NN;};   // Number of neighbors (calculated in the program)
 };
 
 #endif

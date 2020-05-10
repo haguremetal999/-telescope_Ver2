@@ -9,6 +9,7 @@ private:
    //Pixel properties
    G4int  NPixY;
    G4int  NPixX;
+   G4int NN; //Neighbors 1,2,3...
    G4double  SPixY;
    G4double  SPixX;
    G4double TPixCmos;
@@ -33,11 +34,12 @@ private:
 public:
    aPixel(
     G4int  CN,        // pixel ID number 
-    G4int  NY=50,     // Number of pixels in Y
-    G4int  NX=50,     // Number of pixels in X
+    G4int  NY=50,     // Number of pixels in Y          0--calculated in the program
+    G4int  NX=50,     // Number of pixels in X          0--calculated in the program
+    G4int  Neighbors=2, // Number of neighbors 1,2,3... 0--calculated in the program
     G4double SY=20.0*um,  //Pixel size in Y
     G4double SX=20.0*um,  //Pixel size in X
-    G4double CS=30.0*um,  //Charge share parameter
+    G4double CS= 5.0*um,  //Charge share parameter
     G4double TC=10.0*um,  //Thickness of circuit
     G4double TD=50.0*um,  //Thickness of the depleted zone
     G4double TW=440.0*um  //Thickness of the supporting wafer

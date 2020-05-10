@@ -28,6 +28,7 @@ aPixel::aPixel(
          G4int    CN,
 	 G4int    NY,
 	 G4int    NX,
+	 G4int Neighbors,
 	 G4double SY,
 	 G4double SX,
 	 G4double Csh,
@@ -39,6 +40,7 @@ aPixel::aPixel(
     CopyNumBase=CN;
     NPixY=NY;
     NPixX=NX;
+    //    NN=Neighbors;
     SPixY=SY;
     SPixX=SX;
     TPixCmos=TC;
@@ -54,8 +56,9 @@ aPixel::aPixel(
     }
 
     //Charge sharing handler
-    chgShare = new ChargeShare(SPixY,SPixX,Csh,0.0,20,20);
-
+    chgShare = new ChargeShare(SPixY,SPixX,Csh,0.0,Neighbors,20,20);
+    NN=chgShare -> GetNeighbors();  //Calculated in the program
+    G4cout << "Apixel: Neighbors is " << NN << G4endl;
    G4NistManager* materi_Man = G4NistManager::Instance();
    G4Box* solid_PixEnvG = new G4Box("Solid_PixEnvG", (NPixX*SPixX)/2.0, (NPixY*SPixY)/2.0, (TPixCmos+TPixDepl+TPixWafer)/2.0);
 
@@ -171,13 +174,13 @@ void aPixel::AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, 
      double yp=(y1*(2*idiv+1)+y0*(2*NDIV-(2*idiv+1)))/(2*NDIV);
      //     G4cout << "Deposite Local coordinateY/X (um) " << yp/um << "  " << xp/um << "  E=" << de/NDIV/keV << " keV " <<G4endl; 
      chgShare -> setPositionYx(yp,xp);
-     for(G4int jy=-1;jy<=1;jy++) {
+     for(G4int jy=-NN;jy<=NN;jy++) {   //NN---Neighbors
        if(jy+iy >=0 && jy+iy <NPixY) {
-	 for(G4int jx=-1;jx<=1;jx++) {
+	 for(G4int jx=-NN;jx<=NN;jx++) {
 	   if(jx+ix >=0 && jx+ix <NPixX) {
 	     G4double w=chgShare -> getChargeShareYx(jy,jx);
 	     pixelData[jy+iy][jx+ix] +=w*de/NDIV;
-	     fEnergyDepl += w*de/NDIV;
+	     fEnergyDepl += w*de/NDIV;   
 	     //	     G4cout << "      Store JY" <<  jy+iy << "/" << jx+ix << " E=" << w*de/NDIV/keV << " keV " << G4endl;
 	   }
          }

@@ -10,3 +10,4 @@ a.out
 *.pdf
 .\#*
 \#*
+build/G4History.macro

@@ -64,6 +64,11 @@
   TH2F *pixel6 = new TH2F("pixel6","pixel6",1500,0.0,1500,400,0.0,Pixelsize*80.0);
   TH2F *nhits5= new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,20);
 
+  TH2F *pixel7 = new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,Pixelsize*80.0);
+  TH2F *pixel8 = new TH2F("pixel6","pixel6",1500,0.0,1500,400,0.0,Pixelsize*80.0);
+  TH2F *nhits9= new TH2F("pixel5","pixel5",1500,0.0,1500,400,0.0,20);
+
+
   for(int i=0;i<Nbuff;i++) {
     ss.str(""); ss<< "IADR" << i;
     tin->SetBranchAddress(ss.str().c_str(),Apix+i);
@@ -97,6 +102,7 @@
         esum1 += Epix[i];
 	xsum1 += ix*Epix[i];
 	ysum1 += iy*Epix[i];
+	if (Epix[i]>1.00) phits++;
       }
 
       if(il==2 ) {
@@ -116,6 +122,13 @@
       nhits5 -> Fill (ievent, phits);
     }
 
+    if(esum1>5.0) {
+   //   printf(" PP %5d, %10.3f, %10.3f, %10.3f\n",ievent,xsum2/esum2, ysum2/esum2, esum2); 
+      pixel7 -> Fill (ievent, Pixelsize*xsum1/esum1, esum1);
+      pixel7 -> Fill (ievent, Pixelsize*ysum1/esum1, esum1);
+      nhits9 -> Fill (ievent, phits);
+    }
+
     if (Nhits >nhitmax) {
       nhitmax=Nhits; 
       cout << "Entry is " << Nhits << endl; 
@@ -123,12 +136,12 @@
   }
   //  int ch;
   c1 -> cd(1);
-  nhits5->Draw("colz");
-  nhits5->SetTitle(0);         //Erase title
+  nhits9->Draw("colz");
+  nhits9->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
   c1 -> cd(2);
-  pixel6->Draw("colz");
-  pixel6->SetTitle(0);         //Erase title
+  pixel7->Draw("colz");
+  pixel7->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
 
   cout << "Nhitmax is "<< nhitmax << endl;
