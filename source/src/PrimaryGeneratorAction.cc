@@ -55,14 +55,15 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   static G4double pos_Y=-0.5*mm;  
   static G4double pos_X=-0.51*mm;  
   G4double pos_Z = -3*mm;
-  if(1) {
+  
+  if(0) {
     pos_X=pos_X+0.49*um;
     pos_Y=pos_Y+0.51*um;
     G4cout << "Generated " << pos_X/um << " " << pos_Y/um << " " << pos_Z << "  " <<N0++ << G4endl;
   }
-  if(0){
-     pos_X = 1.5*mm*( G4UniformRand()-0.5 );
-     pos_Y = 1.5*mm*( G4UniformRand()-0.5 );
+  if(1){
+     pos_X = 1.*mm*( G4UniformRand()-0.5 );
+     pos_Y = 1.*mm*( G4UniformRand()-0.5 );
   }
 
 

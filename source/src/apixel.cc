@@ -179,7 +179,7 @@ void aPixel::AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, 
 	 for(G4int jx=-NN;jx<=NN;jx++) {
 	   if(jx+ix >=0 && jx+ix <NPixX) {
 	     G4double w=chgShare -> getChargeShareYx(jy,jx);
-	     pixelData[jy+iy][jx+ix] +=w*de/NDIV;
+	     if(w>0.001) pixelData[jy+iy][jx+ix] +=w*de/NDIV;
 	     fEnergyDepl += w*de/NDIV;   
 	     //	     G4cout << "      Store JY" <<  jy+iy << "/" << jx+ix << " E=" << w*de/NDIV/keV << " keV " << G4endl;
 	   }
