@@ -23,11 +23,11 @@ void ChargeShare::printShareYx(G4double y, G4double x) {
      }
      G4cout << G4endl;
    }
-   G4cout << " <Y>="<<sy*2 << " <Y>=" << sx*2 <<" Sum=" << ss << G4endl;
+   G4cout << " <Y>="<<sy*2 << " <X>=" << sx*2 <<" Sum=" << ss << G4endl;
    //   G4cout << std::resetiosflags;
 }
 
-void ChargeShare::setPositionYx(G4double ypos, G4double xpos){
+void ChargeShare::setPosition0Yx(G4double ypos, G4double xpos){
   int NT=NN*2+1;
   int  iy=round(ypos/wy*NY);
   int  ix=round(xpos/wx*NX);
@@ -41,6 +41,26 @@ void ChargeShare::setPositionYx(G4double ypos, G4double xpos){
     for(G4int ipy=-NN;ipy<=NN;ipy++) {
       for(G4int ipx=-NN;ipx<=NN;ipx++){  //Data access --> considering the 4-fold symmetry
 	w[ipy+NN][ipx+NN]=syx[abs(iy-ipy*2*NY)][abs(ix-ipx*2*NX)];
+	wsum+=w[ipy+NN][ipx+NN];
+      }
+    }
+  }
+}
+
+void ChargeShare::setPositionYx(G4double ypos, G4double xpos){
+  if( (xpos<-wx*2 || xpos>wx*2 || ypos<-wy*2 || ypos>wy*2)) {
+    G4cout << "ChargeShare: position error X/Y " << xpos << " " << ypos << G4endl;
+    for(G4int ipy=0;ipy<=NN*2;ipy++) for(G4int ipx=0;ipx<=NN*2;ipx++)  w[ipy][ipx]=0.0;
+    w[NN][NN]=1.0;
+    wsum=1.0;
+  } else {
+    wsum=0;
+    G4double fy2=1.0/sig/sqrt(2);
+    G4double fx2=1.0/sig/sqrt(2);
+    for(G4int ipy=-NN;ipy<=NN;ipy++) {
+      double ssy=(erf((ypos-(ipy*2-1)*wy)*fy2)-erf((ypos-(ipy*2+1)*wy)*fy2));
+      for(G4int ipx=-NN;ipx<=NN;ipx++){  //Data access --> considering the 4-fold symmetry
+	w[ipy+NN][ipx+NN]=ssy*(erf((xpos-(ipx*2-1)*wx)*fx2)-erf((xpos-(ipx*2+1)*wx)*fx2));
 	wsum+=w[ipy+NN][ipx+NN];
       }
     }
@@ -67,6 +87,13 @@ ChargeShare::ChargeShare (
   wy=width_y;
   sig=sigma;
   leak=ll;
+
+  //   http://blog.northcol.org/2012/01/14/mdarray/
+  w= new double*[NT];
+  for(int i=0 ; i<NT;i++) w[i]= new double[NT];
+
+  if(1) return;
+
   if(NdivY==0) 
     NY=std::max(10,(int)((wy/sig)*4+1));
     else
@@ -78,15 +105,9 @@ ChargeShare::ChargeShare (
   G4cout << "ChargeShare y/x size="<<wy/um <<", "<<wx/um<< " Sig=" << sig/um << " Neighbors=" << NN << "  Mesh="<<NY<<" , "<<NX<<" Leak factor "<<leak<<G4endl; 
 
 
-  //   http://blog.northcol.org/2012/01/14/mdarray/
-  w= new double*[NT];
-  for(int i=0 ; i<NT;i++) w[i]= new double[NT];
 
   syx = new G4double*[NY*NT+1];
   for (G4int i = 0; i < NY*NT+1; i++)  syx[i] = new double[NX*NT+1];
-  
-  //  for( G4int iy= -NY*4;iy<= NY*4;iy++) {ey[iy+NY*4]=exp(-iy*iy*wy2)+leak; };
-  //  for( G4int ix= -NX*4;ix<= NX*4;ix++) {ex[ix+NX*4]=exp(-ix*ix*wx2)+leak; };
 
   G4double fy2=wy/sig/NY/sqrt(2);
   G4double fx2=wx/sig/NX/sqrt(2);

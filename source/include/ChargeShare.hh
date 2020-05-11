@@ -17,6 +17,7 @@ class ChargeShare {
 public:
   ChargeShare(double , double , double, double, int , int, int);
   ~ChargeShare(){;};
+  void setPosition0Yx(double , double );
   void setPositionYx(double , double );
   void setShareParam(double Cs) {sig=Cs; };
   void  printShareYx(double , double ) ;

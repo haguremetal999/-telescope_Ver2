@@ -115,10 +115,10 @@
       }
 
     }
-    if(esum2>5.0) {
+    if(esum0>5.0) {
    //   printf(" PP %5d, %10.3f, %10.3f, %10.3f\n",ievent,xsum2/esum2, ysum2/esum2, esum2); 
-      pixel5 -> Fill (ievent, Pixelsize*xsum2/esum2, esum2);
-      pixel6 -> Fill (ievent, Pixelsize*ysum2/esum2, esum2);
+      pixel5 -> Fill (ievent, Pixelsize*xsum0/esum0, esum0);
+      pixel5 -> Fill (ievent, Pixelsize*ysum0/esum0+200.0, esum0);
       nhits5 -> Fill (ievent, phits);
     }
 
@@ -136,8 +136,8 @@
   }
   //  int ch;
   c1 -> cd(1);
-  nhits9->Draw("colz");
-  nhits9->SetTitle(0);         //Erase title
+  pixel5->Draw("colz");
+  pixel5->SetTitle(0);         //Erase title
   gStyle->SetStatX(0.9);  //put aside
   c1 -> cd(2);
   pixel7->Draw("colz");
