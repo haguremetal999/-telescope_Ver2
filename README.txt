@@ -1,3 +1,25 @@
+13 May 2020
+The ELPH/FNAL 2020 beam test set up is simulated.
+Total six(two sofist4 and four fpix2) sensors are instlled.
+
+Sensor    Xwid Ywid  Sig   Total SOI  Depl     Z
+          um   um     um    um    um   um     mm
+fpix2      8    8     10    500   10   300     0.0
+fpix2      8    8     10    500   10   300    30.0
+sofist4   20   20     10    500   10    10    60.0
+sofist4   20   20     10    500   10    10    90.0
+fpix2      8    8     10    500   10   300   120.0
+fpix2      8    8     10    500   10   300   150.0
+
+The program did not run. Just after modification.
+If the pixel structure is displayed, the visualization program needs 1 minutes to 
+prepare a 128x128 fpix2 sensor. It looks the waiting time increases with speed of (Number of sensors)^2.
+This was the main reason of very slow startup, already a problem in the past versions.
+It took a few hours before I realized the reason.
+I had to stop displaying the detail pixel structure, with this version.
+After the change, the program started work without delay.
+The change is for the graphical display only.  The simulation output is not affected.
+
 10 May 2020
 In the previous version, the "charge share region" was 3x3. 
 In this version it can be set NxN. 

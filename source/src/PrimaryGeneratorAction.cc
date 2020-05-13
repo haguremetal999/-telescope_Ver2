@@ -59,18 +59,19 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   if(0) {
     pos_X=pos_X+0.49*um;
     pos_Y=pos_Y+0.51*um;
-    G4cout << "Generated " << pos_X/um << " " << pos_Y/um << " " << pos_Z << "  " <<N0++ << G4endl;
   }
   if(1){
-     pos_X = 1.*mm*( G4UniformRand()-0.5 );
-     pos_Y = 1.*mm*( G4UniformRand()-0.5 );
+     pos_X = 0.9*mm*( G4UniformRand()-0.5 );
+     pos_Y = 0.9*mm*( G4UniformRand()-0.5 );
   }
+
+  G4cout << "Generated " << pos_X/mm << " " << pos_Y/mm << " " << pos_Z/mm << "  " <<N0++ << G4endl;
 
 
   fParticleGun->SetParticlePosition(G4ThreeVector( pos_X, pos_Y, pos_Z ));
 
-  G4double dir_X = 0.00*( G4UniformRand()-0.5 );
-  G4double dir_Y = 0.00*( G4UniformRand()-0.5 );
+  G4double dir_X = 0.002*( G4UniformRand()-0.5 );
+  G4double dir_Y = 0.002*( G4UniformRand()-0.5 );
   G4double dir_Z = 1;
 
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector( dir_X, dir_Y, dir_Z ));

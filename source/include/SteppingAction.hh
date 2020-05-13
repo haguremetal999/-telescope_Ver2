@@ -1,6 +1,6 @@
 /// \file SteppingAction.hh
 /// \brief Definition of the SteppingAction class
-
+ 
 #ifndef SteppingAction_h
 #define SteppingAction_h 1
 
@@ -18,20 +18,20 @@ class EventAction;
 class SteppingAction : public G4UserSteppingAction
 {
 public:
-  //  SteppingAction(const DetectorConstruction* , EventAction* );
   SteppingAction( DetectorConstruction* , EventAction* );
   virtual ~SteppingAction();
 
-  //  virtual void UserSteppingAction(const G4Step* , const DetectorConstruction* );
   virtual void UserSteppingAction(const G4Step* );
     
 private:
-  //  const DetectorConstruction* fDetConstruction;
   DetectorConstruction* fDetConstruction;
   EventAction*  fEventAction;  
-  aPixel* pixel0;
-  aPixel* pixel1;
-  aPixel* pixel2;
+  aPixel* fpix0;
+  aPixel* fpix1;
+  aPixel* fpix2;
+  aPixel* fpix3;
+  aPixel* sofist0;
+  aPixel* sofist1;
 };
 
 #endif

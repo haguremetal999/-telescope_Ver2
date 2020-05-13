@@ -8,7 +8,7 @@
 
 void ChargeShare::printShareYx(G4double y, G4double x) {
   setPositionYx(y,x);
-  G4cout << "ysize " << wy << " xsize " << wx << " sigma " << sig << "  leak " << leak << "  NdivY " << NY << "  NdivX " << NX << " Neighbors "<< NN <<
+  G4cout << "ysize " << wy*2/um << " xsize " << wx*2/um << " sigma " << sig << "  leak " << leak << "  NdivY " << NY << "  NdivX " << NX << " Neighbors "<< NN <<
   G4endl << "Input Y/X=" << y << "/" << x <<G4endl;
   G4double sx=0,sy=0,ss=0;
   G4double share;
@@ -24,10 +24,11 @@ void ChargeShare::printShareYx(G4double y, G4double x) {
      G4cout << G4endl;
    }
    G4cout << " <Y>="<<sy*2 << " <X>=" << sx*2 <<" Sum=" << ss << G4endl;
-   //   G4cout << std::resetiosflags;
+   //   wx and wy are half pixel size.
 }
 
-void ChargeShare::setPositionYx(G4double ypos, G4double xpos){
+void ChargeShare::setPositionYx(G4double yp, G4double xp){
+  G4double xpos=xp/2, ypos=yp/2;
   if( (xpos<-wx*1.5 || xpos>wx*1.5 || ypos<-wy*1.5 || ypos>wy*1.5)) {
     G4cout << "ChargeShare: position error X/Y " << xpos << " " << ypos << G4endl;
     for(G4int ipy=0;ipy<=NN*2;ipy++) for(G4int ipx=0;ipx<=NN*2;ipx++)  w[ipy][ipx]=0.0;
@@ -65,8 +66,8 @@ ChargeShare::ChargeShare (
   else 
     NN=Neighbors;
   int  NT=NN*2+1;   // size of the look up table
-  wx=width_x;
-  wy=width_y;
+  wx=width_x/2;     //  wx and wy are half pixel size
+  wy=width_y/2;     //  wx and wy are half pixel size
   sig=sigma;
   leak=ll;
 
@@ -74,8 +75,6 @@ ChargeShare::ChargeShare (
   w= new double*[NT];
   for(int i=0 ; i<NT;i++) w[i]= new double[NT];
 };
-  
-
 
 /*
    Charge share. Assumption: the charge in silicon "somehow" spread with gaussian with sigma "sig".
@@ -84,5 +83,3 @@ ChargeShare::ChargeShare (
    You can set it 0 to disable.   The intergrasion is done in mesh size specified by NX and NY.
    You can set them to 20 (One pixel is subdivided to 40).  The est root program is  build/chargeshare.C.
 */
-
-

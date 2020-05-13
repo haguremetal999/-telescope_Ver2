@@ -23,7 +23,7 @@ RunAction::RunAction()
   // in Analysis.hh
   auto analysisManager = G4AnalysisManager::Instance();
   G4cout << "Using " << analysisManager->GetType() << G4endl;
-
+  Nbuff=200; //number of buffers in the sampleing in the ntulple
   // Create directories 
   //analysisManager->SetHistoDirectoryName("histograms");
   //analysisManager->SetNtupleDirectoryName("ntuple");

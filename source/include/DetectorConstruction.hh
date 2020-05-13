@@ -37,9 +37,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     virtual G4VPhysicalVolume* Construct();
     virtual void ConstructSDandField();
 
-   aPixel* GetaPixel0() const { return Pixel0;}
-   aPixel* GetaPixel1() const { return Pixel1;}
-   aPixel* GetaPixel2() const { return Pixel2;}
+   aPixel* Getfpix0() const { return fpix0;}
+   aPixel* Getfpix1() const { return fpix1;}
+   aPixel* Getfpix2() const { return fpix2;}
+   aPixel* Getfpix3() const { return fpix3;}
+   aPixel* Getsofist0() const { return sofist0;}
+   aPixel* Getsofist1() const { return sofist1;}
 
   private:
     // methods
@@ -52,9 +55,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     static G4ThreadLocal G4GlobalMagFieldMessenger*  fMagFieldMessenger; 
                                       // magnetic field messenger
      
-  aPixel *Pixel0;
-  aPixel *Pixel1;
-  aPixel *Pixel2;
+  aPixel *fpix0;
+  aPixel *fpix1;
+  aPixel *fpix2;
+  aPixel *fpix3;
+  aPixel *sofist0;
+  aPixel *sofist1;
 
 };
 
