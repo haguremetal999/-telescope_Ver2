@@ -24,7 +24,7 @@ EventAction::EventAction(DetectorConstruction* detectorConstruction)
   ,   fDetConstruction(detectorConstruction)
 {
   Maxhits = 0;
-  Bufsize = 200;
+  Bufsize = 200;    // You should also change Bufsize in RunAction 
   G4cout << "EEEEE  Event action constructor Bufsize is " << Bufsize << G4endl;
 }
 
@@ -37,7 +37,7 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event* /*event*/)
 { 
-    G4cout << "beginofEvent" << G4endl;
+  //  G4cout << "beginofEvent" << G4endl;
   fDetConstruction -> Getfpix0() -> ClearaPixel();
   fDetConstruction -> Getfpix1() -> ClearaPixel();
   fDetConstruction -> Getfpix2() -> ClearaPixel();
@@ -95,19 +95,22 @@ void EventAction::EndOfEventAction(const G4Event* event)
   int nn0,nn1,nn2,nn3,nn4,nn5;
   pixeltotuple(fpix0,         0);  nn0=pixelhits;
   pixeltotuple(fpix1,   1000000);  nn1=pixelhits;
-  pixeltotuple(fpix2,   2000000);  nn2=pixelhits;
-  pixeltotuple(fpix3,   3000000);  nn3=pixelhits;
-  pixeltotuple(sofist0, 4000000);  nn4=pixelhits;
-  pixeltotuple(sofist1, 5000000);  nn5=pixelhits;
-  G4cout << "Hits are " << nn0 <<" " << nn1-nn0 <<" "<< nn2-nn1 <<" "<< nn3-nn2 <<" "<< nn4-nn3 <<" "<< nn5-nn4 <<G4endl;
-  if(pixelhits>Maxhits) {G4cout <<  "EndRun: Maxhits " << pixelhits << "hits are stored" <<G4endl;  Maxhits=pixelhits;}
+  pixeltotuple(sofist0, 2000000);  nn2=pixelhits;
+  pixeltotuple(sofist1, 3000000);  nn3=pixelhits;
+  pixeltotuple(fpix2,   4000000);  nn4=pixelhits;
+  pixeltotuple(fpix3,   5000000);  nn5=pixelhits;
+  if(pixelhits>=Maxhits) {
+    auto eventID = event->GetEventID();
+    G4cout << "End of Events: EventID" << eventID << " Maxhits " << pixelhits << "hits are stored" <<G4endl;  Maxhits=pixelhits;
+    G4cout << "Hits are " << nn0 <<" " << nn1-nn0 <<" "<< nn2-nn1 <<" "<< nn3-nn2 <<" "<< nn4-nn3 <<" "<< nn5-nn4 <<G4endl;
+}
   analysisManager->FillNtupleIColumn(8,pixelhits);
   analysisManager->AddNtupleRow();       // Weite to file.
   auto printModulo = G4RunManager::GetRunManager()->GetPrintProgress();
   if( printModulo > 0 ) {
     auto eventID = event->GetEventID();
     if ( eventID % printModulo == 0 ) {
-      G4cout << "---> End of event: " << eventID << G4endl;
+      G4cout << "Hits are " << nn0 <<" " << nn1-nn0 <<" "<< nn2-nn1 <<" "<< nn3-nn2 <<" "<< nn4-nn3 <<" "<< nn5-nn4 <<G4endl;
     }
   }
 }

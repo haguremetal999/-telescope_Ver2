@@ -96,10 +96,9 @@ void RunAction::BeginOfRunAction(const G4Run* /*run*/)
 
 void RunAction::EndOfRunAction(const G4Run* /*run*/)
 {
-
-  // print histogram statistics
-  //
   auto analysisManager = G4AnalysisManager::Instance();
+#if 0
+  // print statistics
   if ( analysisManager->GetH1(1) ) {
     G4cout << G4endl << " ----> print histograms statistic ";
     if(isMaster) {
@@ -125,9 +124,8 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
        << G4BestUnit(analysisManager->GetH1(4)->rms(),  "Energy") << G4endl;
 
   }
-
+#endif
   // save histograms & ntuple
-  //
   analysisManager->Write();
   analysisManager->CloseFile();
 }

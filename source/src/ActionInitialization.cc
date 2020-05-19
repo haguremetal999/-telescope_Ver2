@@ -33,17 +33,13 @@ void ActionInitialization::BuildForMaster() const
 
 void ActionInitialization::Build() const
 {
-  //  G4cout << "AAAAAAction action init Primary" << G4endl;
   SetUserAction(new PrimaryGeneratorAction);
 
-  //  G4cout << "AAAAAAction action init Runaction" << G4endl;
   SetUserAction(new RunAction);
 
-  //  G4cout << "AAAAAAction action init Eventaction" << G4endl;
   auto eventAction = new EventAction(fDetConstruction);
 
   SetUserAction(eventAction);
-  //  G4cout << "AAAAAAction action init SteppingAction" << G4endl;
 
   SetUserAction(new SteppingAction(fDetConstruction,eventAction));
   G4cout << "Action init  Finish" << G4endl;

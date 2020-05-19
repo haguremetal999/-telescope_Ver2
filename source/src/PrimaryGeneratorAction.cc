@@ -33,7 +33,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
   auto particleDefinition = G4ParticleTable::GetParticleTable()->FindParticle("mu-");
   fParticleGun->SetParticleDefinition(particleDefinition);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
-  fParticleGun->SetParticleEnergy(3.*MeV);
+  fParticleGun->SetParticleEnergy(3*MeV);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -51,7 +51,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //Use the default gun setting except the particle position
   //  auto primaryParticle=new G4PrimaryParticle(particle, momVect.x(), momVect.y(), momVect.z() ); 
 
-  static int N0=0;
+  //  static int N0=0;
   static G4double pos_Y=-0.5*mm;  
   static G4double pos_X=-0.51*mm;  
   G4double pos_Z = -3*mm;
@@ -61,21 +61,22 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     pos_Y=pos_Y+0.51*um;
   }
   if(1){
-     pos_X = 0.9*mm*( G4UniformRand()-0.5 );
-     pos_Y = 0.9*mm*( G4UniformRand()-0.5 );
+     pos_X = 0.5*mm*( G4UniformRand()-0.5 );
+     pos_Y = 0.5*mm*( G4UniformRand()-0.5 );
   }
 
-  G4cout << "Generated " << pos_X/mm << " " << pos_Y/mm << " " << pos_Z/mm << "  " <<N0++ << G4endl;
-
-
+  //  G4cout << "Generated " << pos_X/mm << " " << pos_Y/mm << " " << pos_Z/mm << "  " <<N0++ << G4endl;
   fParticleGun->SetParticlePosition(G4ThreeVector( pos_X, pos_Y, pos_Z ));
 
-  G4double dir_X = 0.002*( G4UniformRand()-0.5 );
-  G4double dir_Y = 0.002*( G4UniformRand()-0.5 );
+#if 0
+  G4double dir_X = 0.010*( G4UniformRand()-0.5 );
+  G4double dir_Y = 0.010*( G4UniformRand()-0.5 );
+#else
+  G4double dir_X = G4RandGauss::shoot(0.0,0.001);
+  G4double dir_Y = G4RandGauss::shoot(0.0,0.001);
+#endif
   G4double dir_Z = 1;
 
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector( dir_X, dir_Y, dir_Z ));
-
   fParticleGun->GeneratePrimaryVertex(anEvent); 
-
 }
