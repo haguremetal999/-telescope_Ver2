@@ -8,8 +8,6 @@
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
 #include "aPixel.hh"
-// I am ashamed I can not forward information from Geometry to other functions
-
 
 class G4VPhysicalVolume;
 class G4GlobalMagFieldMessenger;

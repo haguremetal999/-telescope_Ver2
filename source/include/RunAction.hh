@@ -7,9 +7,6 @@
 #include "G4UserRunAction.hh"
 #include "globals.hh"
 
-//Nbuff is used for Ntuple definition and filling.
-//#define Nbuff   (100)
-
 class G4Run;
 
 /// Run action class
@@ -37,6 +34,7 @@ class RunAction : public G4UserRunAction
     virtual void BeginOfRunAction(const G4Run*);
     virtual void   EndOfRunAction(const G4Run*);
   int GetBufsize() const {return Nbuff;};
+  void SetBufsize(G4int nb) { Nbuff=nb; G4cout << "RunAction Nbuff=" << Nbuff << G4endl;}
 };
 
 #endif

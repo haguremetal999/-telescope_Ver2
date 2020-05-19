@@ -9,6 +9,7 @@
 #include "G4RunManager.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
+#include "NtupleBuffsize.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -22,8 +23,9 @@ RunAction::RunAction()
   // The choice of analysis technology is done via selectin of a namespace
   // in Analysis.hh
   auto analysisManager = G4AnalysisManager::Instance();
+  //  auto detector = DetectorConstruction::Instance();
   G4cout << "Using " << analysisManager->GetType() << G4endl;
-  Nbuff=200; //number of buffers in the sampleing in the ntulple
+  Nbuff = NTUPLEBUFFSIZE;    // defined in "NtupleBuffsize.hh"
   // Create directories 
   //analysisManager->SetHistoDirectoryName("histograms");
   //analysisManager->SetNtupleDirectoryName("ntuple");

@@ -16,7 +16,7 @@
 #include "Analysis.hh"
 #include "aPixel.hh"
 #include "EventAction.hh"
-
+#include "NtupleBuffsize.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 EventAction::EventAction(DetectorConstruction* detectorConstruction)
@@ -24,7 +24,7 @@ EventAction::EventAction(DetectorConstruction* detectorConstruction)
   ,   fDetConstruction(detectorConstruction)
 {
   Maxhits = 0;
-  Bufsize = 200;    // You should also change Bufsize in RunAction 
+  Bufsize = NTUPLEBUFFSIZE;    // defined in "NtupleBuffsize.hh" 
   G4cout << "EEEEE  Event action constructor Bufsize is " << Bufsize << G4endl;
 }
 
