@@ -56,14 +56,12 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   static G4double pos_X=-0.51*mm;  
   G4double pos_Z = -3*mm;
   
-  if(0) {
-    pos_X=pos_X+0.49*um;
-    pos_Y=pos_Y+0.51*um;
-  }
-  if(1){
-     pos_X = 0.5*mm*( G4UniformRand()-0.5 );
-     pos_Y = 0.5*mm*( G4UniformRand()-0.5 );
-  }
+  if(1)     pos_X=pos_X+0.26967233145831580803*um;
+  else      pos_X = 0.5*mm*( G4UniformRand()-0.5 );
+
+  if(0)     pos_Y=pos_Y+0.25*um;
+  else      pos_Y = 0.5*mm*( G4UniformRand()-0.5 );
+
 
   //  G4cout << "Generated " << pos_X/mm << " " << pos_Y/mm << " " << pos_Z/mm << "  " <<N0++ << G4endl;
   fParticleGun->SetParticlePosition(G4ThreeVector( pos_X, pos_Y, pos_Z ));
@@ -71,9 +69,12 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 #if 0
   G4double dir_X = 0.010*( G4UniformRand()-0.5 );
   G4double dir_Y = 0.010*( G4UniformRand()-0.5 );
-#else
+#elif 0
   G4double dir_X = G4RandGauss::shoot(0.0,0.001);
   G4double dir_Y = G4RandGauss::shoot(0.0,0.001);
+#else
+  G4double dir_X = 0.0;
+  G4double dir_Y = 0.0;
 #endif
   G4double dir_Z = 1;
 

@@ -39,12 +39,12 @@ DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 {
   //                   ID  NX     NY   NN   Wy         Wx    sig   t(cmos)   t(depl)  t(wafer)
-  fpix0    = new aPixel(10, 128,  128,  2,  8.0*um,  8.0*um,  5*um, 10*um, 50*um, 440*um);
-  fpix1    = new aPixel(20, 128,  128,  2,  8.0*um,  8.0*um,  5*um, 10*um, 50*um, 440*um);
-  sofist0  = new aPixel(30,  50,   50,  2, 20.0*um, 20.0*um,  5*um, 10*um, 50*um, 440*um);
-  sofist1  = new aPixel(40,  50,   50,  2, 20.0*um, 20.0*um,  5*um, 10*um, 50*um, 440*um);
-  fpix2    = new aPixel(50, 128,  128,  2,  8.0*um,  8.0*um,  5*um, 10*um, 50*um, 440*um);
-  fpix3    = new aPixel(60, 128,  128,  2,  8.0*um,  8.0*um,  5*um, 10*um, 50*um, 440*um);
+  fpix0    = new aPixel(10, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
+  fpix1    = new aPixel(20, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
+  sofist0  = new aPixel(30,  50,   50,  2, 20.0*um, 20.0*um,  3*um, 10*um, 50*um, 440*um);
+  sofist1  = new aPixel(40,  50,   50,  2, 20.0*um, 20.0*um,  3*um, 10*um, 50*um, 440*um);
+  fpix2    = new aPixel(50, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
+  fpix3    = new aPixel(60, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -158,7 +158,7 @@ pos_Y =  0.0*mm;
 pos_Z = 30.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
-//rot.rotateZ(0*deg);
+//rot.rotateZ(1.1*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
 new G4PVPlacement(trans, "PV_fpix1", lV_fpix1, physVol_World,false, cN);
@@ -177,6 +177,7 @@ pos_Y = 0.0*cm;
 pos_Z = 90*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
+//rot.rotateZ(5.0*deg);
 trans = G4Transform3D(rot, vec);
  cN=cN+10;
 new G4PVPlacement(trans, "PV_sofist1", lV_sofist1, physVol_World,false, cN);
@@ -202,7 +203,7 @@ pos_Y =  0.0*mm;
 pos_Z = 120.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
-//rot1.rotateX(45.*deg);
+//rot.rotateZ(-0.8*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
 new G4PVPlacement(trans, "PV_fpix2", lV_fpix2, physVol_World,false, cN);

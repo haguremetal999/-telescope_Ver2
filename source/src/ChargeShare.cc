@@ -66,9 +66,15 @@ ChargeShare::ChargeShare (
   else 
     NN=Neighbors;
   int  NT=NN*2+1;   // size of the look up table
+#if 0 
   wx=width_x/2;     //  wx and wy are half pixel size
   wy=width_y/2;     //  wx and wy are half pixel size
   sig=sigma;
+#else
+  wx=width_x/4;     //  wx and wy are half pixel size
+  wy=width_y/4;     //  wx and wy are half pixel size
+  sig=sigma/4;
+#endif
   leak=ll;
 
   //   http://blog.northcol.org/2012/01/14/mdarray/

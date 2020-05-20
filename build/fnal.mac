@@ -30,7 +30,7 @@
                      # arg > 0; Specified number of events will be executed
 ## GlobalSetup.mac (END)
 /gun/particle proton 
-/gun/energy  100 GeV
+/gun/energy  1200 GeV
 /run/printProgress 100
 /run/beamOn 5000
 
