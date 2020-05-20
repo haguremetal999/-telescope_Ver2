@@ -86,11 +86,18 @@ new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
 
 // new G4Material("Aluminium", z=13., a=26.98*g/mole, density=2.700*g/cm3);
 // new G4Material("Nitrogen", z=7.0,  a=14*g/mole, density=0.1*g/cm3);
- G4Element* Nit = new G4Element("Nitrogen",symbol="N" , z= 7., a= 14.0*g/mole);
+// G4Element* Nit = new G4Element("Nitrogen",symbol="N" , z= 7., a= 14.0*g/mole);
  G4Element* Alu = new G4Element("Aluminum",symbol="Al" , z= 13., a= 26.9*g/mole);
- G4Material* AlN = new G4Material("AlN",density= 3.200*g/cm3, ncomponents=2);
- AlN->AddElement(Alu, natoms=1);
- AlN->AddElement(Nit , natoms=1);
+ G4Element* Oxy = new G4Element("Oxygen",symbol="O" , z= 8., a= 16*g/mole);
+ // G4Material* AlN = new G4Material("AlN",density= 3.200*g/cm3, ncomponents=2);
+ // AlN->AddElement(Alu, natoms=1);
+ // AlN->AddElement(Nit , natoms=1);
+
+ //A440 or A445 Kyocera Alumina package 
+  G4Material* Al2O3 = new G4Material("Al2O3",density= 3.800*g/cm3, ncomponents=2);
+ Al2O3->AddElement(Alu, natoms=2);
+ Al2O3->AddElement(Oxy , natoms=3);
+
 
 // Print materials
 G4cout << *(G4Material::GetMaterialTable()) << G4endl;
@@ -183,10 +190,11 @@ trans = G4Transform3D(rot, vec);
 new G4PVPlacement(trans, "PV_sofist1", lV_sofist1, physVol_World,false, cN);
 
 // Kyocera ceramic package
-G4Material* AlN = materi_Man->FindOrBuildMaterial("AlN");
+//G4Material* AlN = materi_Man->FindOrBuildMaterial("AlN");
+G4Material* Al2O3 = materi_Man->FindOrBuildMaterial("Al2O3");
 
-G4Box* AlNplate= new G4Box("AlNplate", 1.0*mm , 1.0*mm, 1.27*mm/2.0);
-G4LogicalVolume* lV_AlNplate = new G4LogicalVolume(AlNplate, AlN, "AlNplate");
+G4Box* CeraPKG= new G4Box("CeraPKG", 1.0*mm , 1.0*mm, 1.27*mm/2.0);
+G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG, Al2O3, "CeraPKG");
 pos_X = 0.0*cm;
 pos_Y = 0.0*cm;
 pos_Z = 93*mm;
@@ -194,7 +202,7 @@ vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
 trans = G4Transform3D(rot, vec);
  cN=cN+10;
-new G4PVPlacement(trans, "PV_AlNplate", lV_AlNplate, physVol_World,false, cN);
+new G4PVPlacement(trans, "PV_CeraPKG", lV_CeraPKG, physVol_World,false, cN);
 
 
 

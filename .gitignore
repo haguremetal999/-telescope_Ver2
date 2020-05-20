@@ -13,3 +13,4 @@ a.out
 build/G4History.macro
 *.tmp
 build/analysis
+*DS_Store
