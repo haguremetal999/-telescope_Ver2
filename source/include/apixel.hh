@@ -28,6 +28,9 @@ private:
    G4double  fEnergyWafer;
    G4double  fTrackLCmos;
    G4double  fTrackLDepl;
+   G4double  fTimeWafer;
+   G4double  fTimeCmos;
+   G4double  fTimeDepl;
    G4double  fTrackLWafer;
    G4int col_dum;
 
@@ -51,9 +54,10 @@ public:
    G4VPhysicalVolume* GetCmosPV()   const {return fCmosPV;};
    G4VPhysicalVolume* GetDeplPV()   const {return fDeplPV;};
    G4VPhysicalVolume* GetWaferPV()  const {return fWaferPV;};
-   void AddCmos (G4double de, G4double dl, G4double tt, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  col_dum=iy+ix+tt;};
-   void AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1);
-   void AddWafer(G4double de, G4double dl, G4double tt, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; col_dum=iy+ix+tt;};
+   // de-- Energy deposite, dl---Segment length, theTime---global time
+   void AddCmos (G4double de, G4double dl, G4double theTime, G4int iy, G4int ix ) { fEnergyCmos  += de; fTrackLCmos += dl;  fTimeCmos += dl*theTime; col_dum=iy+ix;};
+   void AddDepl (G4double de, G4double dl, G4double theTime, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1);
+   void AddWafer(G4double de, G4double dl, G4double theTime, G4int iy, G4int ix ) { fEnergyWafer += de; fTrackLWafer += dl; fTimeWafer += dl*theTime; col_dum=iy+ix;};
    ChargeShare* getChargeShare() const {return chgShare;}; 
    void ClearaPixel()  {
      for (int iy=0;iy<NPixY;iy++)  for (int ix=0;ix<NPixX;ix++) pixelData[iy][ix]=0.0;;
@@ -63,6 +67,9 @@ public:
      fTrackLCmos=0.0;
      fTrackLDepl=0.0;
      fTrackLWafer=0.0;
+     fTimeCmos=0.0;
+     fTimeDepl=0.0;
+     fTimeWafer=0.0;
      col_dum=0;
    };
 

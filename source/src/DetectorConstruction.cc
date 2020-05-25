@@ -79,6 +79,7 @@ G4double density;
  G4int ncomponents, natoms;
 //new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
      // The argon by NIST Manager is a gas with a different density
+new G4Material("Iron", z=26., a= 56*g/mole, density= 7.9*g/cm3);
 
 // Vacuum
 new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
@@ -86,17 +87,17 @@ new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
 
 // new G4Material("Aluminium", z=13., a=26.98*g/mole, density=2.700*g/cm3);
 // new G4Material("Nitrogen", z=7.0,  a=14*g/mole, density=0.1*g/cm3);
-// G4Element* Nit = new G4Element("Nitrogen",symbol="N" , z= 7., a= 14.0*g/mole);
- G4Element* Alu = new G4Element("Aluminum",symbol="Al" , z= 13., a= 26.9*g/mole);
- G4Element* Oxy = new G4Element("Oxygen",symbol="O" , z= 8., a= 16*g/mole);
- // G4Material* AlN = new G4Material("AlN",density= 3.200*g/cm3, ncomponents=2);
- // AlN->AddElement(Alu, natoms=1);
- // AlN->AddElement(Nit , natoms=1);
 
- //A440 or A445 Kyocera Alumina package 
-  G4Material* Al2O3 = new G4Material("Al2O3",density= 3.800*g/cm3, ncomponents=2);
+ G4Element* Alu = new G4Element("Aluminum",symbol="Al" , z= 13., a= 26.9*g/mole);
+ G4Element* Nit = new G4Element("Nitrogen",symbol="N" , z= 7., a= 14.0*g/mole);
+ G4Element* Oxy = new G4Element("Oxygen",symbol="O" , z= 8., a= 16*g/mole);
+ G4Material* AlN = new G4Material("AlN",density= 3.200*g/cm3, ncomponents=2);
+ AlN->AddElement(Alu, natoms=1);
+ AlN->AddElement(Nit , natoms=1);
+ G4Material* Al2O3 = new G4Material("Al2O3",density= 3.800*g/cm3, ncomponents=2);
  Al2O3->AddElement(Alu, natoms=2);
  Al2O3->AddElement(Oxy , natoms=3);
+
 
 
 // Print materials
@@ -151,8 +152,8 @@ G4PVPlacement* physVol_World  =
  G4Transform3D trans;
  G4int cN;
 
-pos_X = 0.0*mm;
-pos_Y = 0.0*mm;
+pos_X = 0.000*mm;
+pos_Y = 0.000*mm;
 pos_Z = 0.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
@@ -165,7 +166,7 @@ pos_Y =  0.0*mm;
 pos_Z = 30.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
-//rot.rotateZ(1.1*deg);
+//rot.rotateZ(0.4*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
 new G4PVPlacement(trans, "PV_fpix1", lV_fpix1, physVol_World,false, cN);
@@ -175,6 +176,7 @@ pos_Y = 0.0*cm;
 pos_Z = 60*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
+//rot.rotateY(1*deg);
 trans = G4Transform3D(rot, vec);
  cN=cN+10;
  new G4PVPlacement(trans, "PV_sofist0", lV_sofist0, physVol_World,false, cN);
@@ -184,17 +186,22 @@ pos_Y = 0.0*cm;
 pos_Z = 90*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
-//rot.rotateZ(5.0*deg);
+//rot.rotateZ(0.5*deg);
 trans = G4Transform3D(rot, vec);
  cN=cN+10;
 new G4PVPlacement(trans, "PV_sofist1", lV_sofist1, physVol_World,false, cN);
 
-// Kyocera ceramic package
-//G4Material* AlN = materi_Man->FindOrBuildMaterial("AlN");
-G4Material* Al2O3 = materi_Man->FindOrBuildMaterial("Al2O3");
-
+// Kyocera LSI package package:  Default material is Alumina ( A440 or A445 )
 G4Box* CeraPKG= new G4Box("CeraPKG", 1.0*mm , 1.0*mm, 1.27*mm/2.0);
-G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG, Al2O3, "CeraPKG");
+#if   0
+G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_World, "CeraPKG");
+#elif 0
+G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_Man->FindOrBuildMaterial("AlN"), "CeraPKG");
+#elif 0
+G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_Man->FindOrBuildMaterial("Iron"), "CeraPKG");
+#else
+G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_Man->FindOrBuildMaterial("Al2O3"), "CeraPKG");
+#endif
 pos_X = 0.0*cm;
 pos_Y = 0.0*cm;
 pos_Z = 93*mm;
@@ -206,12 +213,12 @@ new G4PVPlacement(trans, "PV_CeraPKG", lV_CeraPKG, physVol_World,false, cN);
 
 
 
-pos_X =  0.0*mm;
+pos_X =  -0.00*mm;
 pos_Y =  0.0*mm;
 pos_Z = 120.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
-//rot.rotateZ(-0.8*deg);
+//rot.rotateZ(-1.2*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
 new G4PVPlacement(trans, "PV_fpix2", lV_fpix2, physVol_World,false, cN);

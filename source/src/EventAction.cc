@@ -44,7 +44,7 @@ void EventAction::BeginOfEventAction(const G4Event* /*event*/)
   fDetConstruction -> Getfpix3() -> ClearaPixel();
   fDetConstruction -> Getsofist0() -> ClearaPixel();
   fDetConstruction -> Getsofist1() -> ClearaPixel();
-  
+  BeamPosZ0=-10000.0*mm;
 }
 
 void EventAction::pixeltotuple(aPixel *pixel, G4int offset) {
@@ -90,7 +90,15 @@ void EventAction::EndOfEventAction(const G4Event* event)
   // fill ntuple
   analysisManager->FillNtupleIColumn(0, NPixY*1000+NPixX);
   analysisManager->FillNtupleIColumn(1, Bufsize);
-  ptr=9;
+
+  analysisManager->FillNtupleDColumn(2, BeamPosX0/mm);
+  analysisManager->FillNtupleDColumn(3, BeamPosY0/mm);
+  analysisManager->FillNtupleDColumn(4, BeamPosZ0/mm);
+  analysisManager->FillNtupleDColumn(5, BeamMomX0/MeV);
+  analysisManager->FillNtupleDColumn(6, BeamMomY0/MeV);
+  analysisManager->FillNtupleDColumn(7, BeamMomZ0/MeV);
+
+  ptr=NTUPLEPIXELPTR ;  // defined in  "NtupleBuffsize.hh"
   pixelhits=0;
   int nn0,nn1,nn2,nn3,nn4,nn5;
   pixeltotuple(fpix0,         0);  nn0=pixelhits;

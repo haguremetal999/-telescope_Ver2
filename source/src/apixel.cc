@@ -20,6 +20,8 @@
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "Analysis.hh"
+#include "NtupleBuffsize.hh"
 #include "aPixel.hh"
 #include <cmath>
 
@@ -145,11 +147,8 @@ z3=zmax-t3/2=(t1+t2)/2
     */
 }
 
-void aPixel::AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1)
+void aPixel::AddDepl(G4double de, G4double dl, G4double theTime, G4int iy, G4int ix, G4ThreeVector lp0, G4ThreeVector lp1)
  {
-   //   if(1) return;
-   if(0) fTrackLDepl=tt;
-   fTrackLDepl += dl;
    G4double x0=lp0.getX();
    G4double y0=lp0.getY();
    G4double x1=lp1.getX();
@@ -158,24 +157,25 @@ void aPixel::AddDepl(G4double de, G4double dl, G4double tt, G4int iy, G4int ix, 
    G4double d=sqrt((x0-x1)*(x0-x1)+(y0-y1)*(y0-y1));
    G4double MINL=2*um;
    G4int NDIV=(d/MINL)+1;
-
-   //   G4cout << "OK AppDepl length " << d/um << " NDIV=" << NDIV <<G4endl;
-   //G4cout << "x0/y0/x1/y1 " << x0/um << " "  << y0/um << " "  << x1/um << " "  << y1/um << " " << G4endl;
+   fEnergyDepl += de;   
+   fTrackLDepl += dl;
+   fTimeDepl += de*theTime;
+   auto analysisManager = G4AnalysisManager::Instance();
+   //Time evolution of charge data.
+   analysisManager->FillH1(NTUPLE_TIMEDEPL, theTime/ns, de/keV);   //NTUPLE_TIMEDEPL is defined in NtupleBuffsize.hh
 
    for(int idiv=0;idiv<NDIV;idiv++) {
      double xp=(x1*(2*idiv+1)+x0*(2*NDIV-(2*idiv+1)))/(2*NDIV);
      double yp=(y1*(2*idiv+1)+y0*(2*NDIV-(2*idiv+1)))/(2*NDIV);
-     //     G4cout << "Deposite Local coordinateY/X (um) " << yp/um << "  " << xp/um << "  E=" << de/NDIV/keV << " keV " <<G4endl; 
+//     G4cout << "Deposite Local coordinateY/X (um) " << yp/um << "  " << xp/um << "  E=" << de/NDIV/keV << " keV " <<G4endl; 
      G4double w;
-     chgShare -> setPositionYx(yp,xp);
+     chgShare -> setPositionYx(yp,xp);    //Set the deposition location in a pixel.
      for(G4int jy=-NN;jy<=NN;jy++) {   //NN---Neighbors
        if(jy+iy >=0 && jy+iy <NPixY) {
 	 for(G4int jx=-NN;jx<=NN;jx++) {
 	   if(jx+ix >=0 && jx+ix <NPixX) {
 	     w=chgShare -> getChargeShareYx(jy,jx);
 	     pixelData[jy+iy][jx+ix] +=w*de/NDIV;
-	     fEnergyDepl += w*de/NDIV;   
-	     //	     G4cout << "      Store JY" <<  jy+iy << "/" << jx+ix << " E=" << w*de/NDIV/keV << " keV " << G4endl;
 	   }
          }
        }

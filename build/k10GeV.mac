@@ -1,3 +1,5 @@
+## Set up primary generaotr
+#
 /control/verbose 2
 /control/saveHistory
 /run/verbose 0
@@ -11,8 +13,8 @@
 /run/beamOn 0        # arg = 0; Only invokes initialization - no event generation
                      # arg > 0; Specified number of events will be executed
 ## GlobalSetup.mac (END)
-/gun/particle e- 
-/gun/energy  1 GeV
+/gun/particle proton 
+/gun/energy  10 GeV
 /run/printProgress 100
-/run/beamOn 5000
+/run/beamOn 7000
 

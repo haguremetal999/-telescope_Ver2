@@ -50,6 +50,8 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
      //G4TouchableHandle theTouchable = preStepPoint->GetTouchableHandle();
      //G4ThreeVector worldPosition = preStepPoint->GetPosition();
      //G4ThreeVector localPosition = theTouchable->GetHistory()-> GetTopTransform().TransformPoint(worldPosition);
+
+
      G4StepPoint* p0 = step -> GetPreStepPoint();
      G4TouchableHandle t0 = p0 -> GetTouchableHandle();
      G4ThreeVector wp0 = p0 -> GetPosition();
@@ -57,6 +59,10 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
      G4StepPoint* p1 = step -> GetPostStepPoint();
      G4ThreeVector wp1 = p1 -> GetPosition();
      G4ThreeVector lp1 = t0-> GetHistory()-> GetTopTransform().TransformPoint(wp1);
+     if(fEventAction -> GetBeamPosZ0() <-5000.0*mm) {
+       G4ThreeVector mom = p0 -> GetMomentum();
+       fEventAction -> SetBeaminfo(wp0.getX(),wp0.getY(),wp0.getZ(),mom.getX(),mom.getY(),mom.getZ());
+     }
      if(0) G4cout << " p0(X Y Z)mm " << lp0.getX()/mm << " / "<< lp0.getY()/mm << " / "<< lp0.getZ()/mm 
             << " p1(X Y Z)mm " << lp1.getX()/mm << " / "<< lp1.getY()/mm << " / "<< lp1.getZ()/mm  <<G4endl;
 

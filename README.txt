@@ -1,3 +1,11 @@
+25 May 2020
+Multiple Coulomb Scattering is quntitatively evaluated and compared with PDG --> OK
+Confirmed the Stopped muons prperly decay. --. 2 us lifetime is observed.
+
+20 May 2020
+I realized the charge share is wrong and the bug is fixed.
+The position reconstruction is reasonable now.
+
 13 May 2020
 The ELPH/FNAL 2020 beam test set up is simulated.
 Total six(two sofist4 and four fpix2) sensors are instlled.

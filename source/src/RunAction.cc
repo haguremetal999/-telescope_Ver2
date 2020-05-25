@@ -23,7 +23,6 @@ RunAction::RunAction()
   // The choice of analysis technology is done via selectin of a namespace
   // in Analysis.hh
   auto analysisManager = G4AnalysisManager::Instance();
-  //  auto detector = DetectorConstruction::Instance();
   G4cout << "Using " << analysisManager->GetType() << G4endl;
   Nbuff = NTUPLEBUFFSIZE;    // defined in "NtupleBuffsize.hh"
   // Create directories 
@@ -35,37 +34,49 @@ RunAction::RunAction()
 
   // Book histograms, ntuple
   //
-  
   // Creating histograms
-  analysisManager->CreateH1("ECmos", "Edep in CMOS layer;E(keV);N"        , 200, 0.0,1000.0);
-  analysisManager->CreateH1("EDepl", "Edep in depletion layer;E(KeV);N"   , 200, 0.0,1000.0);
-  analysisManager->CreateH1("EWafer","Edep in wafer;E(keV);N"             , 200, 0.0,5000.0);
-  analysisManager->CreateH1("LCmos", "Track Length in CMOS;L(um);N"       , 100, 0.0, 600.0);
-  analysisManager->CreateH1("LDepl", "Track Length in Depletion;L(um);N"  , 100, 0.0, 600.0);
-  analysisManager->CreateH1("LWafer","Track Length in Wafer;L(um);N"      , 100, 0.0, 600.0);
-  analysisManager->CreateH1("TCmos", "Time Edep in CMOS;T(ns);E(keV)"     , 300, 0.0, 10000.0);
-  analysisManager->CreateH1("TDepl", "Time Edep in Depletion;T(ns);E(keV)", 300, 0.0, 10000.0);
-  analysisManager->CreateH1("TWafer","Time of Edep in Wafer;T(ns);E(keV)" , 300, 0.0, 10000.0);
+
+  if(1) analysisManager->CreateH1("TDepl", "Time Edep in Depletion;T(ns);E(keV)", 300, 0.0, 10000.0);  // NTUPLE_TIMEDEPL   ==  0 
+  if(0) analysisManager->CreateH1("ECmos", "Edep in CMOS layer;E(keV);N"        , 200, 0.0,1000.0);
+  if(0) analysisManager->CreateH1("EDepl", "Edep in depletion layer;E(KeV);N"   , 200, 0.0,1000.0);
+  if(0) analysisManager->CreateH1("EWafer","Edep in wafer;E(keV);N"             , 200, 0.0,5000.0);
+  if(0) analysisManager->CreateH1("LCmos", "Track Length in CMOS;L(um);N"       , 100, 0.0, 600.0);
+  if(0) analysisManager->CreateH1("LDepl", "Track Length in Depletion;L(um);N"  , 100, 0.0, 600.0);
+  if(0) analysisManager->CreateH1("LWafer","Track Length in Wafer;L(um);N"      , 100, 0.0, 600.0);
+  if(0) analysisManager->CreateH1("TCmos", "Time Edep in CMOS;T(ns);E(keV)"     , 300, 0.0, 10000.0);
+  if(0) analysisManager->CreateH1("TWafer","Time of Edep in Wafer;T(ns);E(keV)" , 300, 0.0, 10000.0);
 
   // Creating ntuple
   //
   analysisManager->CreateNtuple("B4", "EventData");
-  analysisManager->CreateNtupleIColumn("NPixXY");   //  0
-  analysisManager->CreateNtupleIColumn("NBuff");   //  1
-  analysisManager->CreateNtupleDColumn("ECmos");   //  2
-  analysisManager->CreateNtupleDColumn("EDepl");   //  3
-  analysisManager->CreateNtupleDColumn("EWafer");  //  4
-  analysisManager->CreateNtupleDColumn("LCmos");   //  5
-  analysisManager->CreateNtupleDColumn("LDepl");   //  6
-  analysisManager->CreateNtupleDColumn("LWafer");  //  7
-  analysisManager->CreateNtupleIColumn("Nhits");   //  8
+  analysisManager->CreateNtupleIColumn("NPixXY");    //  0
+  analysisManager->CreateNtupleIColumn("NBuff");     //  1
+  analysisManager->CreateNtupleDColumn("BeamPosX0"); //  2
+  analysisManager->CreateNtupleDColumn("BeamPosY0"); //  3
+  analysisManager->CreateNtupleDColumn("BeamPosZ0"); //  4
+  analysisManager->CreateNtupleDColumn("BeamMomX0"); //  5
+  analysisManager->CreateNtupleDColumn("BeamMomY0"); //  6
+  analysisManager->CreateNtupleDColumn("BeamMomZ0"); //  7
+  analysisManager->CreateNtupleIColumn("Nhits");     //  8
+  analysisManager->CreateNtupleIColumn("DUMMY09");     //  9
+  analysisManager->CreateNtupleIColumn("DUMMY10");     //  10
+  analysisManager->CreateNtupleIColumn("DUMMY11");     //  11
+  analysisManager->CreateNtupleIColumn("DUMMY12");     //  12
+  analysisManager->CreateNtupleIColumn("DUMMY13");     //  13
+  analysisManager->CreateNtupleIColumn("DUMMY14");     //  14
+  analysisManager->CreateNtupleIColumn("DUMMY15");     //  15
+  analysisManager->CreateNtupleIColumn("DUMMY16");     //  16
+  analysisManager->CreateNtupleIColumn("DUMMY17");     //  17
+  analysisManager->CreateNtupleIColumn("DUMMY18");     //  18
+  analysisManager->CreateNtupleIColumn("DUMMY19");     //  19
+
 
   //  analysisManager->CreateNtupleDColumn("PixelData");
   std::stringstream ss;
   for (G4int i=0; i<Nbuff; i++) {
-    ss.str("");  ss<< "IADR" << i;             //9,11,13,15...
+    ss.str("");  ss<< "IADR" << i;             //20,22,24,....
     analysisManager->CreateNtupleIColumn(ss.str().c_str());
-    ss.str("");  ss<< "E" << i;                //10,12,14,16...
+    ss.str("");  ss<< "E" << i;                //21,23,25,....
     analysisManager->CreateNtupleDColumn(ss.str().c_str());
   }
   analysisManager->FinishNtuple();
