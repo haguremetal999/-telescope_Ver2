@@ -1,3 +1,14 @@
+Please read this file from bottom to top to follow the revision history. 
+26 May 2020
+Change directory organization
+telescope/source    source files
+telescope/build     cmake make and execution of the exampleB4a
+telescope/analysis  root macros analyzing the generated data.
+Therefore, 
+    TFile f("B4_2MeV.root") 
+in the root macros should be rewritten as 
+    TFile f("../build/B4_2MeV.root");
+
 25 May 2020
 Multiple Coulomb Scattering is quntitatively evaluated and compared with PDG --> OK
 Confirmed the Stopped muons prperly decay. --. 2 us lifetime is observed.
