@@ -1,4 +1,12 @@
 Please read this file from bottom to top to follow the revision history. 
+27 May 2020
+I forget to say that the MacOS file system can not distinguish the capical and small 
+characters in the file names.   And I by mistake made two strange name files aPixel.cc 
+and aPixel.hh.   This information is not properly trnsferred to the git system. 
+If compiler errors happen  in your computer, please change the names as follows.
+$ mv apixel.cc temp.cc
+$ mv temp.cc aPixel.cc
+(You can not $ mv apixel.cc aPixel.cc  on the file system of MacOS.)
 26 May 2020
 Change directory organization
 telescope/source    source files
