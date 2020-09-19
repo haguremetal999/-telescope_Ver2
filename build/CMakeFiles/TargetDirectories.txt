@@ -1,0 +1,7 @@
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/install/strip.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/edit_cache.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/exampleB4a.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/rebuild_cache.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/list_install_components.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/install/local.dir
+/home/superkuppa99/workspace/G4WORK/telescope-work/PixelSize/t300/8um128px/build/CMakeFiles/install.dir

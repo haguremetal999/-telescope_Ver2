@@ -1,0 +1,125 @@
+xcclass AnalysisClass{
+ private :
+  int ClassID;
+  double X[200],Y[200],loss[200];
+  int ID[200],IADR[200];
+  std::vector<double> testDataX;
+  std::vector<double> testDataY;
+  TF1 * f0X;
+  TF1 * f0Y;
+  TGraphErrors * g0X;
+  TGraphErrors * g0Y; 
+  double gradX;
+  double gradY;
+
+  TH2D * h[4];
+  TH2D * h0;
+  TH2D * h1;
+  TH2D * h2;
+  TH2D * h3;
+  TFile * file;
+  TTree * tree;
+  
+ public:  
+  AnalysisClass(){}  
+  AnalysisClass(int ID){
+    ClassID = ID;
+  }
+  ~AnalysisClass(){}
+
+  int GetClassID(){ return ClassID; }
+  std::vector<double> GetTestDataX(){ return testDataX; }
+  std::vector<double> GetTestDataY(){ return testDataY; }
+  TGraphErrors * GetGraph0X(){ return g0X; }
+  TGraphErrors * GetGraph0Y(){ return g0Y; }
+  double GetGradX(){ return gradX; }
+  double GetGradY(){ return gradY; }
+
+  TH2D * Get2DHist0(){ return h[0]; }
+  TH2D * Get2DHist1(){ return h[1]; }
+  
+  double * GetX(){ return X; }
+  double * GetY(){ return Y; }
+  int * GetID(){ return ID; }
+  double * GetLoss(){ return loss; }
+  
+  
+  void SetUp(int *IADRl, double *energylossl){
+    for(int mm=0;mm<200;mm++){
+      IADR[mm] = IADRl[mm];
+      ID[mm]    = IADRl[mm]/1000000;
+      X[mm] = (IADRl[mm] - ID[mm]*1000000)/1000; 
+      Y[mm] = (IADRl[mm] - ID[mm]*1000000 -X[mm]*1000);
+      loss[mm] = energylossl[mm];
+    }
+    file = new TFile("Analysisfile.root","UPDATE");
+    
+  }
+  void SetID( int ID ){ ClassID=ID; }
+  void SetTestDataX(int data){ testDataX.push_back(data); }
+  void SetTestDataY(int data){ testDataY.push_back(data); }
+  void SetHist0X(){
+    std::vector<double> testError;
+    double z[3];
+    double zError[3];
+    for(int ii=0;ii<3;ii++){
+      testError.push_back(2.0);
+      z[ii]=30.0*1000*(ii+1);
+      zError[ii]=0;
+    }
+    f0X = new TF1(Form("f0X%d",ClassID),"pol1");    
+    g0X = new TGraphErrors(3,z,&testDataX[0],zError,&testError[0]);
+    g0X->SetMarkerStyle(22);
+    g0X->SetMarkerSize(2);
+    g0X->Fit(f0X,"0 Q","",30000,90000);
+    gradX = f0X->GetParameter(1);
+  }
+  void SetHist0Y(){
+    std::vector<double> testError;
+    double z[3];
+    double zError[3];
+    for(int ii=0;ii<3;ii++){
+      testError.push_back(2.0);
+      z[ii]=30.0*1000*(ii+1);
+      zError[ii]=0;
+    }
+    f0Y = new TF1(Form("f0Y%d",ClassID),"pol1");    
+    g0Y = new TGraphErrors(3,z,&testDataY[0],zError,&testError[0]);
+    g0Y->SetMarkerStyle(22);
+    g0Y->SetMarkerSize(2);
+    g0Y->Fit(f0Y,"0 Q","",30000,90000);
+    gradY = f0Y->GetParameter(1);
+  }
+  
+  void Set2DHist(){
+      h0 = new TH2D("Tracker 0","Tracker 0",1000,0,1000,1000,0,1000);
+      h1 = new TH2D("Tracker 1","Tracker 1",1000,0,1000,1000,0,1000);
+      h2 = new TH2D("Tracker 2","Tracker 2",1000,0,1000,1000,0,1000);
+      h3 = new TH2D("Tracker 3","Tracker 3",1000,0,1000,1000,0,1000);
+
+      for(int nn=0;nn<4;nn++){
+	h[nn] = new TH2D(Form("Tracker%d",nn),Form("Tracker%d",nn),1000,0,1000,1000,0,1000);
+	h[nn]->Write();
+      }
+      for(int mm=0;mm<200;mm++){
+	if(IADR[mm]==0) break;
+	if(ID[mm]==0) h0->Fill(X[mm],Y[mm]);
+	if(ID[mm]==1) h1->Fill(X[mm],Y[mm]);
+	if(ID[mm]==2) h2->Fill(X[mm],Y[mm]);
+	if(ID[mm]==3) h3->Fill(X[mm],Y[mm]);
+      } // mm
+      /*
+      h0->SetXTitle("X axis[#munm]");
+      h0->SetYTitle("Y axis[#munm]");
+      h1->SetXTitle("X axis[#munm]");
+      h1->SetYTitle("Y axis[#munm]");
+      h2->SetXTitle("X axis[#munm]");
+      h2->SetYTitle("Y axis[#munm]");
+      h3->SetXTitle("X axis[#munm]");
+      h3->SetYTitle("Y axis[#munm]");
+      */
+      
+}
+  
+  
+};
