@@ -65,7 +65,8 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
      }
      if(0) G4cout << " p0(X Y Z)mm " << lp0.getX()/mm << " / "<< lp0.getY()/mm << " / "<< lp0.getZ()/mm 
             << " p1(X Y Z)mm " << lp1.getX()/mm << " / "<< lp1.getY()/mm << " / "<< lp1.getZ()/mm  <<G4endl;
-
+     
+     //////////////// fpix0
      if ( volume == fpix0->GetCmosPV() ) {
        fpix0->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == fpix0->GetDeplPV() ) {
@@ -73,48 +74,55 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        fpix0->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == fpix0->GetWaferPV() ) {
-       fpix0->AddWafer(edep,stepLength,thetime,0,0);
-     } else if ( volume == fpix1->GetCmosPV() ) {
+       fpix0->AddWafer(edep,stepLength,thetime,0,0); }
+     
+     //////////////// fpix1
+     else if ( volume == fpix1->GetCmosPV() ) {
        fpix1->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == fpix1->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        fpix1->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == fpix1->GetWaferPV() ) {
-       fpix1->AddWafer(edep,stepLength,thetime,0,0);
-     } else if ( volume == fpix2->GetCmosPV() ) {
+       fpix1->AddWafer(edep,stepLength,thetime,0,0); }
+     
+     //////////////// fpix2
+     else if ( volume == fpix2->GetCmosPV() ) {
        fpix2->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == fpix2->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        fpix2->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == fpix2->GetWaferPV() ) {
-       fpix2->AddWafer(edep,stepLength,thetime,0,0);
-     } else if ( volume == fpix3->GetCmosPV() ) {
+       fpix2->AddWafer(edep,stepLength,thetime,0,0); }
+     
+     //////////////// fpix3
+     else if ( volume == fpix3->GetCmosPV() ) {
        fpix3->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == fpix3->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        fpix3->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == fpix3->GetWaferPV() ) {
-       fpix3->AddWafer(edep,stepLength,thetime,0,0);
-       //////////////////
-     } else if ( volume == sofist0->GetCmosPV() ) {
+       fpix3->AddWafer(edep,stepLength,thetime,0,0); }       
+     //////////////// sofist0
+     else if ( volume == sofist0->GetCmosPV() ) {
        sofist0->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == sofist0->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        sofist0->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == sofist0->GetWaferPV() ) {
-       sofist0->AddWafer(edep,stepLength,thetime,0,0);
-     } else if ( volume == sofist1->GetCmosPV() ) {
+       sofist0->AddWafer(edep,stepLength,thetime,0,0); }
+     
+     //////////////// sofist1
+     else if ( volume == sofist1->GetCmosPV() ) {
        sofist1->AddCmos(edep,stepLength,thetime,0,0);
      } else if ( volume == sofist1->GetDeplPV() ) {
        G4int ix = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(1);
        G4int iy = step->GetPreStepPoint()->GetTouchableHandle()->GetReplicaNumber(2);
        sofist1->AddDepl(edep,stepLength,thetime,iy,ix,lp0,lp1);
      } else if ( volume == sofist1->GetWaferPV() ) {
-       sofist1->AddWafer(edep,stepLength,thetime,0,0);
-     }
+       sofist1->AddWafer(edep,stepLength,thetime,0,0); }
   }
 }

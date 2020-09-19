@@ -38,23 +38,58 @@ G4GlobalMagFieldMessenger* DetectorConstruction::fMagFieldMessenger = nullptr;
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 {
-  //                   ID  NX     NY   NN   Wy         Wx    sig   t(cmos)   t(depl)  t(wafer)
+  // Parameter setting ....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  // XY setting
+  G4int NX    = 128;
+  G4int NY    = NX;
+  G4int DUTNX = 1000;
+  G4int DUTNY = DUTNX;
+  G4double Wx = 8.0;
+  G4double Wy = Wx;
+  
+  // Z setting
+  G4int t_depl      = 30;
+  G4int t_wafer     = 10;
+  G4int t_depl_DUT  = 300;
+  G4int t_wafer_DUT = 10;
+  G4int t_cmos      = 10;
+  // other setting
+  G4int NN  = 2;
+  G4int sig =2.0;  
+  
+  // making aPixel ....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+  
+  //                    ID  NX    NY    NN   Wx      Wy      sig      t(cmos)     t(depl)        t(wafer)
+  fpix0    = new aPixel(10, NX,   NY,   NN,  Wx*um,  Wy*um,  sig*um,  t_cmos*um,  t_depl*um,     t_wafer*um);     //  Tracker0
+  fpix1    = new aPixel(20, NX,   NY,   NN,  Wx*um,  Wy*um,  sig*um,  t_cmos*um,  t_depl*um,     t_wafer*um);     //  Tracker1
+  fpix2    = new aPixel(30, NX,   NY,   NN,  Wx*um,  Wy*um,  sig*um,  t_cmos*um,  t_depl*um,     t_wafer*um);     //  Tracker2
+  sofist0  = new aPixel(40, DUTNX,DUTNY,NN,  1.0*um, 1.0*um, sig*um,  t_cmos*um,  t_depl_DUT*um, t_wafer_DUT*um); //  DUT
+  
+  sofist1  = new aPixel(50, NX,  NY,  NN,  Wx*um,  Wy*um,  sig*um,  t_cmos*um,  t_depl*um,     t_wafer*um);     //  aftre DUT (unused)
+  fpix3    = new aPixel(60, NX,  NY,  NN,  Wx*um,  Wy*um,  sig*um,  t_cmos*um,  t_depl*um,     t_wafer*um);     //  aftre DUT (unused)
+  
+  /*  // backup of prot type setting
   fpix0    = new aPixel(10, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
   fpix1    = new aPixel(20, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
   sofist0  = new aPixel(30,  50,   50,  2, 20.0*um, 20.0*um,  3*um, 10*um, 50*um, 440*um);
   sofist1  = new aPixel(40,  50,   50,  2, 20.0*um, 20.0*um,  3*um, 10*um, 50*um, 440*um);
   fpix2    = new aPixel(50, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
   fpix3    = new aPixel(60, 128,  128,  2,  8.0*um,  8.0*um,  3*um, 10*um, 50*um, 440*um);
+  */
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+
 
 DetectorConstruction::~DetectorConstruction()
 { 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+  
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {
 // Define materials 
@@ -75,8 +110,8 @@ void DetectorConstruction::DefineMaterials()
 G4double a;  // mass of a mole;
 G4double z;  // z=mean number of protons;  
 G4double density; 
- G4String symbol;
- G4int ncomponents, natoms;
+G4String symbol;
+G4int ncomponents, natoms;
 //new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
      // The argon by NIST Manager is a gas with a different density
 new G4Material("Iron", z=26., a= 56*g/mole, density= 7.9*g/cm3);
@@ -99,7 +134,6 @@ new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
  Al2O3->AddElement(Oxy , natoms=3);
 
 
-
 // Print materials
 G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 }
@@ -109,7 +143,11 @@ G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 {
 G4cout << "DETCON start" << G4endl;
-
+ 
+//Postion setting
+G4double tr_pitch = 30.0;
+G4double DUT_z    = 30.0;
+ 
 // Get pointer to 'Material Manager'
 G4NistManager* materi_Man = G4NistManager::Instance();
 
@@ -125,7 +163,7 @@ G4Box* solid_World =
 G4Material* materi_World = materi_Man->FindOrBuildMaterial("G4_AIR");
 G4LogicalVolume* logVol_World =
  new G4LogicalVolume(solid_World, materi_World, "LogVol_World");
-logVol_World->SetVisAttributes (G4VisAttributes::Invisible);
+//logVol_World->SetVisAttributes (G4VisAttributes::Invisible);
 
 // Placement of logical volume
 G4int copyNum_World = 0;               // Set ID number of world
@@ -152,18 +190,20 @@ G4PVPlacement* physVol_World  =
  G4Transform3D trans;
  G4int cN;
 
+//Tracker0 
 pos_X = 0.000*mm;
 pos_Y = 0.000*mm;
 pos_Z = 0.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
 trans = G4Transform3D(rot, vec);
-cN = 1000;    
+cN = 1000;
 new G4PVPlacement(trans, "PV_fpix0", lV_fpix0, physVol_World,false, cN);
 
-pos_X =  0.0*mm;
-pos_Y =  0.0*mm;
-pos_Z = 30.0*mm;
+//Tracker1
+pos_X = 0.0*cm;
+pos_Y = 0.0*mm;
+pos_Z += tr_pitch*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
 //rot.rotateZ(0.4*deg);
@@ -171,28 +211,33 @@ trans = G4Transform3D(rot, vec);
 cN=cN+10;
 new G4PVPlacement(trans, "PV_fpix1", lV_fpix1, physVol_World,false, cN);
 
+//Tracker2 
 pos_X = 0.0*cm;
 pos_Y = 0.0*cm;
-pos_Z = 60*mm;
+pos_Z += tr_pitch*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
 //rot.rotateY(1*deg);
 trans = G4Transform3D(rot, vec);
- cN=cN+10;
- new G4PVPlacement(trans, "PV_sofist0", lV_sofist0, physVol_World,false, cN);
-
+cN=cN+10;
+new G4PVPlacement(trans, "PV_fpix2", lV_fpix2, physVol_World,false, cN);
+ 
+//DUT 
 pos_X = 0.0*cm;
 pos_Y = 0.0*cm;
-pos_Z = 90*mm;
+//pos_Z = 90.0*mm;
+pos_Z += DUT_z*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
 //rot.rotateZ(0.5*deg);
 trans = G4Transform3D(rot, vec);
- cN=cN+10;
-new G4PVPlacement(trans, "PV_sofist1", lV_sofist1, physVol_World,false, cN);
+cN=cN+10;
+new G4PVPlacement(trans, "PV_sofist0", lV_sofist0, physVol_World,false, cN);
 
+ 
 // Kyocera LSI package package:  Default material is Alumina ( A440 or A445 )
-G4Box* CeraPKG= new G4Box("CeraPKG", 1.0*mm , 1.0*mm, 1.27*mm/2.0);
+G4Box* CeraPKG= new G4Box("CeraPKG", 5.0*mm , 5.0*mm, 1.27*mm/2.0);
+//  G4Box* CeraPKG= new G4Box("CeraPKG", 1.0*mm , 1.0*mm, 1.27*mm/2.0);  //backup
 #if   0
 G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_World, "CeraPKG");
 #elif 0
@@ -204,34 +249,35 @@ G4LogicalVolume* lV_CeraPKG = new G4LogicalVolume(CeraPKG,materi_Man->FindOrBuil
 #endif
 pos_X = 0.0*cm;
 pos_Y = 0.0*cm;
-pos_Z = 93*mm;
+pos_Z += 3.0*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot = G4RotationMatrix();
 trans = G4Transform3D(rot, vec);
- cN=cN+10;
-new G4PVPlacement(trans, "PV_CeraPKG", lV_CeraPKG, physVol_World,false, cN);
+cN=cN+10;
+// new G4PVPlacement(trans, "PV_CeraPKG", lV_CeraPKG, physVol_World,false, cN);
 
 
-
+// atfer DUT1 
 pos_X =  -0.00*mm;
 pos_Y =  0.0*mm;
-pos_Z = 120.0*mm;
+pos_Z = tr_pitch*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
 //rot.rotateZ(-1.2*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
-new G4PVPlacement(trans, "PV_fpix2", lV_fpix2, physVol_World,false, cN);
-
+//new G4PVPlacement(trans, "PV_sofist1", lV_sofist1, physVol_World,false, cN);
+ 
+//after DUT2 
 pos_X =  0.0*mm;
 pos_Y =  0.0*mm;
-pos_Z = 150.0*mm;
+pos_Z = tr_pitch*mm;
 vec = G4ThreeVector(pos_X, pos_Y, pos_Z);
 rot =  G4RotationMatrix();
 //rot.rotateX(45.*deg);
 trans = G4Transform3D(rot, vec);
 cN=cN+10;
-new G4PVPlacement(trans, "PV_fpix3", lV_fpix3, physVol_World,false, cN);
+//new G4PVPlacement(trans, "PV_fpix3", lV_fpix3, physVol_World,false, cN);
 
 #if 0
 // Sensitive Volume

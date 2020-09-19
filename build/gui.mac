@@ -14,13 +14,9 @@
 #
 # Gun menu :
 /gui/addMenu gun Gun
-/gui/addButton gun "1 MeV"  "/gun/energy 1 MeV"
-/gui/addButton gun "2 MeV"  "/gun/energy 2 MeV"
 /gui/addButton gun "50 MeV"  "/gun/energy 50 MeV"
 /gui/addButton gun "1 GeV"   "/gun/energy 1 GeV"
 /gui/addButton gun "10 GeV"  "/gun/energy 10 GeV"
-/gui/addButton gun "mu+"      "/gun/particle mu+"
-/gui/addButton gun "mu-"      "/gun/particle mu-"
 /gui/addButton gun "e-"      "/gun/particle e-"
 /gui/addButton gun "pi0"     "/gun/particle pi0"
 /gui/addButton gun "pi+"     "/gun/particle pi+"
@@ -36,9 +32,6 @@
 #
 # Viewer menu :
 /gui/addMenu viewer Viewer
-/gui/addButton viewer "Front view" "/vis/viewer/set/viewpointThetaPhi 0 0"
-/gui/addButton viewer "Side view" "/vis/viewer/set/viewpointThetaPhi 90 0"
-/gui/addButton viewer "Good view" "/vis/viewer/set/viewpointThetaPhi -4 30"
 /gui/addButton viewer "Set style surface" "/vis/viewer/set/style surface"
 /gui/addButton viewer "Set style wireframe" "/vis/viewer/set/style wireframe"
 /gui/addButton viewer "Refresh viewer" "/vis/viewer/refresh"

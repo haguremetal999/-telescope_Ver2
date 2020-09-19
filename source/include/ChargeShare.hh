@@ -10,7 +10,7 @@ class ChargeShare {
   double wx;
   double wsum;
   double **syx;
-  double **w;
+  double **w;  // Nt*Nt Matrix 
   //  double w[Neighbors*2+1][Neighbors*2+1];
   double sig;
   double leak;

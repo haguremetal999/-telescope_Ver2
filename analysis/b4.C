@@ -20,7 +20,7 @@
   Double_t Blue[NRGBs]  = { 1.00, 0.99, 0.30, 0.30, 0.00 };
   TColor::CreateGradientColorTable(NRGBs, stops, Red, Green, Blue, NCont);
   gStyle->SetNumberContours(NCont);
-  TFile f("B4_2MeV0.root");
+  TFile f("../build/B4_2MeV.root");
 //  TFile f("B4_photon_20keV.root");
   TNtuple* tin=(TNtuple*)f.Get("B4");
   Int_t NPixXY, NPixX, NPixY,Nhits,Ixy,Nbuff;

@@ -7,7 +7,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
-#include "aPixel.hh"
+#include "apixel.hh"
 
 class G4VPhysicalVolume;
 class G4GlobalMagFieldMessenger;

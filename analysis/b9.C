@@ -45,16 +45,8 @@
   //  analysisManager->FinishNtuple();
   const Int_t Nev = tin->GetEntries();
   tin->GetEntry(0);
-
-  
-  NPixY=NPixXY/128;
-  NPixX=NPixXY%128;
-
-  /* //backup
   NPixY=NPixXY/1000;
   NPixX=NPixXY%1000;
-  */
-  
   cout << "Nevents=" << Nev << " NPixY/NPixX=" << NPixY << "  "<< NPixX <<endl;
   double rg=20.0;
   double rg2=0.002;
@@ -87,11 +79,6 @@
 
     for(int i=0;i<Nhits;i++){
       int il= Apix[i]/1000000;
-
-      /*  //back up
-      int il= Apix[i]/1000000;
-      */
-      
       int iy= (Apix[i]-il*1000000)/1000;
       int ix= Apix[i] % 1000;
       if(il>NL)  cout << "IL " << il << endl;

@@ -22,7 +22,7 @@
 
 #include "Analysis.hh"
 #include "NtupleBuffsize.hh"
-#include "aPixel.hh"
+#include "apixel.hh"
 #include <cmath>
 
 //Constructor
@@ -42,9 +42,9 @@ aPixel::aPixel(
     CopyNumBase=CN;
     NPixY=NY;
     NPixX=NX;
-    //    NN=Neighbors;
-    SPixY=SY;
-    SPixX=SX;
+    //    NN=Neighbors;  // commented out in deafalt setting.
+    SPixY=SY;  // pixelsize
+    SPixX=SX;  // pixelsize
     TPixCmos=TC;
     TPixDepl=TD;
     TPixWafer=TW;
@@ -58,7 +58,7 @@ aPixel::aPixel(
     }
     G4cout << "PIXEL constructor size (um) " << SY/um << " / " << SX/um << " / " << NY << " / " << NX << " / " << Csh/um << G4endl; 
     //Charge sharing handler
-    chgShare = new ChargeShare(SPixY,SPixX,Csh,0.0,Neighbors,20,20);
+    chgShare = new ChargeShare(SPixY,SPixX,Csh,0.0,Neighbors,20,20); // defalt setting
     NN=chgShare -> GetNeighbors();  //Calculated in the program
     G4cout << "Apixel: Neighbors is " << NN << G4endl;
 

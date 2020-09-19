@@ -47,8 +47,8 @@ set(EXAMPLEB4A_SCRIPTS
   exampleB4.in
   gui.mac
   init_vis.mac
-  plotHisto.C
-  plotNtuple.C
+#  plotHisto.C
+#  plotNtuple.C
   run1.mac
   run2.mac
   vis.mac

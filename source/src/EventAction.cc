@@ -14,7 +14,7 @@
 #include <vector>
 #include "RunAction.hh"
 #include "Analysis.hh"
-#include "aPixel.hh"
+#include "apixel.hh"
 #include "EventAction.hh"
 #include "NtupleBuffsize.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -101,12 +101,22 @@ void EventAction::EndOfEventAction(const G4Event* event)
   ptr=NTUPLEPIXELPTR ;  // defined in  "NtupleBuffsize.hh"
   pixelhits=0;
   int nn0,nn1,nn2,nn3,nn4,nn5;
+
+  pixeltotuple(fpix0,         0);  nn0=pixelhits;
+  pixeltotuple(fpix1,   1000000);  nn1=pixelhits;
+  pixeltotuple(fpix2,   2000000);  nn2=pixelhits;
+  pixeltotuple(sofist0, 3000000);  nn3=pixelhits;
+  pixeltotuple(sofist1, 4000000);  nn4=pixelhits;
+  pixeltotuple(fpix3,   5000000);  nn5=pixelhits;
+  
+  /* //backup original detector ID
   pixeltotuple(fpix0,         0);  nn0=pixelhits;
   pixeltotuple(fpix1,   1000000);  nn1=pixelhits;
   pixeltotuple(sofist0, 2000000);  nn2=pixelhits;
   pixeltotuple(sofist1, 3000000);  nn3=pixelhits;
   pixeltotuple(fpix2,   4000000);  nn4=pixelhits;
   pixeltotuple(fpix3,   5000000);  nn5=pixelhits;
+  */
   if(pixelhits>=Maxhits) {
     auto eventID = event->GetEventID();
     G4cout << "End of Events: EventID" << eventID << " Maxhits " << pixelhits << "hits are stored" <<G4endl;  Maxhits=pixelhits;
